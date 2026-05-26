@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Get Fans Kenya | Facebook Growth</title>
+    <title>Get Fans Kenya | Social Media Growth</title>
     <style>
         * {
             margin: 0;
@@ -23,9 +23,12 @@
             --success: #2ecc71;
             --warning: #f39c12;
             --danger: #e74c3c;
+            --info: #3498db;
             --whatsapp: #25D366;
+            --instagram: #E4405F;
+            --tiktok: #000000;
+            --youtube: #FF0000;
             --review-star: #ffc107;
-            --notification: #3498db;
         }
 
         body.dark {
@@ -54,10 +57,12 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         h1 {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 700;
             background: linear-gradient(135deg, var(--primary), #00b4d8);
             -webkit-background-clip: text;
@@ -65,38 +70,81 @@
             color: transparent;
         }
 
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .track-btn, .admin-small-btn {
+            background: var(--info);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 5px 12px;
+            font-size: 0.65rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .admin-small-btn {
+            background: var(--warning);
+            color: #000;
+        }
+
         .theme-toggle {
             background: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: 30px;
-            padding: 6px 14px;
+            padding: 5px 12px;
             cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .container-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid var(--primary);
-        }
-
-        .container-icon {
-            font-size: 1.2rem;
-        }
-
-        .container-title {
-            font-weight: bold;
             font-size: 0.9rem;
-            color: var(--primary);
         }
 
-        .container-desc {
-            font-size: 0.7rem;
+        .progress-container {
+            margin-bottom: 20px;
+        }
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .step-indicator {
+            text-align: center;
+            flex: 1;
+            font-size: 0.65rem;
             color: var(--text-light);
-            margin-left: auto;
+        }
+        .step-indicator.active {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        .step-indicator.completed {
+            color: var(--success);
+        }
+        .progress-bar {
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .step {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .step.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .card {
@@ -107,376 +155,377 @@
             border: 1px solid var(--border);
         }
 
-        .service-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: var(--primary);
         }
 
-        .service-btn {
+        .platform-buttons, .service-buttons {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .platform-btn, .service-btn {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             background: var(--bg);
             border: 1px solid var(--border);
             border-radius: 30px;
             cursor: pointer;
             font-weight: 600;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
-        .service-btn.active {
-            background: var(--primary);
+        .platform-btn.active, .service-btn.active {
             color: white;
-            border-color: var(--primary);
+            border-color: transparent;
         }
+        .platform-btn[data-platform="facebook"].active { background: var(--primary); }
+        .platform-btn[data-platform="instagram"].active { background: var(--instagram); }
+        .platform-btn[data-platform="tiktok"].active { background: var(--tiktok); }
+        .platform-btn[data-platform="youtube"].active { background: var(--youtube); }
+        .service-btn.active { background: var(--primary); }
 
         .qty-row {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .qty-row label { font-weight: 600; font-size: 0.85rem; min-width: 60px; }
+        .qty-row input { flex: 1; padding: 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 0.9rem; text-align: center; }
+        input[type="range"] { width: 100%; height: 4px; -webkit-appearance: none; background: var(--border); border-radius: 4px; margin: 10px 0; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--primary); border-radius: 50%; cursor: pointer; }
+        .price { text-align: center; font-size: 1.5rem; font-weight: bold; color: var(--primary); margin: 8px 0; }
+
+        .form-group { margin-bottom: 14px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.8rem; }
+        label .required { color: #e74c3c; }
+        input, textarea { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 0.9rem; }
+
+        .trust-badges { display: flex; justify-content: center; gap: 8px; margin: 10px 0; flex-wrap: wrap; }
+        .badge { background: var(--bg); border: 1px solid var(--border); border-radius: 30px; padding: 4px 10px; font-size: 0.65rem; font-weight: 500; }
+
+        .delivery-time-note { background: linear-gradient(135deg, var(--success), #219a52); color: white; padding: 8px; border-radius: 12px; font-size: 0.7rem; text-align: center; margin-bottom: 12px; }
+
+        .mpesa-container { background: linear-gradient(135deg, var(--primary-dark), #001f3f); color: white; padding: 14px; border-radius: 16px; margin: 12px 0; }
+        .till-number { font-size: 1.6rem; font-weight: bold; background: white; color: var(--primary-dark); display: inline-block; padding: 4px 16px; border-radius: 40px; margin: 6px 0; font-family: monospace; text-align: center; width: 100%; }
+        .payment-steps { text-align: left; font-size: 0.7rem; margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.2); }
+        .mpesa-field { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); }
+        .mpesa-field textarea { background: rgba(255,255,255,0.95); color: #333; font-size: 0.8rem; }
+
+        .summary-card {
+            background: var(--bg);
+            border-radius: 14px;
+            padding: 12px;
+            margin: 12px 0;
+        }
+        .info-row { display: flex; justify-content: space-between; margin: 8px 0; font-size: 0.8rem; flex-wrap: wrap; gap: 6px; }
+        hr { border-color: var(--border); margin: 8px 0; }
+
+        .btn-next, .btn-back, .btn-submit {
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            margin-top: 6px;
+        }
+        .btn-next {
+            background: var(--primary);
+            color: white;
+            width: 100%;
+        }
+        .btn-back {
+            background: var(--border);
+            color: var(--text);
+            flex: 1;
+        }
+        .btn-submit {
+            background: var(--success);
+            color: white;
+            width: 100%;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: var(--whatsapp); color: white; border-radius: 50px; padding: 8px 14px; display: flex; align-items: center; gap: 6px; text-decoration: none; font-weight: bold; font-size: 0.75rem; z-index: 1000; }
+        .loading { display: inline-block; width: 12px; height: 12px; border: 2px solid white; border-radius: 50%; border-top-color: transparent; animation: spin 0.6s linear infinite; margin-right: 6px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Review Carousel */
+        .reviews-section {
+            margin-top: 16px;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-bottom: 12px;
         }
-
-        .qty-row label {
-            font-weight: 600;
+        .section-header h3 {
             font-size: 0.9rem;
-            min-width: 65px;
-        }
-
-        .qty-row input {
-            flex: 1;
-            padding: 10px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: var(--bg);
-            color: var(--text);
-            font-size: 1rem;
-            text-align: center;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            height: 5px;
-            -webkit-appearance: none;
-            background: var(--border);
-            border-radius: 5px;
-            margin: 12px 0;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            background: var(--primary);
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .price {
-            text-align: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin: 10px 0;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 6px;
             font-weight: 600;
-            font-size: 0.85rem;
         }
-
-        label .required {
-            color: #e74c3c;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background: var(--bg);
-            color: var(--text);
-            font-size: 0.95rem;
-        }
-
-        textarea {
-            font-family: monospace;
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .trust-badges {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin: 12px 0;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 6px 14px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-
-        .delivery-time-note {
-            background: linear-gradient(135deg, var(--success), #219a52);
-            color: white;
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            text-align: center;
-            margin-bottom: 16px;
-            font-weight: 500;
-        }
-
-        .package-carousel-container {
-            margin: 20px 0 16px 0;
-        }
-
-        .carousel-title {
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-bottom: 8px;
+        .section-header span {
+            font-size: 0.65rem;
             color: var(--text-light);
-            text-align: center;
         }
-
-        .carousel-wrapper {
-            position: relative;
-            overflow: hidden;
-            border-radius: 16px;
-        }
-
-        .carousel {
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            cursor: grab;
-        }
-
-        .carousel::-webkit-scrollbar {
-            display: none;
-        }
-
-        .carousel-items {
-            display: inline-flex;
-            gap: 10px;
-            padding: 4px 0;
-        }
-
-        .package-card {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            border-radius: 16px;
-            padding: 12px 20px;
-            min-width: 150px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .package-card:hover {
-            transform: scale(1.02);
-        }
-
-        .package-qty {
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-
-        .package-service {
-            font-size: 0.7rem;
-            opacity: 0.9;
-            margin-top: 2px;
-        }
-
-        .package-price {
-            font-size: 0.85rem;
-            margin-top: 6px;
-            font-weight: bold;
-        }
-
-        .reviews-carousel-container {
-            margin: 16px 0;
-        }
-
         .reviews-carousel {
             overflow-x: auto;
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: thin;
             cursor: grab;
-            padding: 4px 0;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
         }
-
         .reviews-carousel::-webkit-scrollbar {
-            height: 4px;
+            height: 3px;
         }
-
         .reviews-carousel::-webkit-scrollbar-track {
             background: var(--border);
             border-radius: 10px;
         }
-
         .reviews-carousel::-webkit-scrollbar-thumb {
             background: var(--primary);
             border-radius: 10px;
         }
-
         .reviews-items {
             display: inline-flex;
-            gap: 14px;
+            gap: 12px;
             padding: 4px 0;
         }
-
         .review-card {
-            background: var(--bg);
+            background: var(--card-bg);
             border-radius: 16px;
-            padding: 16px;
-            min-width: 260px;
+            padding: 14px;
+            min-width: 250px;
             max-width: 280px;
             border: 1px solid var(--border);
-            scroll-snap-align: start;
-            position: relative;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+        .review-rating {
+            color: var(--review-star);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .review-text {
+            font-size: 0.8rem;
+            line-height: 1.4;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+        .review-author {
+            font-size: 0.65rem;
+            color: var(--text-light);
+            font-weight: 500;
         }
 
-        .review-header {
+        .rating-input { display: flex; gap: 6px; margin-bottom: 10px; justify-content: center; }
+        .star-rating { font-size: 1.5rem; cursor: pointer; color: var(--border); transition: color 0.2s; }
+        .star-rating.active { color: var(--review-star); }
+        .btn-review { width: 100%; padding: 10px; background: var(--success); color: white; border: none; border-radius: 30px; font-size: 0.8rem; font-weight: bold; cursor: pointer; margin-top: 6px; }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+        .modal-container {
+            background: var(--card-bg);
+            border-radius: 24px;
+            width: 90%;
+            max-width: 450px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn 0.2s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-            gap: 6px;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--card-bg);
+            z-index: 10;
         }
-
-        .review-name {
-            font-weight: bold;
-            font-size: 0.85rem;
+        .modal-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
         }
-
-        .review-stars {
-            color: var(--review-star);
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-        }
-
-        .review-text {
-            font-size: 0.8rem;
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-
-        .review-details {
-            font-size: 0.65rem;
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
             color: var(--text-light);
         }
+        .modal-body {
+            padding: 20px;
+        }
 
-        .admin-toggle {
-            background: var(--warning);
-            color: #000;
+        .tracking-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tracking-input-group input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            font-family: monospace;
+        }
+        .tracking-input-group button {
+            padding: 12px 20px;
+            background: var(--primary);
+            color: white;
             border: none;
-            border-radius: 30px;
-            padding: 10px 16px;
-            font-size: 0.8rem;
+            border-radius: 12px;
             cursor: pointer;
-            margin-bottom: 12px;
-            width: 100%;
-            font-weight: bold;
+        }
+        .tracking-result {
+            display: none;
+            margin-top: 16px;
+        }
+        .tracking-result.show {
+            display: block;
+        }
+        .tracking-card {
+            background: var(--bg);
+            border-radius: 14px;
+            padding: 14px;
+        }
+        .status-timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+        .status-step {
+            text-align: center;
+            flex: 1;
+            min-width: 50px;
+        }
+        .status-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--border);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            margin: 0 auto 6px;
+            font-size: 0.8rem;
         }
-
-        .notification-badge {
-            background: var(--danger);
+        .status-step.completed .status-icon {
+            background: var(--success);
             color: white;
+        }
+        .status-step.active .status-icon {
+            background: var(--primary);
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,119,182,0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(0,119,182,0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,119,182,0); }
+        }
+        .status-label {
+            font-size: 0.6rem;
+            font-weight: bold;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
             border-radius: 20px;
-            padding: 2px 8px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
         }
-
-        .admin-panel {
-            display: none;
-            background: var(--bg);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 16px;
-            border: 2px solid var(--warning);
-        }
-
-        .admin-panel.show {
-            display: block;
-        }
+        .status-pending { background: var(--warning); color: #000; }
+        .status-processing { background: var(--info); color: white; }
+        .status-completed, .status-delivered { background: var(--success); color: white; }
 
         .admin-tabs {
             display: flex;
             gap: 10px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 8px;
+            padding-bottom: 10px;
         }
-
         .admin-tab {
-            padding: 6px 12px;
+            padding: 8px 16px;
             cursor: pointer;
-            border-radius: 20px;
+            border-radius: 30px;
             font-size: 0.8rem;
+            font-weight: 500;
         }
-
         .admin-tab.active {
             background: var(--primary);
             color: white;
         }
-
         .admin-section {
             display: none;
         }
-
         .admin-section.active {
             display: block;
         }
-
         .order-item {
-            background: var(--card-bg);
+            background: var(--bg);
             border-radius: 12px;
             padding: 12px;
             margin-bottom: 10px;
             border: 1px solid var(--border);
-        }
-
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 0.7rem;
-        }
-
-        .order-details {
             font-size: 0.75rem;
         }
-
+        .order-status-select {
+            padding: 6px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-top: 8px;
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+        }
         .review-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 10px;
             border-bottom: 1px solid var(--border);
+            font-size: 0.75rem;
         }
-
         .delete-btn {
             background: var(--danger);
             color: white;
@@ -484,475 +533,379 @@
             border-radius: 20px;
             padding: 4px 12px;
             cursor: pointer;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
         }
 
-        .notification-toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--notification);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 12px;
-            z-index: 3000;
-            animation: slideIn 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            max-width: 300px;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        .rating-input {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-            justify-content: center;
-        }
-
-        .star-rating {
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: var(--border);
-            transition: color 0.2s;
-        }
-
-        .star-rating.active {
-            color: var(--review-star);
-        }
-
-        .btn-review {
-            width: 100%;
-            padding: 12px;
-            background: var(--success);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 8px;
-        }
-
-        .section-divider {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin: 16px 0 12px 0;
-        }
-
-        .divider-line {
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
-
-        .divider-text {
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .mpesa-container {
-            background: linear-gradient(135deg, var(--primary-dark), #001f3f);
-            color: white;
-            padding: 16px;
-            border-radius: 16px;
-            margin: 16px 0;
-        }
-
-        .till-number {
-            font-size: 2rem;
-            font-weight: bold;
-            background: white;
-            color: var(--primary-dark);
-            display: inline-block;
-            padding: 5px 20px;
-            border-radius: 40px;
-            margin: 8px 0;
-            font-family: monospace;
-            text-align: center;
-            width: 100%;
-        }
-
-        .payment-steps {
-            text-align: left;
-            font-size: 0.75rem;
-            margin-top: 10px;
-            padding-top: 8px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .mpesa-field {
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .mpesa-field textarea {
-            background: rgba(255,255,255,0.95);
-            color: #333;
-        }
-
-        .summary {
+        .tracking-code {
             background: var(--bg);
-            border-radius: 14px;
-            padding: 14px;
-            margin: 16px 0;
-            font-size: 0.85rem;
-        }
-
-        .tracking-id {
+            padding: 12px;
+            border-radius: 12px;
             font-family: monospace;
-            background: var(--card-bg);
-            padding: 4px 8px;
-            border-radius: 8px;
-            font-size: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin: 12px 0;
+            border: 2px dashed var(--primary);
         }
-
-        .btn-submit {
-            width: 100%;
-            padding: 14px;
+        .copy-btn {
             background: var(--primary);
             color: white;
             border: none;
+            padding: 10px 20px;
             border-radius: 40px;
-            font-size: 1rem;
-            font-weight: bold;
+            font-size: 0.9rem;
             cursor: pointer;
         }
 
-        .whatsapp-float {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--whatsapp);
-            color: white;
-            border-radius: 50px;
-            padding: 10px 18px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.85rem;
-            z-index: 1000;
-        }
-
-        .loading {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2px solid white;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 0.6s linear infinite;
-            margin-right: 6px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            margin: 8px 0;
-            font-size: 0.8rem;
-        }
-
-        hr {
-            border-color: var(--border);
-            margin: 12px 0;
-        }
-
-        .password-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .password-modal.show {
-            display: flex;
-        }
-
         .password-box {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 24px;
-            width: 280px;
             text-align: center;
         }
-
         .password-box input {
             margin: 16px 0;
             text-align: center;
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg);
         }
-
         .password-box button {
             background: var(--primary);
             color: white;
             border: none;
             border-radius: 30px;
-            padding: 10px 20px;
+            padding: 10px 16px;
             cursor: pointer;
             width: 100%;
+            margin-top: 8px;
         }
 
         @media (max-width: 480px) {
             body { padding: 12px; }
             .card { padding: 16px; }
-            .till-number { font-size: 1.6rem; }
-            .package-card { min-width: 130px; padding: 10px 14px; }
-            .review-card { min-width: 240px; }
-            .container-desc { display: none; }
+            .review-card { min-width: 220px; }
+            .modal-container { width: 95%; }
+            .status-label { font-size: 0.55rem; }
+            .status-icon { width: 28px; height: 28px; font-size: 0.7rem; }
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <h1>📱 Get Fans Kenya</h1>
-        <div class="theme-toggle" id="themeToggle">🌓</div>
+        <h1>Get Fans Kenya</h1>
+        <div class="header-actions">
+            <button class="track-btn" id="trackOrderBtn">Track</button>
+            <button class="admin-small-btn" id="adminSmallBtn">Admin</button>
+            <div class="theme-toggle" id="themeToggle">🌓</div>
+        </div>
     </div>
 
     <div class="trust-badges">
-        <span class="badge">⚡ Instant Start</span>
-        <span class="badge">🔒 No Password</span>
-        <span class="badge">✅ Delivery Guarantee</span>
-        <span class="badge">💬 24/7 Support</span>
+        <span class="badge">Instant Start</span>
+        <span class="badge">No Password</span>
+        <span class="badge">Delivery Guarantee</span>
+        <span class="badge">24/7 Support</span>
     </div>
 
-    <div class="delivery-time-note" id="deliveryTimeNote">
-        ⏱️ <span id="deliveryEstimate">1-2 hours</span> delivery for this quantity
-    </div>
-
-    <!-- ORDER CONTAINER -->
-    <div class="card">
-        <div class="container-label">
-            <span class="container-icon">📝</span>
-            <span class="container-title">ORDER DETAILS</span>
-            <span class="container-desc">Fill in your info & select package</span>
+    <div class="progress-container">
+        <div class="progress-steps">
+            <div class="step-indicator" id="step1Indicator">1. Select</div>
+            <div class="step-indicator" id="step2Indicator">2. Details</div>
+            <div class="step-indicator" id="step3Indicator">3. Payment</div>
         </div>
-        
-        <div class="service-buttons" id="serviceButtons">
-            <div class="service-btn active" data-service="followers">👥 Followers</div>
-            <div class="service-btn" data-service="likes">❤️ Likes</div>
-            <div class="service-btn" data-service="comments">💬 Comments</div>
-        </div>
-
-        <div class="qty-row">
-            <label>Quantity</label>
-            <input type="number" id="quantityNumber" min="100" max="1000000" step="100" value="3000">
-        </div>
-        <input type="range" id="quantitySlider" min="100" max="1000000" step="100" value="3000">
-        <div class="price" id="priceDisplay">KSh 1,199</div>
-
-        <div class="form-group">
-            <label>Full Name <span class="required">*</span></label>
-            <input type="text" id="customerName" placeholder="Enter your full name">
-        </div>
-        <div class="form-group">
-            <label>Facebook Profile URL <span class="required">*</span></label>
-            <input type="text" id="fbUsername" placeholder="https://facebook.com/yourpage">
-        </div>
-        <div class="form-group" id="postLinkGroup" style="display: none;">
-            <label>Post/Video Link <span class="required">*</span></label>
-            <input type="text" id="postLink" placeholder="Facebook post/video URL (required for likes/comments)">
-        </div>
-        <div class="form-group">
-            <label>WhatsApp Number <span class="required">*</span></label>
-            <input type="tel" id="customerPhone" placeholder="0712345678">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
         </div>
     </div>
 
-    <!-- M-PESA CONTAINER -->
-    <div class="section-divider">
-        <div class="divider-line"></div>
-        <div class="divider-text">💳 PAYMENT</div>
-        <div class="divider-line"></div>
-    </div>
-
-    <div class="mpesa-container">
-        <div class="container-label" style="border-bottom-color: rgba(255,255,255,0.3); margin-bottom: 8px;">
-            <span class="container-icon">🏦</span>
-            <span class="container-title" style="color: white;">M-PESA TILL NUMBER</span>
-            <span class="container-desc" style="color: rgba(255,255,255,0.7);">Only payment method</span>
-        </div>
-        <div class="till-number">8941840</div>
-        <div class="payment-steps">
-            <div>📝 1. Go to M-Pesa > Lipa Na M-Pesa > Buy Goods</div>
-            <div>🔢 2. Enter Till Number: <strong>8941840</strong></div>
-            <div>💰 3. Enter amount: <strong id="paymentAmountStep">KSh 1,199</strong></div>
-            <div>🔐 4. Enter PIN & confirm</div>
-        </div>
-        <div class="mpesa-field">
-            <label>📋 Paste M-Pesa Confirmation Here</label>
-            <textarea id="mpesaConfirmation" rows="3" placeholder="After payment, copy the M-Pesa message from your phone and paste it here..."></textarea>
+    <!-- STEP 1 -->
+    <div class="step active" id="step1">
+        <div class="card">
+            <div class="step-title">Choose Package</div>
+            <div class="platform-buttons" id="platformButtons">
+                <div class="platform-btn active" data-platform="facebook">Facebook</div>
+                <div class="platform-btn" data-platform="instagram">Instagram</div>
+                <div class="platform-btn" data-platform="tiktok">TikTok</div>
+                <div class="platform-btn" data-platform="youtube">YouTube</div>
+            </div>
+            <div class="service-buttons" id="serviceButtons"></div>
+            <div class="qty-row">
+                <label>Quantity</label>
+                <input type="number" id="quantityNumber" min="100" max="1000000" step="100" value="3000">
+            </div>
+            <input type="range" id="quantitySlider" min="100" max="1000000" step="100" value="3000">
+            <div class="price" id="priceDisplay">KSh 1,199</div>
+            <div class="delivery-time-note">
+                <span id="deliveryEstimate">1-2 hours</span> delivery
+            </div>
+            <button class="btn-next" id="nextToStep2">Continue</button>
         </div>
     </div>
 
-    <!-- PACKAGE CAROUSEL -->
-    <div class="package-carousel-container">
-        <div class="container-label" style="margin-bottom: 8px;">
-            <span class="container-icon">🎁</span>
-            <span class="container-title">QUICK SELECTION</span>
-            <span class="container-desc">Click any package → auto-fills above</span>
-        </div>
-        <div class="carousel-wrapper">
-            <div class="carousel" id="packageCarousel">
-                <div class="carousel-items">
-                    <div class="package-card" data-qty="100" data-service="followers"><div class="package-qty">100</div><div class="package-service">Followers</div><div class="package-price">KSh 40</div></div>
-                    <div class="package-card" data-qty="500" data-service="followers"><div class="package-qty">500</div><div class="package-service">Followers</div><div class="package-price">KSh 199</div></div>
-                    <div class="package-card" data-qty="1000" data-service="followers"><div class="package-qty">1,000</div><div class="package-service">Followers</div><div class="package-price">KSh 399</div></div>
-                    <div class="package-card" data-qty="3000" data-service="followers"><div class="package-qty">3,000</div><div class="package-service">Followers</div><div class="package-price">KSh 1,199</div></div>
-                    <div class="package-card" data-qty="5000" data-service="followers"><div class="package-qty">5,000</div><div class="package-service">Followers</div><div class="package-price">KSh 1,899</div></div>
-                    <div class="package-card" data-qty="10000" data-service="followers"><div class="package-qty">10,000</div><div class="package-service">Followers</div><div class="package-price">KSh 3,499</div></div>
-                    <div class="package-card" data-qty="25000" data-service="followers"><div class="package-qty">25,000</div><div class="package-service">Followers</div><div class="package-price">KSh 7,999</div></div>
-                    <div class="package-card" data-qty="50000" data-service="followers"><div class="package-qty">50,000</div><div class="package-service">Followers</div><div class="package-price">KSh 14,999</div></div>
-                    <div class="package-card" data-qty="100000" data-service="followers"><div class="package-qty">100,000</div><div class="package-service">Followers</div><div class="package-price">KSh 27,999</div></div>
-                    <div class="package-card" data-qty="250000" data-service="followers"><div class="package-qty">250,000</div><div class="package-service">Followers</div><div class="package-price">KSh 64,999</div></div>
-                    <div class="package-card" data-qty="500000" data-service="followers"><div class="package-qty">500,000</div><div class="package-service">Followers</div><div class="package-price">KSh 119,999</div></div>
-                    <div class="package-card" data-qty="1000000" data-service="followers"><div class="package-qty">1,000,000</div><div class="package-service">Followers</div><div class="package-price">KSh 219,999</div></div>
-                </div>
+    <!-- STEP 2 -->
+    <div class="step" id="step2">
+        <div class="card">
+            <div class="step-title">Your Information</div>
+            <div class="form-group">
+                <label id="usernameLabel">Facebook Profile URL <span class="required">*</span></label>
+                <input type="text" id="socialUsername" placeholder="Profile URL or username">
+            </div>
+            <div class="form-group" id="postLinkGroup" style="display: none;">
+                <label id="postLinkLabel">Post Link <span class="required">*</span></label>
+                <input type="text" id="postLink" placeholder="Link to post or video">
+            </div>
+            <div class="form-group">
+                <label>Full Name <span class="required">*</span></label>
+                <input type="text" id="customerName" placeholder="Your full name">
+            </div>
+            <div class="form-group">
+                <label>WhatsApp Number <span class="required">*</span></label>
+                <input type="tel" id="customerPhone" placeholder="0712345678">
+            </div>
+            <div class="button-group">
+                <button class="btn-back" id="backToStep1">Back</button>
+                <button class="btn-next" id="nextToStep3">Continue</button>
             </div>
         </div>
     </div>
 
-    <!-- ORDER SUMMARY -->
-    <div class="summary" id="orderSummary">
-        <div class="container-label" style="margin-bottom: 8px;">
-            <span class="container-icon">📋</span>
-            <span class="container-title">ORDER SUMMARY</span>
-            <span class="container-desc">Review before submitting</span>
-        </div>
-        <div class="info-row"><strong>Tracking ID:</strong><span class="tracking-id" id="trackingId">Loading...</span></div>
-        <hr>
-        <div class="info-row"><span>Service:</span><strong><span id="summaryService">Facebook Followers</span></strong></div>
-        <div class="info-row"><span>Quantity:</span><strong><span id="summaryQty">3,000</span></strong></div>
-        <div class="info-row"><span>Total Amount:</span><strong style="color: var(--primary);" id="summaryPrice">KSh 1,199</strong></div>
-        <div class="info-row"><span>Delivery Time:</span><span id="summaryDelivery">⏱️ 1-2 hours</span></div>
-    </div>
-
-    <button class="btn-submit" id="submitOrder">✅ PLACE ORDER & SUBMIT PAYMENT</button>
-
-    <!-- REVIEWS SECTION -->
-    <div class="section-divider">
-        <div class="divider-line"></div>
-        <div class="divider-text">⭐ CUSTOMER REVIEWS</div>
-        <div class="divider-line"></div>
-    </div>
-
-    <!-- Admin Toggle Button -->
-    <button class="admin-toggle" id="adminToggleBtn">
-        🔐 ADMIN PANEL <span id="notificationBadge" class="notification-badge" style="display: none;">0</span>
-    </button>
-
-    <!-- Admin Panel -->
-    <div class="admin-panel" id="adminPanel">
-        <div class="admin-tabs">
-            <div class="admin-tab active" data-tab="orders">📦 Orders</div>
-            <div class="admin-tab" data-tab="reviews">⭐ Manage Reviews</div>
-        </div>
-        
-        <div id="adminOrdersSection" class="admin-section active">
-            <div id="ordersList"></div>
-        </div>
-        
-        <div id="adminReviewsSection" class="admin-section">
-            <div id="adminReviewsList"></div>
+    <!-- STEP 3 -->
+    <div class="step" id="step3">
+        <div class="card">
+            <div class="step-title">Complete Payment</div>
+            <div class="mpesa-container" style="margin-top: 0;">
+                <div class="till-number">8941840</div>
+                <div class="payment-steps">
+                    <div>1. M-Pesa > Lipa Na M-Pesa > Buy Goods</div>
+                    <div>2. Enter Till: 8941840</div>
+                    <div>3. Amount: <strong id="paymentAmountStep">KSh 1,199</strong></div>
+                    <div>4. Enter PIN and confirm</div>
+                </div>
+                <div class="mpesa-field">
+                    <label>Paste M-Pesa Confirmation</label>
+                    <textarea id="mpesaConfirmation" rows="2" placeholder="Paste the M-Pesa message here"></textarea>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="info-row"><strong>Tracking ID:</strong><span id="trackingId">Loading...</span></div>
+                <hr>
+                <div class="info-row"><span>Platform:</span><strong id="summaryPlatform">Facebook</strong></div>
+                <div class="info-row"><span>Service:</span><strong id="summaryService">Followers</strong></div>
+                <div class="info-row"><span>Quantity:</span><strong id="summaryQty">3,000</strong></div>
+                <div class="info-row"><span>Total:</span><strong id="summaryPrice">KSh 1,199</strong></div>
+            </div>
+            <div class="button-group">
+                <button class="btn-back" id="backToStep2">Back</button>
+                <button class="btn-submit" id="submitOrder">Place Order</button>
+            </div>
         </div>
     </div>
 
-    <!-- Password Modal -->
-    <div class="password-modal" id="passwordModal">
-        <div class="password-box">
-            <span style="font-size: 2rem;">🔐</span>
-            <h3 style="margin: 12px 0;">Admin Access</h3>
-            <input type="password" id="adminPassword" placeholder="Enter password" autocomplete="off">
-            <button id="submitPassword">Unlock</button>
-            <button id="closePasswordModal" style="background: var(--danger); margin-top: 8px;">Cancel</button>
-        </div>
-    </div>
-
-    <div class="reviews-carousel-container">
-        <div class="container-label" style="margin-bottom: 8px;">
-            <span class="container-icon">💬</span>
-            <span class="container-title">SUCCESS STORIES</span>
-            <span class="container-desc">Real customers, real results</span>
+    <!-- REVIEWS CAROUSEL SECTION -->
+    <div class="reviews-section">
+        <div class="section-header">
+            <h3>Customer Reviews</h3>
+            <span>← swipe →</span>
         </div>
         <div class="reviews-carousel" id="reviewsCarousel">
             <div class="reviews-items" id="reviewsItems"></div>
         </div>
+        <div class="card" style="margin-top: 8px; padding: 14px;">
+            <div style="font-weight: 600; margin-bottom: 10px; font-size: 0.8rem;">Leave a Review</div>
+            <div class="rating-input" id="ratingStars">
+                <span class="star-rating" data-rating="1">★</span>
+                <span class="star-rating" data-rating="2">★</span>
+                <span class="star-rating" data-rating="3">★</span>
+                <span class="star-rating" data-rating="4">★</span>
+                <span class="star-rating" data-rating="5">★</span>
+            </div>
+            <input type="text" id="reviewerName" placeholder="Your name" style="margin-bottom: 8px; font-size: 0.8rem;">
+            <textarea id="reviewText" rows="2" placeholder="Share your experience" style="font-size: 0.8rem;"></textarea>
+            <button class="btn-review" id="submitReview">Submit Review</button>
+        </div>
     </div>
 
-    <!-- REVIEW FORM -->
-    <div class="card">
-        <div class="container-label" style="margin-bottom: 12px;">
-            <span class="container-icon">✍️</span>
-            <span class="container-title">LEAVE A REVIEW</span>
-            <span class="container-desc">Share your experience</span>
-        </div>
-        <div class="rating-input" id="ratingStars">
-            <span class="star-rating" data-rating="1">★</span>
-            <span class="star-rating" data-rating="2">★</span>
-            <span class="star-rating" data-rating="3">★</span>
-            <span class="star-rating" data-rating="4">★</span>
-            <span class="star-rating" data-rating="5">★</span>
-        </div>
-        <input type="text" id="reviewerName" placeholder="Your name" style="margin-bottom: 8px;">
-        <textarea id="reviewText" rows="2" placeholder="Tell others about your experience..."></textarea>
-        <button class="btn-review" id="submitReview">⭐ SUBMIT REVIEW</button>
-    </div>
-
-    <footer style="text-align: center; font-size: 0.65rem; color: var(--text-light); margin: 20px 0;">
+    <footer style="text-align: center; font-size: 0.6rem; color: var(--text-light); margin: 16px 0;">
         Get Fans Kenya • Till 8941840
     </footer>
 </div>
 
-<a href="https://wa.me/254750600715?text=Hi%20Get%20Fans%20Kenya" class="whatsapp-float" target="_blank">💬 WhatsApp</a>
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>Order Placed!</h3>
+            <button class="close-modal" id="closeSuccessModal">&times;</button>
+        </div>
+        <div class="modal-body" style="text-align: center;">
+            <div style="font-size: 2.5rem;">✓</div>
+            <p style="margin: 10px 0;">Your Tracking ID</p>
+            <div class="tracking-code" id="successTrackingId">GFKXXXXXX</div>
+            <button class="copy-btn" id="copyTrackingBtn">Copy ID</button>
+        </div>
+    </div>
+</div>
+
+<!-- TRACK ORDER MODAL -->
+<div class="modal-overlay" id="trackModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>Track Your Order</h3>
+            <button class="close-modal" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="tracking-input-group">
+                <input type="text" id="trackingInput" placeholder="Enter Tracking ID">
+                <button id="searchTrackBtn">Track</button>
+            </div>
+            <div id="trackingResult" class="tracking-result"></div>
+            <p style="font-size: 0.65rem; margin-top: 12px; text-align: center;">Need help? WhatsApp: 0750600715</p>
+        </div>
+    </div>
+</div>
+
+<!-- ADMIN MODAL -->
+<div class="modal-overlay" id="adminModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>Admin Panel</h3>
+            <button class="close-modal" id="closeAdminModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="admin-tabs">
+                <div class="admin-tab active" data-tab="orders">Orders</div>
+                <div class="admin-tab" data-tab="reviews">Reviews</div>
+            </div>
+            <div id="adminOrdersSection" class="admin-section active">
+                <div id="ordersList"></div>
+            </div>
+            <div id="adminReviewsSection" class="admin-section">
+                <div id="adminReviewsList"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- PASSWORD MODAL -->
+<div class="modal-overlay" id="passwordModal">
+    <div class="modal-container" style="max-width: 320px;">
+        <div class="modal-header">
+            <h3>Admin Access</h3>
+            <button class="close-modal" id="closePasswordModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="password-box">
+                <input type="password" id="adminPassword" placeholder="Enter password">
+                <button id="submitPassword">Unlock</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="https://wa.me/254750600715?text=Hi" class="whatsapp-float" target="_blank">WhatsApp</a>
 
 <script>
-    // ========== YOUR GOOGLE SHEETS WEB APP URL (INSERTED) ==========
     const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbytZBJEB1BFDeqV5f6m0fnFGUEO2RIoxTXNwjWuemDWh7kulZ9Hd6xl8nU_AulYRiMY/exec";
     const ADMIN_PASSWORD = "GetFans2024";
-    // =================================================================
 
     let orders = [];
     let reviews = [];
-    let isAdminLoggedIn = false;
+    let currentPlatform = "facebook";
+    let currentService = "followers";
+    let currentQuantity = 3000;
+    let currentStep = 1;
+
+    const platformSettings = {
+        facebook: { name: "Facebook", usernameLabel: "Facebook Profile URL", usernamePlaceholder: "Profile URL or username", postLabel: "Post Link" },
+        instagram: { name: "Instagram", usernameLabel: "Instagram Username", usernamePlaceholder: "Username or profile URL", postLabel: "Post Link" },
+        tiktok: { name: "TikTok", usernameLabel: "TikTok Username", usernamePlaceholder: "Username or profile URL", postLabel: "Video Link" },
+        youtube: { name: "YouTube", usernameLabel: "Channel URL", usernamePlaceholder: "Channel URL or handle", postLabel: "Video Link" }
+    };
+
+    const serviceOptions = {
+        facebook: ["followers", "likes", "comments"],
+        instagram: ["followers", "likes", "views"],
+        tiktok: ["followers", "likes", "views"],
+        youtube: ["subscribers", "views", "likes"]
+    };
+
+    const serviceNames = { followers: "Followers", likes: "Likes", comments: "Comments", views: "Views", subscribers: "Subscribers" };
+
+    function calculatePrice(platform, service, qty) {
+        const basePrices = {
+            facebook: { followers: 0.4, likes: 0.25, comments: 0.3 },
+            instagram: { followers: 0.45, likes: 0.3, views: 0.2 },
+            tiktok: { followers: 0.5, likes: 0.35, views: 0.25 },
+            youtube: { subscribers: 0.8, views: 0.15, likes: 0.4 }
+        };
+        const rate = basePrices[platform]?.[service] || 0.4;
+        let price = Math.round(qty * rate);
+        if (qty >= 10000) price = Math.round(price * 0.9);
+        if (qty >= 50000) price = Math.round(price * 0.8);
+        if (qty >= 100000) price = Math.round(price * 0.7);
+        return Math.max(price, 25);
+    }
+
+    function getDeliveryTime(qty) {
+        if (qty < 50000) return "1-2 hours";
+        if (qty < 200000) return "2-4 hours";
+        if (qty < 500000) return "4-8 hours";
+        return "8-24 hours";
+    }
+
+    function updateProgress() {
+        document.getElementById("progressFill").style.width = `${(currentStep - 1) * 50}%`;
+        document.getElementById("step1Indicator").classList.remove("active", "completed");
+        document.getElementById("step2Indicator").classList.remove("active", "completed");
+        document.getElementById("step3Indicator").classList.remove("active", "completed");
+        if (currentStep >= 1) document.getElementById("step1Indicator").classList.add(currentStep > 1 ? "completed" : "active");
+        if (currentStep >= 2) document.getElementById("step2Indicator").classList.add(currentStep > 2 ? "completed" : "active");
+        if (currentStep >= 3) document.getElementById("step3Indicator").classList.add("active");
+    }
+
+    function showStep(step) {
+        document.getElementById("step1").classList.remove("active");
+        document.getElementById("step2").classList.remove("active");
+        document.getElementById("step3").classList.remove("active");
+        document.getElementById(`step${step}`).classList.add("active");
+        currentStep = step;
+        updateProgress();
+        if (step === 3) {
+            let price = calculatePrice(currentPlatform, currentService, currentQuantity);
+            document.getElementById("summaryPlatform").innerText = platformSettings[currentPlatform].name;
+            document.getElementById("summaryService").innerText = serviceNames[currentService];
+            document.getElementById("summaryQty").innerText = currentQuantity.toLocaleString();
+            document.getElementById("summaryPrice").innerText = `KSh ${price.toLocaleString()}`;
+        }
+    }
+
+    function updateUI() {
+        let price = calculatePrice(currentPlatform, currentService, currentQuantity);
+        document.getElementById("priceDisplay").innerText = `KSh ${price.toLocaleString()}`;
+        document.getElementById("paymentAmountStep").innerText = `KSh ${price.toLocaleString()}`;
+        document.getElementById("deliveryEstimate").innerText = getDeliveryTime(currentQuantity);
+        let showPostLink = (currentService === "likes" || currentService === "comments" || currentService === "views");
+        document.getElementById("postLinkGroup").style.display = showPostLink ? "block" : "none";
+        document.getElementById("postLinkLabel").innerHTML = `${platformSettings[currentPlatform].postLabel} <span class="required">*</span>`;
+        document.getElementById("usernameLabel").innerHTML = `${platformSettings[currentPlatform].usernameLabel} <span class="required">*</span>`;
+        document.getElementById("socialUsername").placeholder = platformSettings[currentPlatform].usernamePlaceholder;
+    }
 
     function loadData() {
         const savedOrders = localStorage.getItem('getfanskenya_orders');
-        if (savedOrders) {
-            try { orders = JSON.parse(savedOrders); } catch(e) {}
-        }
+        if (savedOrders) { try { orders = JSON.parse(savedOrders); } catch(e) {} }
         const savedReviews = localStorage.getItem('getfanskenya_reviews');
-        if (savedReviews) {
-            try { reviews = JSON.parse(savedReviews); } catch(e) {}
-        }
+        if (savedReviews) { try { reviews = JSON.parse(savedReviews); } catch(e) {} }
         if (reviews.length === 0) {
             reviews = [
-                { id: Date.now() + 1, name: "🔥 John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 2 hours! My page is blowing up now! 🔥", date: "2 days ago" },
-                { id: Date.now() + 2, name: "Sarah W.", rating: 5, review: "Got 10,000 followers for my business page. Delivery was super fast!", date: "5 days ago" },
-                { id: Date.now() + 3, name: "David K.", rating: 5, review: "Very reliable service. The 3,000 followers came in less than an hour!", date: "1 week ago" }
+                { id: Date.now() + 1, name: "John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 2 hours. My page has grown so much.", date: "2 days ago" },
+                { id: Date.now() + 2, name: "Sarah W.", rating: 5, review: "Got 10,000 Instagram followers. Delivery was very fast. Will order again.", date: "5 days ago" },
+                { id: Date.now() + 3, name: "David K.", rating: 5, review: "Very reliable service. The 3,000 YouTube subscribers came in less than a day.", date: "1 week ago" }
             ];
             saveReviews();
         }
         renderReviews();
-        if (isAdminLoggedIn) { renderAdminOrders(); renderAdminReviews(); }
     }
 
     function saveOrders() { localStorage.setItem('getfanskenya_orders', JSON.stringify(orders)); }
@@ -960,63 +913,102 @@
 
     function showNotification(title, message) {
         const toast = document.createElement('div');
-        toast.className = 'notification-toast';
-        toast.innerHTML = `<strong>${title}</strong><br><small>${message}</small>`;
+        toast.style.cssText = `position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:var(--primary); color:white; padding:10px 20px; border-radius:30px; z-index:3000; font-size:0.75rem; animation:fadeInOut 3s ease;`;
+        toast.innerHTML = `<strong>${title}</strong> - ${message}`;
         document.body.appendChild(toast);
-        setTimeout(() => toast.remove(), 5000);
-        try {
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-            oscillator.frequency.value = 800;
-            gainNode.gain.value = 0.3;
-            oscillator.start();
-            gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.5);
-            oscillator.stop(audioCtx.currentTime + 0.5);
-        } catch(e) {}
-        if (Notification.permission === 'granted') new Notification(title, { body: message });
-        else if (Notification.permission !== 'denied') Notification.requestPermission();
+        setTimeout(() => toast.remove(), 3000);
     }
 
-    async function saveToGoogleSheets(data, type) {
+    async function saveToGoogleSheets(data) {
         try {
-            await fetch(GOOGLE_SHEET_API_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-            console.log(`${type} saved to Google Sheets`);
+            await fetch(GOOGLE_SHEET_API_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
             return true;
-        } catch (error) { console.error(error); return false; }
+        } catch (error) { return false; }
     }
 
     function addOrder(orderData) {
-        orders.unshift({ ...orderData, id: Date.now(), read: false });
+        orders.unshift({ ...orderData, id: Date.now(), status: "Pending", read: false });
         saveOrders();
-        showNotification('🛒 NEW ORDER!', `${orderData.customerName} ordered ${orderData.quantity.toLocaleString()} ${orderData.service}`);
-        if (isAdminLoggedIn) renderAdminOrders();
+        showNotification('New Order', `${orderData.customerName} - ${orderData.platform} ${orderData.service}`);
+        if (typeof renderAdminOrders === 'function') renderAdminOrders();
     }
 
-    function addReviewToAdmin(name, rating, review) {
-        const newReview = { id: Date.now(), name, rating, review, date: new Date().toLocaleString(), read: false };
-        reviews.unshift(newReview);
-        saveReviews();
-        showNotification('⭐ NEW REVIEW!', `${name} rated ${rating} stars`);
-        renderReviews();
-        if (isAdminLoggedIn) renderAdminReviews();
+    // CRITICAL FIX: Update order status and save to localStorage
+    function updateOrderStatus(trackingId, newStatus) {
+        const orderIndex = orders.findIndex(o => o.trackingId === trackingId);
+        if (orderIndex !== -1) {
+            orders[orderIndex].status = newStatus;
+            saveOrders();
+            showNotification("Status Updated", `${trackingId} is now ${newStatus}`);
+            // Refresh admin orders display
+            if (typeof renderAdminOrders === 'function') renderAdminOrders();
+            console.log(`Order ${trackingId} status updated to: ${newStatus}`);
+        } else {
+            console.log(`Order ${trackingId} not found`);
+        }
+    }
+
+    // CRITICAL FIX: Track order - always get latest status from orders array
+    function trackOrder(trackingId) {
+        // Find the most up-to-date order from the orders array
+        const order = orders.find(o => o.trackingId === trackingId);
+        const resultDiv = document.getElementById("trackingResult");
+        
+        if (!order) {
+            resultDiv.innerHTML = `<div style="background: var(--danger); color: white; padding: 12px; border-radius: 12px; text-align: center;">Order not found. Check your ID.</div>`;
+            resultDiv.classList.add("show");
+            return;
+        }
+        
+        // Get the current status from the order (not from a variable)
+        const currentStatus = order.status;
+        const steps = ["Pending", "Processing", "Completed", "Delivered"];
+        const currentIdx = steps.indexOf(currentStatus);
+        
+        console.log(`Tracking ${trackingId} - Current status: ${currentStatus}`);
+        
+        // Build status timeline based on actual current status
+        let timelineHtml = '';
+        for (let i = 0; i < steps.length; i++) {
+            const step = steps[i];
+            let stepClass = '';
+            let icon = '○';
+            if (i < currentIdx) {
+                stepClass = 'completed';
+                icon = '✓';
+            } else if (i === currentIdx) {
+                stepClass = 'active';
+                icon = '●';
+            }
+            timelineHtml += `<div class="status-step ${stepClass}"><div class="status-icon">${icon}</div><div class="status-label">${step}</div></div>`;
+        }
+        
+        resultDiv.innerHTML = `
+            <div class="tracking-card">
+                <div class="info-row"><strong>Tracking ID:</strong> ${escapeHtml(order.trackingId)}</div>
+                <div class="info-row"><strong>Status:</strong> <span class="status-badge status-${currentStatus.toLowerCase()}">${currentStatus}</span></div>
+                <div class="status-timeline">${timelineHtml}</div>
+                <div class="info-row"><span>Platform:</span><strong>${escapeHtml(order.platform)}</strong></div>
+                <div class="info-row"><span>Service:</span><strong>${escapeHtml(order.service)}</strong></div>
+                <div class="info-row"><span>Quantity:</span><strong>${order.quantity.toLocaleString()}</strong></div>
+                <div class="info-row"><span>Amount:</span><strong>KSh ${order.price.toLocaleString()}</strong></div>
+                ${currentStatus === 'Delivered' ? '<div class="info-row" style="color: var(--success);"><span>🎉</span><strong>Order Delivered! Thank you for choosing Get Fans Kenya.</strong></div>' : ''}
+            </div>`;
+        resultDiv.classList.add("show");
     }
 
     function renderReviews() {
         const container = document.getElementById('reviewsItems');
         if (!container) return;
+        if (reviews.length === 0) {
+            container.innerHTML = '<div style="padding: 20px; text-align: center;">No reviews yet</div>';
+            return;
+        }
         container.innerHTML = reviews.map(r => `
             <div class="review-card">
-                <div class="review-header"><span class="review-name">${escapeHtml(r.name)}</span><span class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span></div>
-                <div class="review-text">"${escapeHtml(r.review)}"</div>
-                <div class="review-details">${escapeHtml(r.date)}</div>
+                <div class="review-rating">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+                <div class="review-text">${escapeHtml(r.review)}</div>
+                <div class="review-author">— ${escapeHtml(r.name)}</div>
             </div>
         `).join('');
     }
@@ -1024,177 +1016,309 @@
     function renderAdminOrders() {
         const container = document.getElementById('ordersList');
         if (!container) return;
-        if (orders.length === 0) { container.innerHTML = '<p style="text-align:center; padding:20px;">No orders yet.</p>'; return; }
+        if (orders.length === 0) { 
+            container.innerHTML = '<p style="text-align:center; padding:16px;">No orders yet.</p>'; 
+            return; 
+        }
         container.innerHTML = orders.map(o => `
             <div class="order-item">
-                <div class="order-header"><strong>${escapeHtml(o.trackingId)}</strong><small>${escapeHtml(o.timestamp)}</small></div>
-                <div class="order-details">👤 ${escapeHtml(o.customerName)}<br>📱 ${escapeHtml(o.service)} • ${o.quantity.toLocaleString()}<br>💰 KSh ${o.price.toLocaleString()}<br>🔑 TXN: ${escapeHtml(o.transactionId)}</div>
+                <div><strong>${escapeHtml(o.trackingId)}</strong> <small>${escapeHtml(o.timestamp)}</small></div>
+                <div>${escapeHtml(o.customerName)} • ${escapeHtml(o.platform)} ${escapeHtml(o.service)}<br>📊 ${o.quantity.toLocaleString()} • 💰 KSh ${o.price.toLocaleString()}</div>
+                <select class="order-status-select" data-tracking="${escapeHtml(o.trackingId)}">
+                    <option value="Pending" ${o.status === "Pending" ? "selected" : ""}>⏳ Pending</option>
+                    <option value="Processing" ${o.status === "Processing" ? "selected" : ""}>🔄 Processing</option>
+                    <option value="Completed" ${o.status === "Completed" ? "selected" : ""}>✅ Completed</option>
+                    <option value="Delivered" ${o.status === "Delivered" ? "selected" : ""}>🚀 Delivered</option>
+                </select>
             </div>
         `).join('');
+        
+        // Add event listeners to status dropdowns
+        document.querySelectorAll('.order-status-select').forEach(select => {
+            select.removeEventListener('change', handleStatusChange);
+            select.addEventListener('change', handleStatusChange);
+        });
+    }
+    
+    function handleStatusChange(e) {
+        const trackingId = e.target.dataset.tracking;
+        const newStatus = e.target.value;
+        updateOrderStatus(trackingId, newStatus);
     }
 
     function renderAdminReviews() {
         const container = document.getElementById('adminReviewsList');
         if (!container) return;
-        if (reviews.length === 0) { container.innerHTML = '<p style="text-align:center; padding:20px;">No reviews yet.</p>'; return; }
+        if (reviews.length === 0) { 
+            container.innerHTML = '<p style="text-align:center; padding:16px;">No reviews yet.</p>'; 
+            return; 
+        }
         container.innerHTML = reviews.map((r, i) => `
             <div class="review-item">
-                <div class="admin-review-text"><strong>${escapeHtml(r.name)}</strong> (${'★'.repeat(r.rating)})<br><small>"${escapeHtml(r.review.substring(0, 60))}${r.review.length > 60 ? '...' : ''}"</small></div>
+                <div><strong>${escapeHtml(r.name)}</strong> (${'★'.repeat(r.rating)})<br><small>${escapeHtml(r.review.substring(0, 40))}${r.review.length > 40 ? '...' : ''}</small></div>
                 <button class="delete-btn" data-index="${i}">Delete</button>
             </div>
         `).join('');
-        document.querySelectorAll('.delete-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const idx = parseInt(btn.dataset.index);
-                if (confirm('Delete this review?')) { reviews.splice(idx, 1); saveReviews(); renderReviews(); renderAdminReviews(); alert('✅ Deleted!'); }
-            });
+        document.querySelectorAll('.delete-btn').forEach(btn => { 
+            btn.addEventListener('click', (e) => { 
+                const idx = parseInt(btn.dataset.index); 
+                if (confirm('Delete this review?')) { 
+                    reviews.splice(idx, 1); 
+                    saveReviews(); 
+                    renderReviews(); 
+                    renderAdminReviews(); 
+                    alert('Review deleted'); 
+                } 
+            }); 
         });
     }
 
-    function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
-
-    // Pricing and other functions...
-    function calculatePrice(service, qty) {
-        if (service === "followers") {
-            if (qty <= 100) return 40;
-            if (qty <= 500) return Math.round(199 * (qty / 500));
-            if (qty <= 1000) return Math.round(399 * (qty / 1000));
-            if (qty <= 3000) return Math.round(1199 * (qty / 3000));
-            if (qty <= 10000) return Math.round(1199 + ((qty - 3000) * 0.33));
-            if (qty <= 25000) return Math.round(3499 + ((qty - 10000) * 0.30));
-            if (qty <= 50000) return Math.round(7999 + ((qty - 25000) * 0.28));
-            if (qty <= 100000) return Math.round(14999 + ((qty - 50000) * 0.26));
-            if (qty <= 250000) return Math.round(27999 + ((qty - 100000) * 0.24));
-            if (qty <= 500000) return Math.round(64999 + ((qty - 250000) * 0.22));
-            return Math.round(119999 + ((qty - 500000) * 0.20));
-        } else if (service === "likes") {
-            if (qty <= 100) return 25;
-            if (qty <= 500) return Math.round(125 * (qty / 500));
-            if (qty <= 1000) return Math.round(249 * (qty / 1000));
-            if (qty <= 3000) return Math.round(699 * (qty / 3000));
-            if (qty <= 10000) return Math.round(699 + ((qty - 3000) * 0.25));
-            if (qty <= 50000) return Math.round(1999 + ((qty - 10000) * 0.22));
-            return Math.round(9999 + ((qty - 50000) * 0.18));
-        } else {
-            if (qty <= 100) return 35;
-            if (qty <= 500) return Math.round(175 * (qty / 500));
-            if (qty <= 1000) return Math.round(349 * (qty / 1000));
-            if (qty <= 3000) return Math.round(899 * (qty / 3000));
-            if (qty <= 10000) return Math.round(899 + ((qty - 3000) * 0.35));
-            if (qty <= 50000) return Math.round(2499 + ((qty - 10000) * 0.30));
-            return Math.round(13999 + ((qty - 50000) * 0.25));
-        }
+    function escapeHtml(text) { 
+        if (!text) return '';
+        const div = document.createElement('div'); 
+        div.textContent = text; 
+        return div.innerHTML; 
     }
-    function formatQuantity(qty) { return qty.toLocaleString(); }
-    function getDeliveryTime(qty) { if (qty < 50000) return "1-2 hours"; if (qty < 200000) return "2-4 hours"; if (qty < 500000) return "4-8 hours"; return "8-24 hours"; }
-    function updateDeliveryTime(qty) { const time = getDeliveryTime(qty); document.getElementById("deliveryEstimate").innerText = time; document.getElementById("summaryDelivery").innerHTML = `⏱️ ${time}`; const note = document.getElementById("deliveryTimeNote"); if (qty >= 50000) note.style.background = "linear-gradient(135deg, var(--warning), #e67e22)"; else note.style.background = "linear-gradient(135deg, var(--success), #219a52)"; }
 
-    // Auto-scroll
-    const pkgCarousel = document.getElementById('packageCarousel');
-    let pkgScrollInterval, pkgHovering = false, pkgScrollPosition = 0;
-    function startPkgScroll() { if (pkgScrollInterval) clearInterval(pkgScrollInterval); pkgScrollInterval = setInterval(() => { if (!pkgHovering && pkgCarousel) { const maxScroll = pkgCarousel.scrollWidth - pkgCarousel.clientWidth; pkgScrollPosition += 0.5; if (pkgScrollPosition >= maxScroll) pkgScrollPosition = 0; pkgCarousel.scrollTo({ left: pkgScrollPosition, behavior: 'smooth' }); } }, 50); }
-    if (pkgCarousel) { pkgCarousel.addEventListener('mouseenter', () => { pkgHovering = true; }); pkgCarousel.addEventListener('mouseleave', () => { pkgHovering = false; }); startPkgScroll(); }
-    const revCarousel = document.getElementById('reviewsCarousel');
-    let revScrollInterval, revHovering = false, revScrollPosition = 0;
-    function startRevScroll() { if (revScrollInterval) clearInterval(revScrollInterval); revScrollInterval = setInterval(() => { if (!revHovering && revCarousel) { const maxScroll = revCarousel.scrollWidth - revCarousel.clientWidth; revScrollPosition += 0.5; if (revScrollPosition >= maxScroll) revScrollPosition = 0; revCarousel.scrollTo({ left: revScrollPosition, behavior: 'smooth' }); } }, 60); }
-    if (revCarousel) { revCarousel.addEventListener('mouseenter', () => { revHovering = true; }); revCarousel.addEventListener('mouseleave', () => { revHovering = false; }); startRevScroll(); }
+    function updateServiceButtons() {
+        const container = document.getElementById('serviceButtons');
+        container.innerHTML = serviceOptions[currentPlatform].map(s => `<div class="service-btn ${s === currentService ? 'active' : ''}" data-service="${s}">${serviceNames[s]}</div>`).join('');
+        document.querySelectorAll('.service-btn').forEach(btn => { 
+            btn.addEventListener('click', () => { 
+                document.querySelectorAll('.service-btn').forEach(b => b.classList.remove('active')); 
+                btn.classList.add('active'); 
+                currentService = btn.dataset.service; 
+                updateUI(); 
+            }); 
+        });
+    }
 
-    document.querySelectorAll('.package-card').forEach(card => { card.addEventListener('click', () => { const qty = parseInt(card.dataset.qty); const service = card.dataset.service; if (!isNaN(qty) && service) { if (service !== currentService) { currentService = service; serviceBtns.forEach(btn => { if (btn.dataset.service === service) btn.classList.add('active'); else btn.classList.remove('active'); }); } currentQuantity = qty; slider.value = qty; quantityNumber.value = qty; updateUI(); updateDeliveryTime(qty); document.querySelector('.qty-row').scrollIntoView({ behavior: 'smooth', block: 'center' }); } }); });
+    document.querySelectorAll('.platform-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentPlatform = btn.dataset.platform;
+            currentService = serviceOptions[currentPlatform][0];
+            updateServiceButtons();
+            updateUI();
+        });
+    });
 
-    function generateTrackingId() { return 'GFK' + Math.random().toString(36).substring(2, 10).toUpperCase(); }
+    updateServiceButtons();
+
+    function generateTrackingId() { return 'GFK' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substring(2, 4).toUpperCase(); }
     let currentTrackingId = generateTrackingId();
     document.getElementById("trackingId").innerText = currentTrackingId;
-    let currentService = "followers";
-    let currentQuantity = 3000;
+
     const slider = document.getElementById("quantitySlider");
     const quantityNumber = document.getElementById("quantityNumber");
-    const priceDisplay = document.getElementById("priceDisplay");
-    const paymentAmountStep = document.getElementById("paymentAmountStep");
-    const serviceBtns = document.querySelectorAll(".service-btn");
-    const postLinkGroup = document.getElementById("postLinkGroup");
-    const summaryService = document.getElementById("summaryService");
-    const summaryQty = document.getElementById("summaryQty");
-    const summaryPrice = document.getElementById("summaryPrice");
-    const submitBtn = document.getElementById("submitOrder");
-    const customerName = document.getElementById("customerName");
-    const fbUsername = document.getElementById("fbUsername");
-    const postLink = document.getElementById("postLink");
-    const customerPhone = document.getElementById("customerPhone");
-    const mpesaConfirmation = document.getElementById("mpesaConfirmation");
+    slider.addEventListener("input", () => { currentQuantity = parseInt(slider.value); quantityNumber.value = currentQuantity; updateUI(); });
+    quantityNumber.addEventListener("input", () => { let v = parseInt(quantityNumber.value); if (isNaN(v)) v = 100; v = Math.min(1000000, Math.max(100, v)); currentQuantity = v; slider.value = v; quantityNumber.value = v; updateUI(); });
 
-    function updateUI() { let price = calculatePrice(currentService, currentQuantity); let priceFormatted = `KSh ${price.toLocaleString()}`; priceDisplay.innerText = priceFormatted; if (paymentAmountStep) paymentAmountStep.innerText = priceFormatted; let serviceName = currentService === "followers" ? "Facebook Followers" : (currentService === "likes" ? "Facebook Likes" : "Facebook Comments"); summaryService.innerText = serviceName; summaryQty.innerText = formatQuantity(currentQuantity); summaryPrice.innerText = priceFormatted; updateDeliveryTime(currentQuantity); postLinkGroup.style.display = (currentService === "comments" || currentService === "likes") ? "block" : "none"; }
-    function syncFromSlider() { currentQuantity = parseInt(slider.value); quantityNumber.value = currentQuantity; updateUI(); }
-    function syncFromNumber() { let val = parseInt(quantityNumber.value); if (isNaN(val)) val = 100; val = Math.min(1000000, Math.max(100, val)); currentQuantity = val; slider.value = val; quantityNumber.value = val; updateUI(); }
-    slider.addEventListener("input", syncFromSlider);
-    quantityNumber.addEventListener("input", syncFromNumber);
-    serviceBtns.forEach(btn => { btn.addEventListener("click", () => { serviceBtns.forEach(b => b.classList.remove("active")); btn.classList.add("active"); currentService = btn.dataset.service; currentQuantity = currentService === "followers" ? 3000 : 1000; slider.value = currentQuantity; quantityNumber.value = currentQuantity; updateUI(); }); });
+    document.getElementById("nextToStep2").addEventListener("click", () => showStep(2));
+    document.getElementById("backToStep1").addEventListener("click", () => showStep(1));
+    document.getElementById("nextToStep3").addEventListener("click", () => showStep(3));
+    document.getElementById("backToStep2").addEventListener("click", () => showStep(2));
 
-    submitBtn.addEventListener("click", async () => {
-        const name = customerName.value.trim(), profile = fbUsername.value.trim(), phone = customerPhone.value.trim(), link = postLink.value.trim(), mpesaText = mpesaConfirmation.value.trim();
-        if (!name) { alert("❌ Enter your full name"); customerName.focus(); return; }
-        if (!profile) { alert("❌ Enter Facebook profile URL"); fbUsername.focus(); return; }
-        if (!phone) { alert("❌ Enter WhatsApp number"); customerPhone.focus(); return; }
-        if ((currentService === "comments" || currentService === "likes") && !link) { alert("❌ Enter post/video link"); postLink.focus(); return; }
-        if (!mpesaText) { alert("❌ Paste M-Pesa confirmation message"); mpesaConfirmation.focus(); return; }
-        let serviceName = currentService === "followers" ? "Facebook Followers" : (currentService === "likes" ? "Facebook Likes" : "Facebook Comments");
-        let price = calculatePrice(currentService, currentQuantity);
+    // Success Modal
+    const successModal = document.getElementById("successModal");
+    function showSuccessModal(id) {
+        document.getElementById("successTrackingId").innerText = id;
+        successModal.classList.add("show");
+    }
+    document.getElementById("copyTrackingBtn").addEventListener("click", () => { 
+        navigator.clipboard.writeText(document.getElementById("successTrackingId").innerText); 
+        alert("Tracking ID copied!"); 
+    });
+    document.getElementById("closeSuccessModal").addEventListener("click", () => successModal.classList.remove("show"));
+
+    document.getElementById("submitOrder").addEventListener("click", async () => {
+        const name = document.getElementById("customerName").value.trim();
+        const username = document.getElementById("socialUsername").value.trim();
+        const phone = document.getElementById("customerPhone").value.trim();
+        const link = document.getElementById("postLink").value.trim();
+        const mpesaText = document.getElementById("mpesaConfirmation").value.trim();
+
+        if (!name) { alert("Enter your name"); showStep(2); return; }
+        if (!username) { alert(`Enter ${platformSettings[currentPlatform].usernameLabel}`); showStep(2); return; }
+        if (!phone) { alert("Enter WhatsApp number"); showStep(2); return; }
+        if ((currentService === "likes" || currentService === "comments" || currentService === "views") && !link) { alert(`Enter ${platformSettings[currentPlatform].postLabel}`); showStep(2); return; }
+        if (!mpesaText) { alert("Paste M-Pesa confirmation"); showStep(3); return; }
+
+        let price = calculatePrice(currentPlatform, currentService, currentQuantity);
         let deliveryTime = getDeliveryTime(currentQuantity);
         let transactionId = mpesaText.match(/[A-Z0-9]{10,}/i)?.[0] || "Not extracted";
-        const orderData = { trackingId: currentTrackingId, service: serviceName, quantity: currentQuantity, price: price, deliveryTime: deliveryTime, customerName: name, profile: profile, postLink: link || "Not provided", phone: phone, mpesaConfirmation: mpesaText.substring(0, 500), transactionId: transactionId, status: "Pending Verification", timestamp: new Date().toLocaleString("en-KE") };
-        submitBtn.innerHTML = '<span class="loading"></span>Submitting...';
-        submitBtn.disabled = true;
-        let saved = await saveToGoogleSheets(orderData, 'order');
+        let fullServiceName = `${platformSettings[currentPlatform].name} ${serviceNames[currentService]}`;
+        let finalTrackingId = currentTrackingId;
+
+        const orderData = {
+            trackingId: finalTrackingId, 
+            service: fullServiceName, 
+            platform: platformSettings[currentPlatform].name,
+            serviceType: serviceNames[currentService], 
+            quantity: currentQuantity, 
+            price: price,
+            deliveryTime: deliveryTime, 
+            customerName: name, 
+            username: username,
+            postLink: link || "Not provided", 
+            phone: phone,
+            mpesaConfirmation: mpesaText.substring(0, 500), 
+            transactionId: transactionId,
+            status: "Pending", 
+            timestamp: new Date().toLocaleString("en-KE")
+        };
+
+        const btn = document.getElementById("submitOrder");
+        btn.innerHTML = '<span class="loading"></span>Processing...';
+        btn.disabled = true;
+        
+        let saved = await saveToGoogleSheets(orderData);
         if (saved) {
             addOrder(orderData);
-            alert(`✅ ORDER SUBMITTED!\n📋 ID: ${currentTrackingId}\n💰 KSh ${price.toLocaleString()}\n⏱️ Delivery: ${deliveryTime}`);
-            currentTrackingId = generateTrackingId(); document.getElementById("trackingId").innerText = currentTrackingId;
-            customerName.value = ""; fbUsername.value = ""; postLink.value = ""; customerPhone.value = ""; mpesaConfirmation.value = "";
-            currentService = "followers"; currentQuantity = 3000;
-            slider.value = 3000; quantityNumber.value = 3000;
-            serviceBtns.forEach(b => b.classList.remove("active"));
-            document.querySelector('[data-service="followers"]').classList.add("active");
+            showSuccessModal(finalTrackingId);
+            currentTrackingId = generateTrackingId();
+            document.getElementById("trackingId").innerText = currentTrackingId;
+            document.getElementById("customerName").value = "";
+            document.getElementById("socialUsername").value = "";
+            document.getElementById("postLink").value = "";
+            document.getElementById("customerPhone").value = "";
+            document.getElementById("mpesaConfirmation").value = "";
+            currentPlatform = "facebook"; 
+            currentService = "followers"; 
+            currentQuantity = 3000;
+            slider.value = 3000; 
+            quantityNumber.value = 3000;
+            document.querySelectorAll('.platform-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector('[data-platform="facebook"]').classList.add('active');
+            updateServiceButtons();
             updateUI();
-        } else { alert("❌ Error submitting. Try again or WhatsApp 0750600715"); }
-        submitBtn.innerHTML = "✅ PLACE ORDER & SUBMIT PAYMENT";
-        submitBtn.disabled = false;
+            showStep(1);
+        } else { 
+            alert("Error. Try again or WhatsApp 0750600715"); 
+        }
+        btn.innerHTML = "Place Order";
+        btn.disabled = false;
     });
 
+    // Track Modal
+    const trackModal = document.getElementById("trackModal");
+    document.getElementById("trackOrderBtn").addEventListener("click", () => { 
+        trackModal.classList.add("show"); 
+        document.getElementById("trackingResult").classList.remove("show"); 
+        document.getElementById("trackingInput").value = ""; 
+    });
+    document.getElementById("closeModalBtn").addEventListener("click", () => trackModal.classList.remove("show"));
+    document.getElementById("searchTrackBtn").addEventListener("click", () => { 
+        if (document.getElementById("trackingInput").value.trim()) {
+            const trackingId = document.getElementById("trackingInput").value.trim().toUpperCase();
+            trackOrder(trackingId);
+        } else {
+            alert("Enter Tracking ID"); 
+        }
+    });
+    document.getElementById("trackingInput").addEventListener("keypress", (e) => { if (e.key === "Enter") document.getElementById("searchTrackBtn").click(); });
+    trackModal.addEventListener("click", (e) => { if (e.target === trackModal) trackModal.classList.remove("show"); });
+
+    // Admin Modal
+    let isAdminLoggedIn = false;
+    const adminModal = document.getElementById("adminModal");
+    const passwordModalEl = document.getElementById("passwordModal");
+    
+    document.getElementById("adminSmallBtn").addEventListener("click", () => {
+        if (isAdminLoggedIn) {
+            adminModal.classList.add("show");
+            renderAdminOrders();
+            renderAdminReviews();
+        } else {
+            passwordModalEl.classList.add("show");
+        }
+    });
+    
+    document.getElementById("closeAdminModal").addEventListener("click", () => adminModal.classList.remove("show"));
+    document.getElementById("closePasswordModal").addEventListener("click", () => passwordModalEl.classList.remove("show"));
+    
+    document.getElementById("submitPassword").addEventListener("click", () => {
+        const enteredPassword = document.getElementById("adminPassword").value;
+        if (enteredPassword === ADMIN_PASSWORD) {
+            isAdminLoggedIn = true;
+            passwordModalEl.classList.remove("show");
+            adminModal.classList.add("show");
+            renderAdminOrders();
+            renderAdminReviews();
+            alert("Admin access granted");
+        } else {
+            alert("Wrong password");
+        }
+    });
+    document.getElementById("adminPassword").addEventListener("keypress", (e) => { if (e.key === "Enter") document.getElementById("submitPassword").click(); });
+    passwordModalEl.addEventListener("click", (e) => { if (e.target === passwordModalEl) passwordModalEl.classList.remove("show"); });
+    
+    document.querySelectorAll('.admin-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            const tn = tab.dataset.tab;
+            document.getElementById('adminOrdersSection').classList.toggle('active', tn === 'orders');
+            document.getElementById('adminReviewsSection').classList.toggle('active', tn === 'reviews');
+        });
+    });
+
+    // Reviews stars
     let selectedRating = 0;
-    const stars = document.querySelectorAll('.star-rating');
-    stars.forEach(star => { star.addEventListener('click', () => { selectedRating = parseInt(star.dataset.rating); stars.forEach(s => parseInt(s.dataset.rating) <= selectedRating ? s.classList.add('active') : s.classList.remove('active')); }); });
+    document.querySelectorAll('.star-rating').forEach(star => {
+        star.addEventListener('click', () => {
+            selectedRating = parseInt(star.dataset.rating);
+            document.querySelectorAll('.star-rating').forEach(s => parseInt(s.dataset.rating) <= selectedRating ? s.classList.add('active') : s.classList.remove('active'));
+        });
+    });
     document.getElementById("submitReview").addEventListener("click", async () => {
-        const name = document.getElementById("reviewerName").value.trim(), review = document.getElementById("reviewText").value.trim();
+        const name = document.getElementById("reviewerName").value.trim();
+        const review = document.getElementById("reviewText").value.trim();
         if (!name) { alert("Enter your name"); return; }
         if (!review) { alert("Write your review"); return; }
-        if (selectedRating === 0) { alert("Select a star rating"); return; }
-        const reviewData = { type: "review", name: name, rating: selectedRating, review: review, timestamp: new Date().toLocaleString("en-KE") };
-        await saveToGoogleSheets(reviewData, 'review');
-        addReviewToAdmin(name, selectedRating, review);
-        alert("⭐ Thank you for your review!");
-        document.getElementById("reviewerName").value = ""; document.getElementById("reviewText").value = ""; selectedRating = 0;
-        stars.forEach(s => s.classList.remove('active'));
+        if (selectedRating === 0) { alert("Select a rating"); return; }
+        await saveToGoogleSheets({ type: "review", name: name, rating: selectedRating, review: review, timestamp: new Date().toLocaleString("en-KE") });
+        reviews.unshift({ id: Date.now(), name: name, rating: selectedRating, review: review, date: new Date().toLocaleString() });
+        saveReviews(); 
+        renderReviews(); 
+        if (isAdminLoggedIn) renderAdminReviews();
+        alert("Thank you for your review!");
+        document.getElementById("reviewerName").value = ""; 
+        document.getElementById("reviewText").value = ""; 
+        selectedRating = 0;
+        document.querySelectorAll('.star-rating').forEach(s => s.classList.remove('active'));
     });
 
-    // Admin Password Logic
-    const modal = document.getElementById('passwordModal'), adminToggleBtn = document.getElementById('adminToggleBtn');
-    const submitPasswordBtn = document.getElementById('submitPassword'), closeModalBtn = document.getElementById('closePasswordModal');
-    const adminPanel = document.getElementById('adminPanel');
-    function showPasswordModal() { modal.classList.add('show'); document.getElementById('adminPassword').value = ''; document.getElementById('adminPassword').focus(); }
-    function hidePasswordModal() { modal.classList.remove('show'); }
-    function checkPassword() { if (document.getElementById('adminPassword').value === ADMIN_PASSWORD) { isAdminLoggedIn = true; hidePasswordModal(); adminPanel.classList.add('show'); renderAdminOrders(); renderAdminReviews(); alert('✅ Admin access granted!'); } else { alert('❌ Incorrect password!'); } }
-    adminToggleBtn.addEventListener('click', showPasswordModal);
-    submitPasswordBtn.addEventListener('click', checkPassword);
-    closeModalBtn.addEventListener('click', hidePasswordModal);
-    document.getElementById('adminPassword').addEventListener('keypress', (e) => { if (e.key === 'Enter') checkPassword(); });
-    modal.addEventListener('click', (e) => { if (e.target === modal) hidePasswordModal(); });
-    document.querySelectorAll('.admin-tab').forEach(tab => { tab.addEventListener('click', () => { document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active')); tab.classList.add('active'); const tabName = tab.dataset.tab; document.getElementById('adminOrdersSection').classList.toggle('active', tabName === 'orders'); document.getElementById('adminReviewsSection').classList.toggle('active', tabName === 'reviews'); }); });
+    // Auto-scroll reviews
+    const revCarousel = document.getElementById('reviewsCarousel');
+    if (revCarousel) {
+        let scrolling = false, pos = 0;
+        const scrollInterval = setInterval(() => {
+            if (!scrolling && revCarousel && revCarousel.scrollWidth > revCarousel.clientWidth) {
+                const max = revCarousel.scrollWidth - revCarousel.clientWidth;
+                if (max > 0) {
+                    pos += 0.5;
+                    if (pos >= max) pos = 0;
+                    revCarousel.scrollTo({ left: pos, behavior: 'smooth' });
+                }
+            }
+        }, 50);
+        revCarousel.addEventListener('mouseenter', () => { scrolling = true; });
+        revCarousel.addEventListener('mouseleave', () => { scrolling = false; });
+    }
 
+    // Dark mode
     const themeToggle = document.getElementById("themeToggle");
     if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark");
-    themeToggle.addEventListener("click", () => { document.body.classList.toggle("dark"); localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light"); });
+    themeToggle.addEventListener("click", () => { 
+        document.body.classList.toggle("dark"); 
+        localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light"); 
+    });
 
     loadData();
     updateUI();
+    updateProgress();
 </script>
 </body>
 </html>
