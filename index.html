@@ -384,7 +384,6 @@
             color: var(--text-light);
         }
 
-        /* Admin Styles */
         .admin-toggle {
             background: var(--warning);
             color: #000;
@@ -864,7 +863,7 @@
     <!-- Admin Panel -->
     <div class="admin-panel" id="adminPanel">
         <div class="admin-tabs">
-            <div class="admin-tab active" data-tab="orders">📦 New Orders <span id="ordersBadge" class="notification-badge" style="display: none;">0</span></div>
+            <div class="admin-tab active" data-tab="orders">📦 Orders</div>
             <div class="admin-tab" data-tab="reviews">⭐ Manage Reviews</div>
         </div>
         
@@ -926,34 +925,24 @@
 <a href="https://wa.me/254750600715?text=Hi%20Get%20Fans%20Kenya" class="whatsapp-float" target="_blank">💬 WhatsApp</a>
 
 <script>
-    // ========== CONFIGURATION ==========
+    // ========== YOUR GOOGLE SHEETS WEB APP URL (INSERTED) ==========
+    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbytZBJEB1BFDeqV5f6m0fnFGUEO2RIoxTXNwjWuemDWh7kulZ9Hd6xl8nU_AulYRiMY/exec";
     const ADMIN_PASSWORD = "GetFans2024";
-    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyVOGLW4yygdlEz-6pj9RP0IMfe4UYfG407buFVreeMMG3VGW3TBvLdPvmHI6UCZqT1Qg/exec";
-    // ====================================
+    // =================================================================
 
-    // Store orders and reviews
     let orders = [];
     let reviews = [];
     let isAdminLoggedIn = false;
-    let unreadOrders = 0;
-    let unreadReviews = 0;
 
-    // Load data from localStorage
     function loadData() {
         const savedOrders = localStorage.getItem('getfanskenya_orders');
         if (savedOrders) {
-            try {
-                orders = JSON.parse(savedOrders);
-            } catch(e) { console.error(e); }
+            try { orders = JSON.parse(savedOrders); } catch(e) {}
         }
-        
         const savedReviews = localStorage.getItem('getfanskenya_reviews');
         if (savedReviews) {
-            try {
-                reviews = JSON.parse(savedReviews);
-            } catch(e) { console.error(e); }
+            try { reviews = JSON.parse(savedReviews); } catch(e) {}
         }
-        
         if (reviews.length === 0) {
             reviews = [
                 { id: Date.now() + 1, name: "🔥 John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 2 hours! My page is blowing up now! 🔥", date: "2 days ago" },
@@ -962,35 +951,19 @@
             ];
             saveReviews();
         }
-        
         renderReviews();
-        if (isAdminLoggedIn) {
-            renderAdminOrders();
-            renderAdminReviews();
-        }
+        if (isAdminLoggedIn) { renderAdminOrders(); renderAdminReviews(); }
     }
 
-    function saveOrders() {
-        localStorage.setItem('getfanskenya_orders', JSON.stringify(orders));
-    }
+    function saveOrders() { localStorage.setItem('getfanskenya_orders', JSON.stringify(orders)); }
+    function saveReviews() { localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews)); }
 
-    function saveReviews() {
-        localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
-    }
-
-    // Show notification popup
-    function showNotification(title, message, type = 'order') {
-        // Toast notification on screen
+    function showNotification(title, message) {
         const toast = document.createElement('div');
         toast.className = 'notification-toast';
-        toast.innerHTML = `
-            <strong>${type === 'order' ? '🛒 NEW ORDER!' : '⭐ NEW REVIEW!'}</strong><br>
-            <small>${message}</small>
-        `;
+        toast.innerHTML = `<strong>${title}</strong><br><small>${message}</small>`;
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 5000);
-        
-        // Play beep sound (simple beep using Web Audio)
         try {
             const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             const oscillator = audioCtx.createOscillator();
@@ -1002,68 +975,36 @@
             oscillator.start();
             gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.5);
             oscillator.stop(audioCtx.currentTime + 0.5);
-        } catch(e) { console.log('Sound not supported'); }
-        
-        // Browser notification (requires permission)
-        if (Notification.permission === 'granted') {
-            new Notification(title, { body: message, icon: 'https://cdn-icons-png.flaticon.com/512/190/190411.png' });
-        } else if (Notification.permission !== 'denied') {
-            Notification.requestPermission();
-        }
-        
-        // Update badge
-        updateBadges();
+        } catch(e) {}
+        if (Notification.permission === 'granted') new Notification(title, { body: message });
+        else if (Notification.permission !== 'denied') Notification.requestPermission();
     }
-    
-    function updateBadges() {
-        const badge = document.getElementById('notificationBadge');
-        const ordersBadge = document.getElementById('ordersBadge');
-        if (unreadOrders > 0) {
-            badge.style.display = 'inline-block';
-            badge.innerText = unreadOrders;
-            ordersBadge.style.display = 'inline-block';
-            ordersBadge.innerText = unreadOrders;
-        } else {
-            badge.style.display = 'none';
-            ordersBadge.style.display = 'none';
-        }
+
+    async function saveToGoogleSheets(data, type) {
+        try {
+            await fetch(GOOGLE_SHEET_API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            console.log(`${type} saved to Google Sheets`);
+            return true;
+        } catch (error) { console.error(error); return false; }
     }
 
     function addOrder(orderData) {
-        const newOrder = {
-            id: Date.now(),
-            trackingId: orderData.trackingId,
-            service: orderData.service,
-            quantity: orderData.quantity,
-            price: orderData.price,
-            customerName: orderData.customerName,
-            phone: orderData.phone,
-            transactionId: orderData.transactionId,
-            timestamp: orderData.timestamp,
-            read: false
-        };
-        orders.unshift(newOrder);
+        orders.unshift({ ...orderData, id: Date.now(), read: false });
         saveOrders();
-        unreadOrders++;
-        showNotification('🛒 New Order!', `${orderData.customerName} ordered ${orderData.quantity.toLocaleString()} ${orderData.service} for KSh ${orderData.price.toLocaleString()}`, 'order');
+        showNotification('🛒 NEW ORDER!', `${orderData.customerName} ordered ${orderData.quantity.toLocaleString()} ${orderData.service}`);
         if (isAdminLoggedIn) renderAdminOrders();
     }
 
     function addReviewToAdmin(name, rating, review) {
-        const now = new Date();
-        const dateStr = now.toLocaleDateString() + " " + now.toLocaleTimeString();
-        const newReview = {
-            id: Date.now(),
-            name: name,
-            rating: rating,
-            review: review,
-            date: dateStr,
-            read: false
-        };
+        const newReview = { id: Date.now(), name, rating, review, date: new Date().toLocaleString(), read: false };
         reviews.unshift(newReview);
         saveReviews();
-        unreadReviews++;
-        showNotification('⭐ New Review!', `${name} rated ${rating} stars: "${review.substring(0, 50)}..."`, 'review');
+        showNotification('⭐ NEW REVIEW!', `${name} rated ${rating} stars`);
         renderReviews();
         if (isAdminLoggedIn) renderAdminReviews();
     }
@@ -1071,14 +1012,11 @@
     function renderReviews() {
         const container = document.getElementById('reviewsItems');
         if (!container) return;
-        container.innerHTML = reviews.map(review => `
+        container.innerHTML = reviews.map(r => `
             <div class="review-card">
-                <div class="review-header">
-                    <span class="review-name">${escapeHtml(review.name)}</span>
-                    <span class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</span>
-                </div>
-                <div class="review-text">"${escapeHtml(review.review)}"</div>
-                <div class="review-details">${escapeHtml(review.date)}</div>
+                <div class="review-header"><span class="review-name">${escapeHtml(r.name)}</span><span class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span></div>
+                <div class="review-text">"${escapeHtml(r.review)}"</div>
+                <div class="review-details">${escapeHtml(r.date)}</div>
             </div>
         `).join('');
     }
@@ -1086,83 +1024,36 @@
     function renderAdminOrders() {
         const container = document.getElementById('ordersList');
         if (!container) return;
-        
-        if (orders.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color: var(--text-light); padding: 20px;">No orders yet.</p>';
-            return;
-        }
-        
-        container.innerHTML = orders.map(order => `
+        if (orders.length === 0) { container.innerHTML = '<p style="text-align:center; padding:20px;">No orders yet.</p>'; return; }
+        container.innerHTML = orders.map(o => `
             <div class="order-item">
-                <div class="order-header">
-                    <strong>${escapeHtml(order.trackingId)}</strong>
-                    <small>${escapeHtml(order.timestamp)}</small>
-                </div>
-                <div class="order-details">
-                    👤 ${escapeHtml(order.customerName)}<br>
-                    📱 ${escapeHtml(order.service)} • ${order.quantity.toLocaleString()}<br>
-                    💰 KSh ${order.price.toLocaleString()}<br>
-                    🔑 TXN: ${escapeHtml(order.transactionId)}
-                </div>
+                <div class="order-header"><strong>${escapeHtml(o.trackingId)}</strong><small>${escapeHtml(o.timestamp)}</small></div>
+                <div class="order-details">👤 ${escapeHtml(o.customerName)}<br>📱 ${escapeHtml(o.service)} • ${o.quantity.toLocaleString()}<br>💰 KSh ${o.price.toLocaleString()}<br>🔑 TXN: ${escapeHtml(o.transactionId)}</div>
             </div>
         `).join('');
-        
-        // Mark as read
-        if (unreadOrders > 0) {
-            unreadOrders = 0;
-            orders.forEach(o => o.read = true);
-            saveOrders();
-            updateBadges();
-        }
     }
 
     function renderAdminReviews() {
         const container = document.getElementById('adminReviewsList');
         if (!container) return;
-        
-        if (reviews.length === 0) {
-            container.innerHTML = '<p style="text-align:center; color: var(--text-light); padding: 20px;">No reviews yet.</p>';
-            return;
-        }
-        
-        container.innerHTML = reviews.map((review, index) => `
+        if (reviews.length === 0) { container.innerHTML = '<p style="text-align:center; padding:20px;">No reviews yet.</p>'; return; }
+        container.innerHTML = reviews.map((r, i) => `
             <div class="review-item">
-                <div class="admin-review-text">
-                    <strong>${escapeHtml(review.name)}</strong> (${'★'.repeat(review.rating)})
-                    <br><small>"${escapeHtml(review.review.substring(0, 60))}${review.review.length > 60 ? '...' : ''}"</small>
-                </div>
-                <button class="delete-btn" data-index="${index}">Delete</button>
+                <div class="admin-review-text"><strong>${escapeHtml(r.name)}</strong> (${'★'.repeat(r.rating)})<br><small>"${escapeHtml(r.review.substring(0, 60))}${r.review.length > 60 ? '...' : ''}"</small></div>
+                <button class="delete-btn" data-index="${i}">Delete</button>
             </div>
         `).join('');
-        
         document.querySelectorAll('.delete-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const index = parseInt(btn.dataset.index);
-                if (confirm('Delete this review permanently?')) {
-                    reviews.splice(index, 1);
-                    saveReviews();
-                    renderReviews();
-                    renderAdminReviews();
-                    alert('✅ Review deleted!');
-                }
+                const idx = parseInt(btn.dataset.index);
+                if (confirm('Delete this review?')) { reviews.splice(idx, 1); saveReviews(); renderReviews(); renderAdminReviews(); alert('✅ Deleted!'); }
             });
         });
-        
-        // Mark reviews as read
-        if (unreadReviews > 0) {
-            unreadReviews = 0;
-            reviews.forEach(r => r.read = true);
-            saveReviews();
-        }
     }
 
-    function escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
+    function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
 
-    // Pricing and other functions
+    // Pricing and other functions...
     function calculatePrice(service, qty) {
         if (service === "followers") {
             if (qty <= 100) return 40;
@@ -1194,104 +1085,27 @@
             return Math.round(13999 + ((qty - 50000) * 0.25));
         }
     }
+    function formatQuantity(qty) { return qty.toLocaleString(); }
+    function getDeliveryTime(qty) { if (qty < 50000) return "1-2 hours"; if (qty < 200000) return "2-4 hours"; if (qty < 500000) return "4-8 hours"; return "8-24 hours"; }
+    function updateDeliveryTime(qty) { const time = getDeliveryTime(qty); document.getElementById("deliveryEstimate").innerText = time; document.getElementById("summaryDelivery").innerHTML = `⏱️ ${time}`; const note = document.getElementById("deliveryTimeNote"); if (qty >= 50000) note.style.background = "linear-gradient(135deg, var(--warning), #e67e22)"; else note.style.background = "linear-gradient(135deg, var(--success), #219a52)"; }
 
-    function formatQuantity(qty) {
-        return qty.toLocaleString();
-    }
-
-    function getDeliveryTime(qty) {
-        if (qty < 50000) return "1-2 hours";
-        if (qty < 200000) return "2-4 hours";
-        if (qty < 500000) return "4-8 hours";
-        return "8-24 hours";
-    }
-
-    function updateDeliveryTime(qty) {
-        const time = getDeliveryTime(qty);
-        document.getElementById("deliveryEstimate").innerText = time;
-        document.getElementById("summaryDelivery").innerHTML = `⏱️ ${time}`;
-        const note = document.getElementById("deliveryTimeNote");
-        if (qty >= 50000) note.style.background = "linear-gradient(135deg, var(--warning), #e67e22)";
-        else note.style.background = "linear-gradient(135deg, var(--success), #219a52)";
-    }
-
-    // Auto-scroll functions
+    // Auto-scroll
     const pkgCarousel = document.getElementById('packageCarousel');
-    let pkgScrollInterval, pkgHovering = false;
-    let pkgScrollPosition = 0;
-    
-    function startPkgScroll() {
-        if (pkgScrollInterval) clearInterval(pkgScrollInterval);
-        pkgScrollInterval = setInterval(() => {
-            if (!pkgHovering && pkgCarousel) {
-                const maxScroll = pkgCarousel.scrollWidth - pkgCarousel.clientWidth;
-                pkgScrollPosition += 0.5;
-                if (pkgScrollPosition >= maxScroll) pkgScrollPosition = 0;
-                pkgCarousel.scrollTo({ left: pkgScrollPosition, behavior: 'smooth' });
-            }
-        }, 50);
-    }
-    
-    if (pkgCarousel) {
-        pkgCarousel.addEventListener('mouseenter', () => { pkgHovering = true; });
-        pkgCarousel.addEventListener('mouseleave', () => { pkgHovering = false; });
-        startPkgScroll();
-    }
-
+    let pkgScrollInterval, pkgHovering = false, pkgScrollPosition = 0;
+    function startPkgScroll() { if (pkgScrollInterval) clearInterval(pkgScrollInterval); pkgScrollInterval = setInterval(() => { if (!pkgHovering && pkgCarousel) { const maxScroll = pkgCarousel.scrollWidth - pkgCarousel.clientWidth; pkgScrollPosition += 0.5; if (pkgScrollPosition >= maxScroll) pkgScrollPosition = 0; pkgCarousel.scrollTo({ left: pkgScrollPosition, behavior: 'smooth' }); } }, 50); }
+    if (pkgCarousel) { pkgCarousel.addEventListener('mouseenter', () => { pkgHovering = true; }); pkgCarousel.addEventListener('mouseleave', () => { pkgHovering = false; }); startPkgScroll(); }
     const revCarousel = document.getElementById('reviewsCarousel');
-    let revScrollInterval, revHovering = false;
-    let revScrollPosition = 0;
-    
-    function startRevScroll() {
-        if (revScrollInterval) clearInterval(revScrollInterval);
-        revScrollInterval = setInterval(() => {
-            if (!revHovering && revCarousel) {
-                const maxScroll = revCarousel.scrollWidth - revCarousel.clientWidth;
-                revScrollPosition += 0.5;
-                if (revScrollPosition >= maxScroll) revScrollPosition = 0;
-                revCarousel.scrollTo({ left: revScrollPosition, behavior: 'smooth' });
-            }
-        }, 60);
-    }
-    
-    if (revCarousel) {
-        revCarousel.addEventListener('mouseenter', () => { revHovering = true; });
-        revCarousel.addEventListener('mouseleave', () => { revHovering = false; });
-        startRevScroll();
-    }
+    let revScrollInterval, revHovering = false, revScrollPosition = 0;
+    function startRevScroll() { if (revScrollInterval) clearInterval(revScrollInterval); revScrollInterval = setInterval(() => { if (!revHovering && revCarousel) { const maxScroll = revCarousel.scrollWidth - revCarousel.clientWidth; revScrollPosition += 0.5; if (revScrollPosition >= maxScroll) revScrollPosition = 0; revCarousel.scrollTo({ left: revScrollPosition, behavior: 'smooth' }); } }, 60); }
+    if (revCarousel) { revCarousel.addEventListener('mouseenter', () => { revHovering = true; }); revCarousel.addEventListener('mouseleave', () => { revHovering = false; }); startRevScroll(); }
 
-    document.querySelectorAll('.package-card').forEach(card => {
-        card.addEventListener('click', () => {
-            const qty = parseInt(card.dataset.qty);
-            const service = card.dataset.service;
-            if (!isNaN(qty) && service) {
-                if (service !== currentService) {
-                    currentService = service;
-                    serviceBtns.forEach(btn => {
-                        if (btn.dataset.service === service) btn.classList.add('active');
-                        else btn.classList.remove('active');
-                    });
-                }
-                currentQuantity = qty;
-                slider.value = qty;
-                quantityNumber.value = qty;
-                updateUI();
-                updateDeliveryTime(qty);
-                document.querySelector('.qty-row').scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        });
-    });
+    document.querySelectorAll('.package-card').forEach(card => { card.addEventListener('click', () => { const qty = parseInt(card.dataset.qty); const service = card.dataset.service; if (!isNaN(qty) && service) { if (service !== currentService) { currentService = service; serviceBtns.forEach(btn => { if (btn.dataset.service === service) btn.classList.add('active'); else btn.classList.remove('active'); }); } currentQuantity = qty; slider.value = qty; quantityNumber.value = qty; updateUI(); updateDeliveryTime(qty); document.querySelector('.qty-row').scrollIntoView({ behavior: 'smooth', block: 'center' }); } }); });
 
-    function generateTrackingId() {
-        return 'GFK' + Math.random().toString(36).substring(2, 10).toUpperCase();
-    }
-
+    function generateTrackingId() { return 'GFK' + Math.random().toString(36).substring(2, 10).toUpperCase(); }
     let currentTrackingId = generateTrackingId();
     document.getElementById("trackingId").innerText = currentTrackingId;
-
     let currentService = "followers";
     let currentQuantity = 3000;
-
     const slider = document.getElementById("quantitySlider");
     const quantityNumber = document.getElementById("quantityNumber");
     const priceDisplay = document.getElementById("priceDisplay");
@@ -1308,206 +1122,76 @@
     const customerPhone = document.getElementById("customerPhone");
     const mpesaConfirmation = document.getElementById("mpesaConfirmation");
 
-    function updateUI() {
-        let price = calculatePrice(currentService, currentQuantity);
-        let priceFormatted = `KSh ${price.toLocaleString()}`;
-        priceDisplay.innerText = priceFormatted;
-        if (paymentAmountStep) paymentAmountStep.innerText = priceFormatted;
-        
-        let serviceName = currentService === "followers" ? "Facebook Followers" : (currentService === "likes" ? "Facebook Likes" : "Facebook Comments");
-        summaryService.innerText = serviceName;
-        summaryQty.innerText = formatQuantity(currentQuantity);
-        summaryPrice.innerText = priceFormatted;
-        updateDeliveryTime(currentQuantity);
-        postLinkGroup.style.display = (currentService === "comments" || currentService === "likes") ? "block" : "none";
-    }
-
-    function syncFromSlider() {
-        currentQuantity = parseInt(slider.value);
-        quantityNumber.value = currentQuantity;
-        updateUI();
-    }
-
-    function syncFromNumber() {
-        let val = parseInt(quantityNumber.value);
-        if (isNaN(val)) val = 100;
-        val = Math.min(1000000, Math.max(100, val));
-        currentQuantity = val;
-        slider.value = val;
-        quantityNumber.value = val;
-        updateUI();
-    }
-
+    function updateUI() { let price = calculatePrice(currentService, currentQuantity); let priceFormatted = `KSh ${price.toLocaleString()}`; priceDisplay.innerText = priceFormatted; if (paymentAmountStep) paymentAmountStep.innerText = priceFormatted; let serviceName = currentService === "followers" ? "Facebook Followers" : (currentService === "likes" ? "Facebook Likes" : "Facebook Comments"); summaryService.innerText = serviceName; summaryQty.innerText = formatQuantity(currentQuantity); summaryPrice.innerText = priceFormatted; updateDeliveryTime(currentQuantity); postLinkGroup.style.display = (currentService === "comments" || currentService === "likes") ? "block" : "none"; }
+    function syncFromSlider() { currentQuantity = parseInt(slider.value); quantityNumber.value = currentQuantity; updateUI(); }
+    function syncFromNumber() { let val = parseInt(quantityNumber.value); if (isNaN(val)) val = 100; val = Math.min(1000000, Math.max(100, val)); currentQuantity = val; slider.value = val; quantityNumber.value = val; updateUI(); }
     slider.addEventListener("input", syncFromSlider);
     quantityNumber.addEventListener("input", syncFromNumber);
-
-    serviceBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
-            serviceBtns.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            currentService = btn.dataset.service;
-            currentQuantity = currentService === "followers" ? 3000 : 1000;
-            slider.value = currentQuantity;
-            quantityNumber.value = currentQuantity;
-            updateUI();
-        });
-    });
-
-    async function saveOrderToSheet(orderData) {
-        try {
-            await fetch(GOOGLE_SHEET_API_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(orderData) });
-            return true;
-        } catch (error) { return false; }
-    }
+    serviceBtns.forEach(btn => { btn.addEventListener("click", () => { serviceBtns.forEach(b => b.classList.remove("active")); btn.classList.add("active"); currentService = btn.dataset.service; currentQuantity = currentService === "followers" ? 3000 : 1000; slider.value = currentQuantity; quantityNumber.value = currentQuantity; updateUI(); }); });
 
     submitBtn.addEventListener("click", async () => {
-        const name = customerName.value.trim();
-        const profile = fbUsername.value.trim();
-        const phone = customerPhone.value.trim();
-        const link = postLink.value.trim();
-        const mpesaText = mpesaConfirmation.value.trim();
-
+        const name = customerName.value.trim(), profile = fbUsername.value.trim(), phone = customerPhone.value.trim(), link = postLink.value.trim(), mpesaText = mpesaConfirmation.value.trim();
         if (!name) { alert("❌ Enter your full name"); customerName.focus(); return; }
         if (!profile) { alert("❌ Enter Facebook profile URL"); fbUsername.focus(); return; }
         if (!phone) { alert("❌ Enter WhatsApp number"); customerPhone.focus(); return; }
         if ((currentService === "comments" || currentService === "likes") && !link) { alert("❌ Enter post/video link"); postLink.focus(); return; }
         if (!mpesaText) { alert("❌ Paste M-Pesa confirmation message"); mpesaConfirmation.focus(); return; }
-
         let serviceName = currentService === "followers" ? "Facebook Followers" : (currentService === "likes" ? "Facebook Likes" : "Facebook Comments");
         let price = calculatePrice(currentService, currentQuantity);
         let deliveryTime = getDeliveryTime(currentQuantity);
         let transactionId = mpesaText.match(/[A-Z0-9]{10,}/i)?.[0] || "Not extracted";
-
-        const orderData = {
-            trackingId: currentTrackingId,
-            service: serviceName,
-            quantity: currentQuantity,
-            price: price,
-            deliveryTime: deliveryTime,
-            customerName: name,
-            profile: profile,
-            postLink: link || "Not provided",
-            phone: phone,
-            mpesaConfirmation: mpesaText.substring(0, 500),
-            transactionId: transactionId,
-            status: "Pending Verification",
-            timestamp: new Date().toLocaleString("en-KE")
-        };
-
+        const orderData = { trackingId: currentTrackingId, service: serviceName, quantity: currentQuantity, price: price, deliveryTime: deliveryTime, customerName: name, profile: profile, postLink: link || "Not provided", phone: phone, mpesaConfirmation: mpesaText.substring(0, 500), transactionId: transactionId, status: "Pending Verification", timestamp: new Date().toLocaleString("en-KE") };
         submitBtn.innerHTML = '<span class="loading"></span>Submitting...';
         submitBtn.disabled = true;
-        
-        let saved = await saveOrderToSheet(orderData);
-        
+        let saved = await saveToGoogleSheets(orderData, 'order');
         if (saved) {
-            // Add to local orders for notification
             addOrder(orderData);
-            
-            alert(`✅ ORDER SUBMITTED!\n📋 ID: ${currentTrackingId}\n💰 KSh ${price.toLocaleString()}\n⏱️ Delivery: ${deliveryTime}\n\nWe'll deliver within ${deliveryTime} after payment verification.`);
-            
-            currentTrackingId = generateTrackingId();
-            document.getElementById("trackingId").innerText = currentTrackingId;
+            alert(`✅ ORDER SUBMITTED!\n📋 ID: ${currentTrackingId}\n💰 KSh ${price.toLocaleString()}\n⏱️ Delivery: ${deliveryTime}`);
+            currentTrackingId = generateTrackingId(); document.getElementById("trackingId").innerText = currentTrackingId;
             customerName.value = ""; fbUsername.value = ""; postLink.value = ""; customerPhone.value = ""; mpesaConfirmation.value = "";
             currentService = "followers"; currentQuantity = 3000;
             slider.value = 3000; quantityNumber.value = 3000;
             serviceBtns.forEach(b => b.classList.remove("active"));
             document.querySelector('[data-service="followers"]').classList.add("active");
             updateUI();
-        } else { 
-            alert("❌ Error submitting. Try again or WhatsApp 0750600715"); 
-        }
-        
+        } else { alert("❌ Error submitting. Try again or WhatsApp 0750600715"); }
         submitBtn.innerHTML = "✅ PLACE ORDER & SUBMIT PAYMENT";
         submitBtn.disabled = false;
     });
 
-    // Star Rating
     let selectedRating = 0;
     const stars = document.querySelectorAll('.star-rating');
-    stars.forEach(star => {
-        star.addEventListener('click', () => {
-            selectedRating = parseInt(star.dataset.rating);
-            stars.forEach(s => parseInt(s.dataset.rating) <= selectedRating ? s.classList.add('active') : s.classList.remove('active'));
-        });
-    });
-
-    document.getElementById("submitReview").addEventListener("click", () => {
-        const name = document.getElementById("reviewerName").value.trim();
-        const review = document.getElementById("reviewText").value.trim();
-        if (!name) { alert("Please enter your name"); return; }
-        if (!review) { alert("Please write your review"); return; }
-        if (selectedRating === 0) { alert("Please select a star rating (1-5)"); return; }
-        
+    stars.forEach(star => { star.addEventListener('click', () => { selectedRating = parseInt(star.dataset.rating); stars.forEach(s => parseInt(s.dataset.rating) <= selectedRating ? s.classList.add('active') : s.classList.remove('active')); }); });
+    document.getElementById("submitReview").addEventListener("click", async () => {
+        const name = document.getElementById("reviewerName").value.trim(), review = document.getElementById("reviewText").value.trim();
+        if (!name) { alert("Enter your name"); return; }
+        if (!review) { alert("Write your review"); return; }
+        if (selectedRating === 0) { alert("Select a star rating"); return; }
+        const reviewData = { type: "review", name: name, rating: selectedRating, review: review, timestamp: new Date().toLocaleString("en-KE") };
+        await saveToGoogleSheets(reviewData, 'review');
         addReviewToAdmin(name, selectedRating, review);
-        alert("⭐ Thank you! Your review has been added.");
-        
-        document.getElementById("reviewerName").value = "";
-        document.getElementById("reviewText").value = "";
-        selectedRating = 0;
+        alert("⭐ Thank you for your review!");
+        document.getElementById("reviewerName").value = ""; document.getElementById("reviewText").value = ""; selectedRating = 0;
         stars.forEach(s => s.classList.remove('active'));
     });
 
-    // Admin Panel Password Logic
-    const modal = document.getElementById('passwordModal');
-    const adminToggleBtn = document.getElementById('adminToggleBtn');
-    const submitPasswordBtn = document.getElementById('submitPassword');
-    const closeModalBtn = document.getElementById('closePasswordModal');
+    // Admin Password Logic
+    const modal = document.getElementById('passwordModal'), adminToggleBtn = document.getElementById('adminToggleBtn');
+    const submitPasswordBtn = document.getElementById('submitPassword'), closeModalBtn = document.getElementById('closePasswordModal');
     const adminPanel = document.getElementById('adminPanel');
-
-    function showPasswordModal() {
-        modal.classList.add('show');
-        document.getElementById('adminPassword').value = '';
-        document.getElementById('adminPassword').focus();
-    }
-
-    function hidePasswordModal() {
-        modal.classList.remove('show');
-    }
-
-    function checkPassword() {
-        const enteredPassword = document.getElementById('adminPassword').value;
-        if (enteredPassword === ADMIN_PASSWORD) {
-            isAdminLoggedIn = true;
-            hidePasswordModal();
-            adminPanel.classList.add('show');
-            renderAdminOrders();
-            renderAdminReviews();
-            unreadOrders = 0;
-            unreadReviews = 0;
-            updateBadges();
-            alert('✅ Admin access granted! You can now see orders and manage reviews.');
-        } else {
-            alert('❌ Incorrect password! Access denied.');
-            document.getElementById('adminPassword').value = '';
-        }
-    }
-
+    function showPasswordModal() { modal.classList.add('show'); document.getElementById('adminPassword').value = ''; document.getElementById('adminPassword').focus(); }
+    function hidePasswordModal() { modal.classList.remove('show'); }
+    function checkPassword() { if (document.getElementById('adminPassword').value === ADMIN_PASSWORD) { isAdminLoggedIn = true; hidePasswordModal(); adminPanel.classList.add('show'); renderAdminOrders(); renderAdminReviews(); alert('✅ Admin access granted!'); } else { alert('❌ Incorrect password!'); } }
     adminToggleBtn.addEventListener('click', showPasswordModal);
     submitPasswordBtn.addEventListener('click', checkPassword);
     closeModalBtn.addEventListener('click', hidePasswordModal);
-    document.getElementById('adminPassword').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') checkPassword();
-    });
+    document.getElementById('adminPassword').addEventListener('keypress', (e) => { if (e.key === 'Enter') checkPassword(); });
     modal.addEventListener('click', (e) => { if (e.target === modal) hidePasswordModal(); });
+    document.querySelectorAll('.admin-tab').forEach(tab => { tab.addEventListener('click', () => { document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active')); tab.classList.add('active'); const tabName = tab.dataset.tab; document.getElementById('adminOrdersSection').classList.toggle('active', tabName === 'orders'); document.getElementById('adminReviewsSection').classList.toggle('active', tabName === 'reviews'); }); });
 
-    // Tab switching
-    document.querySelectorAll('.admin-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            const tabName = tab.dataset.tab;
-            document.getElementById('adminOrdersSection').classList.toggle('active', tabName === 'orders');
-            document.getElementById('adminReviewsSection').classList.toggle('active', tabName === 'reviews');
-        });
-    });
-
-    // Dark mode
     const themeToggle = document.getElementById("themeToggle");
     if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark");
-    themeToggle.addEventListener("click", () => {
-        document.body.classList.toggle("dark");
-        localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
-    });
+    themeToggle.addEventListener("click", () => { document.body.classList.toggle("dark"); localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light"); });
 
     loadData();
     updateUI();
