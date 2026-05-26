@@ -22,8 +22,10 @@
             --primary-dark: #023e8a;
             --success: #2ecc71;
             --warning: #f39c12;
+            --danger: #e74c3c;
             --whatsapp: #25D366;
             --review-star: #ffc107;
+            --notification: #3498db;
         }
 
         body.dark {
@@ -70,6 +72,31 @@
             padding: 6px 14px;
             cursor: pointer;
             font-size: 1rem;
+        }
+
+        .container-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .container-icon {
+            font-size: 1.2rem;
+        }
+
+        .container-title {
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .container-desc {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            margin-left: auto;
         }
 
         .card {
@@ -219,9 +246,9 @@
         }
 
         .carousel-title {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: var(--text-light);
             text-align: center;
         }
@@ -255,7 +282,7 @@
             color: white;
             border-radius: 16px;
             padding: 12px 20px;
-            min-width: 140px;
+            min-width: 150px;
             text-align: center;
             cursor: pointer;
             transition: transform 0.2s ease;
@@ -265,7 +292,23 @@
             transform: scale(1.02);
         }
 
-        /* Reviews Carousel */
+        .package-qty {
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .package-service {
+            font-size: 0.7rem;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+
+        .package-price {
+            font-size: 0.85rem;
+            margin-top: 6px;
+            font-weight: bold;
+        }
+
         .reviews-carousel-container {
             margin: 16px 0;
         }
@@ -307,6 +350,7 @@
             max-width: 280px;
             border: 1px solid var(--border);
             scroll-snap-align: start;
+            position: relative;
         }
 
         .review-header {
@@ -338,6 +382,129 @@
         .review-details {
             font-size: 0.65rem;
             color: var(--text-light);
+        }
+
+        /* Admin Styles */
+        .admin-toggle {
+            background: var(--warning);
+            color: #000;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 16px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-bottom: 12px;
+            width: 100%;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .notification-badge {
+            background: var(--danger);
+            color: white;
+            border-radius: 20px;
+            padding: 2px 8px;
+            font-size: 0.7rem;
+        }
+
+        .admin-panel {
+            display: none;
+            background: var(--bg);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 2px solid var(--warning);
+        }
+
+        .admin-panel.show {
+            display: block;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+        }
+
+        .admin-tab {
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .admin-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .order-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.7rem;
+        }
+
+        .order-details {
+            font-size: 0.75rem;
+        }
+
+        .review-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .delete-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 4px 12px;
+            cursor: pointer;
+            font-size: 0.7rem;
+        }
+
+        .notification-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--notification);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            z-index: 3000;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            max-width: 300px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
 
         .rating-input {
@@ -505,12 +672,53 @@
             margin: 12px 0;
         }
 
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .password-modal.show {
+            display: flex;
+        }
+
+        .password-box {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 24px;
+            width: 280px;
+            text-align: center;
+        }
+
+        .password-box input {
+            margin: 16px 0;
+            text-align: center;
+        }
+
+        .password-box button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+
         @media (max-width: 480px) {
             body { padding: 12px; }
             .card { padding: 16px; }
             .till-number { font-size: 1.6rem; }
-            .package-card { min-width: 120px; padding: 10px 16px; }
+            .package-card { min-width: 130px; padding: 10px 14px; }
             .review-card { min-width: 240px; }
+            .container-desc { display: none; }
         }
     </style>
 </head>
@@ -529,11 +737,17 @@
     </div>
 
     <div class="delivery-time-note" id="deliveryTimeNote">
-        ⏱️ <span id="deliveryEstimate">1-2 hours</span> delivery
+        ⏱️ <span id="deliveryEstimate">1-2 hours</span> delivery for this quantity
     </div>
 
     <!-- ORDER CONTAINER -->
     <div class="card">
+        <div class="container-label">
+            <span class="container-icon">📝</span>
+            <span class="container-title">ORDER DETAILS</span>
+            <span class="container-desc">Fill in your info & select package</span>
+        </div>
+        
         <div class="service-buttons" id="serviceButtons">
             <div class="service-btn active" data-service="followers">👥 Followers</div>
             <div class="service-btn" data-service="likes">❤️ Likes</div>
@@ -542,9 +756,9 @@
 
         <div class="qty-row">
             <label>Quantity</label>
-            <input type="number" id="quantityNumber" min="100" max="100000" step="100" value="3000">
+            <input type="number" id="quantityNumber" min="100" max="1000000" step="100" value="3000">
         </div>
-        <input type="range" id="quantitySlider" min="100" max="100000" step="100" value="3000">
+        <input type="range" id="quantitySlider" min="100" max="1000000" step="100" value="3000">
         <div class="price" id="priceDisplay">KSh 1,199</div>
 
         <div class="form-group">
@@ -557,7 +771,7 @@
         </div>
         <div class="form-group" id="postLinkGroup" style="display: none;">
             <label>Post/Video Link <span class="required">*</span></label>
-            <input type="text" id="postLink" placeholder="Facebook post/video URL">
+            <input type="text" id="postLink" placeholder="Facebook post/video URL (required for likes/comments)">
         </div>
         <div class="form-group">
             <label>WhatsApp Number <span class="required">*</span></label>
@@ -565,88 +779,143 @@
         </div>
     </div>
 
+    <!-- M-PESA CONTAINER -->
     <div class="section-divider">
         <div class="divider-line"></div>
-        <div class="divider-text">💳 M-PESA PAYMENT</div>
+        <div class="divider-text">💳 PAYMENT</div>
         <div class="divider-line"></div>
     </div>
 
     <div class="mpesa-container">
-        <div class="mpesa-title">Pay via Till Number</div>
+        <div class="container-label" style="border-bottom-color: rgba(255,255,255,0.3); margin-bottom: 8px;">
+            <span class="container-icon">🏦</span>
+            <span class="container-title" style="color: white;">M-PESA TILL NUMBER</span>
+            <span class="container-desc" style="color: rgba(255,255,255,0.7);">Only payment method</span>
+        </div>
         <div class="till-number">8941840</div>
         <div class="payment-steps">
-            <div>📝 1. M-Pesa > Lipa Na M-Pesa > Buy Goods</div>
-            <div>🔢 2. Enter Till: <strong>8941840</strong></div>
-            <div>💰 3. Amount: <strong id="paymentAmountStep">KSh 1,199</strong></div>
+            <div>📝 1. Go to M-Pesa > Lipa Na M-Pesa > Buy Goods</div>
+            <div>🔢 2. Enter Till Number: <strong>8941840</strong></div>
+            <div>💰 3. Enter amount: <strong id="paymentAmountStep">KSh 1,199</strong></div>
             <div>🔐 4. Enter PIN & confirm</div>
         </div>
         <div class="mpesa-field">
-            <label>📋 Paste M-Pesa Confirmation</label>
-            <textarea id="mpesaConfirmation" rows="3" placeholder="Paste the M-Pesa message here..."></textarea>
+            <label>📋 Paste M-Pesa Confirmation Here</label>
+            <textarea id="mpesaConfirmation" rows="3" placeholder="After payment, copy the M-Pesa message from your phone and paste it here..."></textarea>
         </div>
     </div>
 
     <!-- PACKAGE CAROUSEL -->
     <div class="package-carousel-container">
-        <div class="carousel-title">📦 POPULAR PACKAGES → click to auto-fill</div>
+        <div class="container-label" style="margin-bottom: 8px;">
+            <span class="container-icon">🎁</span>
+            <span class="container-title">QUICK SELECTION</span>
+            <span class="container-desc">Click any package → auto-fills above</span>
+        </div>
         <div class="carousel-wrapper">
             <div class="carousel" id="packageCarousel">
                 <div class="carousel-items">
-                    <div class="package-card" data-qty="500" data-price="299"><div class="package-qty">500</div><div class="package-price">KSh 299</div></div>
-                    <div class="package-card" data-qty="1000" data-price="499"><div class="package-qty">1,000</div><div class="package-price">KSh 499</div></div>
-                    <div class="package-card" data-qty="3000" data-price="1199"><div class="package-qty">3,000</div><div class="package-price">KSh 1,199</div></div>
-                    <div class="package-card" data-qty="5000" data-price="1899"><div class="package-qty">5,000</div><div class="package-price">KSh 1,899</div></div>
-                    <div class="package-card" data-qty="10000" data-price="3499"><div class="package-qty">10,000</div><div class="package-price">KSh 3,499</div></div>
-                    <div class="package-card" data-qty="25000" data-price="7999"><div class="package-qty">25,000</div><div class="package-price">KSh 7,999</div></div>
-                    <div class="package-card" data-qty="50000" data-price="14999"><div class="package-qty">50,000</div><div class="package-price">KSh 14,999</div></div>
-                    <div class="package-card" data-qty="100000" data-price="27999"><div class="package-qty">100,000</div><div class="package-price">KSh 27,999</div></div>
+                    <div class="package-card" data-qty="100" data-service="followers"><div class="package-qty">100</div><div class="package-service">Followers</div><div class="package-price">KSh 40</div></div>
+                    <div class="package-card" data-qty="500" data-service="followers"><div class="package-qty">500</div><div class="package-service">Followers</div><div class="package-price">KSh 199</div></div>
+                    <div class="package-card" data-qty="1000" data-service="followers"><div class="package-qty">1,000</div><div class="package-service">Followers</div><div class="package-price">KSh 399</div></div>
+                    <div class="package-card" data-qty="3000" data-service="followers"><div class="package-qty">3,000</div><div class="package-service">Followers</div><div class="package-price">KSh 1,199</div></div>
+                    <div class="package-card" data-qty="5000" data-service="followers"><div class="package-qty">5,000</div><div class="package-service">Followers</div><div class="package-price">KSh 1,899</div></div>
+                    <div class="package-card" data-qty="10000" data-service="followers"><div class="package-qty">10,000</div><div class="package-service">Followers</div><div class="package-price">KSh 3,499</div></div>
+                    <div class="package-card" data-qty="25000" data-service="followers"><div class="package-qty">25,000</div><div class="package-service">Followers</div><div class="package-price">KSh 7,999</div></div>
+                    <div class="package-card" data-qty="50000" data-service="followers"><div class="package-qty">50,000</div><div class="package-service">Followers</div><div class="package-price">KSh 14,999</div></div>
+                    <div class="package-card" data-qty="100000" data-service="followers"><div class="package-qty">100,000</div><div class="package-service">Followers</div><div class="package-price">KSh 27,999</div></div>
+                    <div class="package-card" data-qty="250000" data-service="followers"><div class="package-qty">250,000</div><div class="package-service">Followers</div><div class="package-price">KSh 64,999</div></div>
+                    <div class="package-card" data-qty="500000" data-service="followers"><div class="package-qty">500,000</div><div class="package-service">Followers</div><div class="package-price">KSh 119,999</div></div>
+                    <div class="package-card" data-qty="1000000" data-service="followers"><div class="package-qty">1,000,000</div><div class="package-service">Followers</div><div class="package-price">KSh 219,999</div></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- ORDER SUMMARY -->
     <div class="summary" id="orderSummary">
-        <div class="info-row"><strong>Order Summary</strong><span class="tracking-id" id="trackingId">Loading...</span></div>
+        <div class="container-label" style="margin-bottom: 8px;">
+            <span class="container-icon">📋</span>
+            <span class="container-title">ORDER SUMMARY</span>
+            <span class="container-desc">Review before submitting</span>
+        </div>
+        <div class="info-row"><strong>Tracking ID:</strong><span class="tracking-id" id="trackingId">Loading...</span></div>
         <hr>
         <div class="info-row"><span>Service:</span><strong><span id="summaryService">Facebook Followers</span></strong></div>
         <div class="info-row"><span>Quantity:</span><strong><span id="summaryQty">3,000</span></strong></div>
-        <div class="info-row"><span>Total:</span><strong style="color: var(--primary);" id="summaryPrice">KSh 1,199</strong></div>
-        <div class="info-row"><span>Delivery:</span><span id="summaryDelivery">⏱️ 1-2 hours</span></div>
+        <div class="info-row"><span>Total Amount:</span><strong style="color: var(--primary);" id="summaryPrice">KSh 1,199</strong></div>
+        <div class="info-row"><span>Delivery Time:</span><span id="summaryDelivery">⏱️ 1-2 hours</span></div>
     </div>
 
-    <button class="btn-submit" id="submitOrder">✅ Place Order & Submit Payment</button>
+    <button class="btn-submit" id="submitOrder">✅ PLACE ORDER & SUBMIT PAYMENT</button>
 
-    <!-- REVIEWS CAROUSEL SECTION -->
+    <!-- REVIEWS SECTION -->
     <div class="section-divider">
         <div class="divider-line"></div>
-        <div class="divider-text">⭐ SUCCESS STORIES</div>
+        <div class="divider-text">⭐ CUSTOMER REVIEWS</div>
         <div class="divider-line"></div>
+    </div>
+
+    <!-- Admin Toggle Button -->
+    <button class="admin-toggle" id="adminToggleBtn">
+        🔐 ADMIN PANEL <span id="notificationBadge" class="notification-badge" style="display: none;">0</span>
+    </button>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-tabs">
+            <div class="admin-tab active" data-tab="orders">📦 New Orders <span id="ordersBadge" class="notification-badge" style="display: none;">0</span></div>
+            <div class="admin-tab" data-tab="reviews">⭐ Manage Reviews</div>
+        </div>
+        
+        <div id="adminOrdersSection" class="admin-section active">
+            <div id="ordersList"></div>
+        </div>
+        
+        <div id="adminReviewsSection" class="admin-section">
+            <div id="adminReviewsList"></div>
+        </div>
+    </div>
+
+    <!-- Password Modal -->
+    <div class="password-modal" id="passwordModal">
+        <div class="password-box">
+            <span style="font-size: 2rem;">🔐</span>
+            <h3 style="margin: 12px 0;">Admin Access</h3>
+            <input type="password" id="adminPassword" placeholder="Enter password" autocomplete="off">
+            <button id="submitPassword">Unlock</button>
+            <button id="closePasswordModal" style="background: var(--danger); margin-top: 8px;">Cancel</button>
+        </div>
     </div>
 
     <div class="reviews-carousel-container">
-        <div class="carousel-title">← swipe to see reviews →</div>
+        <div class="container-label" style="margin-bottom: 8px;">
+            <span class="container-icon">💬</span>
+            <span class="container-title">SUCCESS STORIES</span>
+            <span class="container-desc">Real customers, real results</span>
+        </div>
         <div class="reviews-carousel" id="reviewsCarousel">
-            <div class="reviews-items" id="reviewsItems">
-                <!-- Reviews will be dynamically loaded here -->
-            </div>
+            <div class="reviews-items" id="reviewsItems"></div>
         </div>
     </div>
 
-    <!-- REVIEW FORM - Below carousel -->
+    <!-- REVIEW FORM -->
     <div class="card">
-        <div class="form-group">
-            <label>✨ Leave Your Review</label>
-            <div class="rating-input" id="ratingStars">
-                <span class="star-rating" data-rating="1">★</span>
-                <span class="star-rating" data-rating="2">★</span>
-                <span class="star-rating" data-rating="3">★</span>
-                <span class="star-rating" data-rating="4">★</span>
-                <span class="star-rating" data-rating="5">★</span>
-            </div>
-            <input type="text" id="reviewerName" placeholder="Your name" style="margin-bottom: 8px;">
-            <textarea id="reviewText" rows="2" placeholder="Share your experience..."></textarea>
-            <button class="btn-review" id="submitReview">⭐ Submit Review</button>
+        <div class="container-label" style="margin-bottom: 12px;">
+            <span class="container-icon">✍️</span>
+            <span class="container-title">LEAVE A REVIEW</span>
+            <span class="container-desc">Share your experience</span>
         </div>
+        <div class="rating-input" id="ratingStars">
+            <span class="star-rating" data-rating="1">★</span>
+            <span class="star-rating" data-rating="2">★</span>
+            <span class="star-rating" data-rating="3">★</span>
+            <span class="star-rating" data-rating="4">★</span>
+            <span class="star-rating" data-rating="5">★</span>
+        </div>
+        <input type="text" id="reviewerName" placeholder="Your name" style="margin-bottom: 8px;">
+        <textarea id="reviewText" rows="2" placeholder="Tell others about your experience..."></textarea>
+        <button class="btn-review" id="submitReview">⭐ SUBMIT REVIEW</button>
     </div>
 
     <footer style="text-align: center; font-size: 0.65rem; color: var(--text-light); margin: 20px 0;">
@@ -654,91 +923,154 @@
     </footer>
 </div>
 
-<a href="https://wa.me/254750600715?text=Hi" class="whatsapp-float" target="_blank">💬 WhatsApp</a>
+<a href="https://wa.me/254750600715?text=Hi%20Get%20Fans%20Kenya" class="whatsapp-float" target="_blank">💬 WhatsApp</a>
 
 <script>
+    // ========== CONFIGURATION ==========
+    const ADMIN_PASSWORD = "GetFans2024";
     const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyVOGLW4yygdlEz-6pj9RP0IMfe4UYfG407buFVreeMMG3VGW3TBvLdPvmHI6UCZqT1Qg/exec";
+    // ====================================
 
-    // Store reviews in memory (will be loaded from localStorage initially)
+    // Store orders and reviews
+    let orders = [];
     let reviews = [];
+    let isAdminLoggedIn = false;
+    let unreadOrders = 0;
+    let unreadReviews = 0;
 
-    // Delivery time
-    function getDeliveryTime(qty) {
-        return qty < 50000 ? "1-2 hours" : "2-3 hours";
+    // Load data from localStorage
+    function loadData() {
+        const savedOrders = localStorage.getItem('getfanskenya_orders');
+        if (savedOrders) {
+            try {
+                orders = JSON.parse(savedOrders);
+            } catch(e) { console.error(e); }
+        }
+        
+        const savedReviews = localStorage.getItem('getfanskenya_reviews');
+        if (savedReviews) {
+            try {
+                reviews = JSON.parse(savedReviews);
+            } catch(e) { console.error(e); }
+        }
+        
+        if (reviews.length === 0) {
+            reviews = [
+                { id: Date.now() + 1, name: "🔥 John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 2 hours! My page is blowing up now! 🔥", date: "2 days ago" },
+                { id: Date.now() + 2, name: "Sarah W.", rating: 5, review: "Got 10,000 followers for my business page. Delivery was super fast!", date: "5 days ago" },
+                { id: Date.now() + 3, name: "David K.", rating: 5, review: "Very reliable service. The 3,000 followers came in less than an hour!", date: "1 week ago" }
+            ];
+            saveReviews();
+        }
+        
+        renderReviews();
+        if (isAdminLoggedIn) {
+            renderAdminOrders();
+            renderAdminReviews();
+        }
     }
 
-    function updateDeliveryTime(qty) {
-        const time = getDeliveryTime(qty);
-        document.getElementById("deliveryEstimate").innerText = time;
-        document.getElementById("summaryDelivery").innerHTML = `⏱️ ${time}`;
-        const note = document.getElementById("deliveryTimeNote");
-        note.style.background = qty >= 50000 ? "linear-gradient(135deg, var(--warning), #e67e22)" : "linear-gradient(135deg, var(--success), #219a52)";
+    function saveOrders() {
+        localStorage.setItem('getfanskenya_orders', JSON.stringify(orders));
     }
 
-    // Auto-scroll for package carousel
-    const pkgCarousel = document.getElementById('packageCarousel');
-    let pkgScrollInterval;
-    let pkgHovering = false;
-
-    function startPkgScroll() {
-        if (pkgScrollInterval) clearInterval(pkgScrollInterval);
-        pkgScrollInterval = setInterval(() => {
-            if (!pkgHovering && pkgCarousel) {
-                if (pkgCarousel.scrollLeft + pkgCarousel.clientWidth >= pkgCarousel.scrollWidth - 5) {
-                    pkgCarousel.scrollLeft = 0;
-                } else {
-                    pkgCarousel.scrollLeft += 1;
-                }
-            }
-        }, 30);
+    function saveReviews() {
+        localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
     }
 
-    if (pkgCarousel) {
-        pkgCarousel.addEventListener('mouseenter', () => { pkgHovering = true; });
-        pkgCarousel.addEventListener('mouseleave', () => { pkgHovering = false; });
-        startPkgScroll();
+    // Show notification popup
+    function showNotification(title, message, type = 'order') {
+        // Toast notification on screen
+        const toast = document.createElement('div');
+        toast.className = 'notification-toast';
+        toast.innerHTML = `
+            <strong>${type === 'order' ? '🛒 NEW ORDER!' : '⭐ NEW REVIEW!'}</strong><br>
+            <small>${message}</small>
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 5000);
+        
+        // Play beep sound (simple beep using Web Audio)
+        try {
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            oscillator.frequency.value = 800;
+            gainNode.gain.value = 0.3;
+            oscillator.start();
+            gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.5);
+            oscillator.stop(audioCtx.currentTime + 0.5);
+        } catch(e) { console.log('Sound not supported'); }
+        
+        // Browser notification (requires permission)
+        if (Notification.permission === 'granted') {
+            new Notification(title, { body: message, icon: 'https://cdn-icons-png.flaticon.com/512/190/190411.png' });
+        } else if (Notification.permission !== 'denied') {
+            Notification.requestPermission();
+        }
+        
+        // Update badge
+        updateBadges();
+    }
+    
+    function updateBadges() {
+        const badge = document.getElementById('notificationBadge');
+        const ordersBadge = document.getElementById('ordersBadge');
+        if (unreadOrders > 0) {
+            badge.style.display = 'inline-block';
+            badge.innerText = unreadOrders;
+            ordersBadge.style.display = 'inline-block';
+            ordersBadge.innerText = unreadOrders;
+        } else {
+            badge.style.display = 'none';
+            ordersBadge.style.display = 'none';
+        }
     }
 
-    // Auto-scroll for reviews carousel
-    const reviewsCarousel = document.getElementById('reviewsCarousel');
-    let revScrollInterval;
-    let revHovering = false;
-
-    function startReviewsScroll() {
-        if (revScrollInterval) clearInterval(revScrollInterval);
-        revScrollInterval = setInterval(() => {
-            if (!revHovering && reviewsCarousel) {
-                if (reviewsCarousel.scrollLeft + reviewsCarousel.clientWidth >= reviewsCarousel.scrollWidth - 10) {
-                    reviewsCarousel.scrollLeft = 0;
-                } else {
-                    reviewsCarousel.scrollLeft += 0.8;
-                }
-            }
-        }, 40);
+    function addOrder(orderData) {
+        const newOrder = {
+            id: Date.now(),
+            trackingId: orderData.trackingId,
+            service: orderData.service,
+            quantity: orderData.quantity,
+            price: orderData.price,
+            customerName: orderData.customerName,
+            phone: orderData.phone,
+            transactionId: orderData.transactionId,
+            timestamp: orderData.timestamp,
+            read: false
+        };
+        orders.unshift(newOrder);
+        saveOrders();
+        unreadOrders++;
+        showNotification('🛒 New Order!', `${orderData.customerName} ordered ${orderData.quantity.toLocaleString()} ${orderData.service} for KSh ${orderData.price.toLocaleString()}`, 'order');
+        if (isAdminLoggedIn) renderAdminOrders();
     }
 
-    if (reviewsCarousel) {
-        reviewsCarousel.addEventListener('mouseenter', () => { revHovering = true; });
-        reviewsCarousel.addEventListener('mouseleave', () => { revHovering = false; });
-        startReviewsScroll();
+    function addReviewToAdmin(name, rating, review) {
+        const now = new Date();
+        const dateStr = now.toLocaleDateString() + " " + now.toLocaleTimeString();
+        const newReview = {
+            id: Date.now(),
+            name: name,
+            rating: rating,
+            review: review,
+            date: dateStr,
+            read: false
+        };
+        reviews.unshift(newReview);
+        saveReviews();
+        unreadReviews++;
+        showNotification('⭐ New Review!', `${name} rated ${rating} stars: "${review.substring(0, 50)}..."`, 'review');
+        renderReviews();
+        if (isAdminLoggedIn) renderAdminReviews();
     }
 
-    // Function to render reviews in carousel
     function renderReviews() {
         const container = document.getElementById('reviewsItems');
         if (!container) return;
-        
-        if (reviews.length === 0) {
-            // Load default/sample reviews if no reviews exist
-            reviews = [
-                { name: "🔥 John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 2 hours! My page is blowing up now! 🔥", details: "25,000 followers • KSh 7,999 • 2 days ago" },
-                { name: "Sarah W.", rating: 5, review: "Got 10k followers for my business page. Delivery was super fast!", details: "10,000 followers • KSh 3,499 • 5 days ago" },
-                { name: "David K.", rating: 5, review: "Very reliable service. The 3,000 followers came in less than an hour!", details: "3,000 followers • KSh 1,199 • 1 week ago" },
-                { name: "👑 Grace N.", rating: 5, review: "Delivered 50k followers as promised. My page is now verified!", details: "50,000 followers • KSh 14,999 • 2 weeks ago" }
-            ];
-            saveReviewsToLocal();
-        }
-        
         container.innerHTML = reviews.map(review => `
             <div class="review-card">
                 <div class="review-header">
@@ -746,69 +1078,200 @@
                     <span class="review-stars">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</span>
                 </div>
                 <div class="review-text">"${escapeHtml(review.review)}"</div>
-                <div class="review-details">${escapeHtml(review.details)}</div>
+                <div class="review-details">${escapeHtml(review.date)}</div>
             </div>
         `).join('');
     }
 
-    // Helper to escape HTML
+    function renderAdminOrders() {
+        const container = document.getElementById('ordersList');
+        if (!container) return;
+        
+        if (orders.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color: var(--text-light); padding: 20px;">No orders yet.</p>';
+            return;
+        }
+        
+        container.innerHTML = orders.map(order => `
+            <div class="order-item">
+                <div class="order-header">
+                    <strong>${escapeHtml(order.trackingId)}</strong>
+                    <small>${escapeHtml(order.timestamp)}</small>
+                </div>
+                <div class="order-details">
+                    👤 ${escapeHtml(order.customerName)}<br>
+                    📱 ${escapeHtml(order.service)} • ${order.quantity.toLocaleString()}<br>
+                    💰 KSh ${order.price.toLocaleString()}<br>
+                    🔑 TXN: ${escapeHtml(order.transactionId)}
+                </div>
+            </div>
+        `).join('');
+        
+        // Mark as read
+        if (unreadOrders > 0) {
+            unreadOrders = 0;
+            orders.forEach(o => o.read = true);
+            saveOrders();
+            updateBadges();
+        }
+    }
+
+    function renderAdminReviews() {
+        const container = document.getElementById('adminReviewsList');
+        if (!container) return;
+        
+        if (reviews.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color: var(--text-light); padding: 20px;">No reviews yet.</p>';
+            return;
+        }
+        
+        container.innerHTML = reviews.map((review, index) => `
+            <div class="review-item">
+                <div class="admin-review-text">
+                    <strong>${escapeHtml(review.name)}</strong> (${'★'.repeat(review.rating)})
+                    <br><small>"${escapeHtml(review.review.substring(0, 60))}${review.review.length > 60 ? '...' : ''}"</small>
+                </div>
+                <button class="delete-btn" data-index="${index}">Delete</button>
+            </div>
+        `).join('');
+        
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const index = parseInt(btn.dataset.index);
+                if (confirm('Delete this review permanently?')) {
+                    reviews.splice(index, 1);
+                    saveReviews();
+                    renderReviews();
+                    renderAdminReviews();
+                    alert('✅ Review deleted!');
+                }
+            });
+        });
+        
+        // Mark reviews as read
+        if (unreadReviews > 0) {
+            unreadReviews = 0;
+            reviews.forEach(r => r.read = true);
+            saveReviews();
+        }
+    }
+
     function escapeHtml(text) {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
 
-    // Save reviews to localStorage
-    function saveReviewsToLocal() {
-        localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
-    }
-
-    // Load reviews from localStorage
-    function loadReviewsFromLocal() {
-        const saved = localStorage.getItem('getfanskenya_reviews');
-        if (saved) {
-            try {
-                reviews = JSON.parse(saved);
-            } catch(e) { console.error(e); }
+    // Pricing and other functions
+    function calculatePrice(service, qty) {
+        if (service === "followers") {
+            if (qty <= 100) return 40;
+            if (qty <= 500) return Math.round(199 * (qty / 500));
+            if (qty <= 1000) return Math.round(399 * (qty / 1000));
+            if (qty <= 3000) return Math.round(1199 * (qty / 3000));
+            if (qty <= 10000) return Math.round(1199 + ((qty - 3000) * 0.33));
+            if (qty <= 25000) return Math.round(3499 + ((qty - 10000) * 0.30));
+            if (qty <= 50000) return Math.round(7999 + ((qty - 25000) * 0.28));
+            if (qty <= 100000) return Math.round(14999 + ((qty - 50000) * 0.26));
+            if (qty <= 250000) return Math.round(27999 + ((qty - 100000) * 0.24));
+            if (qty <= 500000) return Math.round(64999 + ((qty - 250000) * 0.22));
+            return Math.round(119999 + ((qty - 500000) * 0.20));
+        } else if (service === "likes") {
+            if (qty <= 100) return 25;
+            if (qty <= 500) return Math.round(125 * (qty / 500));
+            if (qty <= 1000) return Math.round(249 * (qty / 1000));
+            if (qty <= 3000) return Math.round(699 * (qty / 3000));
+            if (qty <= 10000) return Math.round(699 + ((qty - 3000) * 0.25));
+            if (qty <= 50000) return Math.round(1999 + ((qty - 10000) * 0.22));
+            return Math.round(9999 + ((qty - 50000) * 0.18));
+        } else {
+            if (qty <= 100) return 35;
+            if (qty <= 500) return Math.round(175 * (qty / 500));
+            if (qty <= 1000) return Math.round(349 * (qty / 1000));
+            if (qty <= 3000) return Math.round(899 * (qty / 3000));
+            if (qty <= 10000) return Math.round(899 + ((qty - 3000) * 0.35));
+            if (qty <= 50000) return Math.round(2499 + ((qty - 10000) * 0.30));
+            return Math.round(13999 + ((qty - 50000) * 0.25));
         }
-        renderReviews();
     }
 
-    // Add a new review
-    function addReview(name, rating, review) {
-        const now = new Date();
-        const dateStr = now.toLocaleDateString();
-        const reviewObj = {
-            name: name,
-            rating: rating,
-            review: review,
-            details: `Added on ${dateStr}`
-        };
-        reviews.unshift(reviewObj); // Add to beginning
-        saveReviewsToLocal();
-        renderReviews();
-        
-        // Also try to save to Google Sheets
-        const reviewData = {
-            type: "review",
-            name: name,
-            rating: rating,
-            review: review,
-            timestamp: now.toLocaleString("en-KE")
-        };
-        fetch(GOOGLE_SHEET_API_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(reviewData)
-        }).catch(e => console.log('Review save to sheet:', e));
+    function formatQuantity(qty) {
+        return qty.toLocaleString();
     }
 
-    // Click package to set quantity
+    function getDeliveryTime(qty) {
+        if (qty < 50000) return "1-2 hours";
+        if (qty < 200000) return "2-4 hours";
+        if (qty < 500000) return "4-8 hours";
+        return "8-24 hours";
+    }
+
+    function updateDeliveryTime(qty) {
+        const time = getDeliveryTime(qty);
+        document.getElementById("deliveryEstimate").innerText = time;
+        document.getElementById("summaryDelivery").innerHTML = `⏱️ ${time}`;
+        const note = document.getElementById("deliveryTimeNote");
+        if (qty >= 50000) note.style.background = "linear-gradient(135deg, var(--warning), #e67e22)";
+        else note.style.background = "linear-gradient(135deg, var(--success), #219a52)";
+    }
+
+    // Auto-scroll functions
+    const pkgCarousel = document.getElementById('packageCarousel');
+    let pkgScrollInterval, pkgHovering = false;
+    let pkgScrollPosition = 0;
+    
+    function startPkgScroll() {
+        if (pkgScrollInterval) clearInterval(pkgScrollInterval);
+        pkgScrollInterval = setInterval(() => {
+            if (!pkgHovering && pkgCarousel) {
+                const maxScroll = pkgCarousel.scrollWidth - pkgCarousel.clientWidth;
+                pkgScrollPosition += 0.5;
+                if (pkgScrollPosition >= maxScroll) pkgScrollPosition = 0;
+                pkgCarousel.scrollTo({ left: pkgScrollPosition, behavior: 'smooth' });
+            }
+        }, 50);
+    }
+    
+    if (pkgCarousel) {
+        pkgCarousel.addEventListener('mouseenter', () => { pkgHovering = true; });
+        pkgCarousel.addEventListener('mouseleave', () => { pkgHovering = false; });
+        startPkgScroll();
+    }
+
+    const revCarousel = document.getElementById('reviewsCarousel');
+    let revScrollInterval, revHovering = false;
+    let revScrollPosition = 0;
+    
+    function startRevScroll() {
+        if (revScrollInterval) clearInterval(revScrollInterval);
+        revScrollInterval = setInterval(() => {
+            if (!revHovering && revCarousel) {
+                const maxScroll = revCarousel.scrollWidth - revCarousel.clientWidth;
+                revScrollPosition += 0.5;
+                if (revScrollPosition >= maxScroll) revScrollPosition = 0;
+                revCarousel.scrollTo({ left: revScrollPosition, behavior: 'smooth' });
+            }
+        }, 60);
+    }
+    
+    if (revCarousel) {
+        revCarousel.addEventListener('mouseenter', () => { revHovering = true; });
+        revCarousel.addEventListener('mouseleave', () => { revHovering = false; });
+        startRevScroll();
+    }
+
     document.querySelectorAll('.package-card').forEach(card => {
         card.addEventListener('click', () => {
             const qty = parseInt(card.dataset.qty);
-            if (!isNaN(qty)) {
+            const service = card.dataset.service;
+            if (!isNaN(qty) && service) {
+                if (service !== currentService) {
+                    currentService = service;
+                    serviceBtns.forEach(btn => {
+                        if (btn.dataset.service === service) btn.classList.add('active');
+                        else btn.classList.remove('active');
+                    });
+                }
                 currentQuantity = qty;
                 slider.value = qty;
                 quantityNumber.value = qty;
@@ -825,24 +1288,6 @@
 
     let currentTrackingId = generateTrackingId();
     document.getElementById("trackingId").innerText = currentTrackingId;
-
-    function calculatePrice(service, qty) {
-        if (service === "followers") {
-            if (qty <= 3000) return Math.round(1199 * (qty / 3000));
-            if (qty <= 10000) return Math.round(1199 + ((qty - 3000) * 0.33));
-            if (qty <= 25000) return Math.round(3499 + ((qty - 10000) * 0.30));
-            if (qty <= 50000) return Math.round(7999 + ((qty - 25000) * 0.28));
-            return Math.round(14999 + ((qty - 50000) * 0.26));
-        } else if (service === "likes") {
-            if (qty <= 2000) return Math.round(699 * (qty / 2000));
-            if (qty <= 10000) return Math.round(699 + ((qty - 2000) * 0.25));
-            return Math.round(2699 + ((qty - 10000) * 0.22));
-        } else {
-            if (qty <= 2000) return Math.round(899 * (qty / 2000));
-            if (qty <= 10000) return Math.round(899 + ((qty - 2000) * 0.35));
-            return Math.round(3699 + ((qty - 10000) * 0.30));
-        }
-    }
 
     let currentService = "followers";
     let currentQuantity = 3000;
@@ -869,9 +1314,9 @@
         priceDisplay.innerText = priceFormatted;
         if (paymentAmountStep) paymentAmountStep.innerText = priceFormatted;
         
-        let serviceName = currentService === "followers" ? "Followers" : (currentService === "likes" ? "Likes" : "Comments");
-        summaryService.innerText = `Facebook ${serviceName}`;
-        summaryQty.innerText = currentQuantity.toLocaleString();
+        let serviceName = currentService === "followers" ? "Facebook Followers" : (currentService === "likes" ? "Facebook Likes" : "Facebook Comments");
+        summaryService.innerText = serviceName;
+        summaryQty.innerText = formatQuantity(currentQuantity);
         summaryPrice.innerText = priceFormatted;
         updateDeliveryTime(currentQuantity);
         postLinkGroup.style.display = (currentService === "comments" || currentService === "likes") ? "block" : "none";
@@ -886,7 +1331,7 @@
     function syncFromNumber() {
         let val = parseInt(quantityNumber.value);
         if (isNaN(val)) val = 100;
-        val = Math.min(100000, Math.max(100, val));
+        val = Math.min(1000000, Math.max(100, val));
         currentQuantity = val;
         slider.value = val;
         quantityNumber.value = val;
@@ -908,7 +1353,7 @@
         });
     });
 
-    async function saveOrder(orderData) {
+    async function saveOrderToSheet(orderData) {
         try {
             await fetch(GOOGLE_SHEET_API_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(orderData) });
             return true;
@@ -926,7 +1371,7 @@
         if (!profile) { alert("❌ Enter Facebook profile URL"); fbUsername.focus(); return; }
         if (!phone) { alert("❌ Enter WhatsApp number"); customerPhone.focus(); return; }
         if ((currentService === "comments" || currentService === "likes") && !link) { alert("❌ Enter post/video link"); postLink.focus(); return; }
-        if (!mpesaText) { alert("❌ Paste M-Pesa confirmation"); mpesaConfirmation.focus(); return; }
+        if (!mpesaText) { alert("❌ Paste M-Pesa confirmation message"); mpesaConfirmation.focus(); return; }
 
         let serviceName = currentService === "followers" ? "Facebook Followers" : (currentService === "likes" ? "Facebook Likes" : "Facebook Comments");
         let price = calculatePrice(currentService, currentQuantity);
@@ -934,17 +1379,32 @@
         let transactionId = mpesaText.match(/[A-Z0-9]{10,}/i)?.[0] || "Not extracted";
 
         const orderData = {
-            trackingId: currentTrackingId, service: serviceName, quantity: currentQuantity, price: price,
-            deliveryTime: deliveryTime, customerName: name, profile: profile, postLink: link || "Not provided",
-            phone: phone, mpesaConfirmation: mpesaText.substring(0, 500), transactionId: transactionId,
-            status: "Pending Verification", timestamp: new Date().toLocaleString("en-KE")
+            trackingId: currentTrackingId,
+            service: serviceName,
+            quantity: currentQuantity,
+            price: price,
+            deliveryTime: deliveryTime,
+            customerName: name,
+            profile: profile,
+            postLink: link || "Not provided",
+            phone: phone,
+            mpesaConfirmation: mpesaText.substring(0, 500),
+            transactionId: transactionId,
+            status: "Pending Verification",
+            timestamp: new Date().toLocaleString("en-KE")
         };
 
         submitBtn.innerHTML = '<span class="loading"></span>Submitting...';
         submitBtn.disabled = true;
-        let saved = await saveOrder(orderData);
+        
+        let saved = await saveOrderToSheet(orderData);
+        
         if (saved) {
-            alert(`✅ ORDER SUBMITTED!\n📋 ID: ${currentTrackingId}\n💰 KSh ${price.toLocaleString()}\n⏱️ Delivery: ${deliveryTime}`);
+            // Add to local orders for notification
+            addOrder(orderData);
+            
+            alert(`✅ ORDER SUBMITTED!\n📋 ID: ${currentTrackingId}\n💰 KSh ${price.toLocaleString()}\n⏱️ Delivery: ${deliveryTime}\n\nWe'll deliver within ${deliveryTime} after payment verification.`);
+            
             currentTrackingId = generateTrackingId();
             document.getElementById("trackingId").innerText = currentTrackingId;
             customerName.value = ""; fbUsername.value = ""; postLink.value = ""; customerPhone.value = ""; mpesaConfirmation.value = "";
@@ -953,8 +1413,11 @@
             serviceBtns.forEach(b => b.classList.remove("active"));
             document.querySelector('[data-service="followers"]').classList.add("active");
             updateUI();
-        } else { alert("❌ Error. Try again or WhatsApp."); }
-        submitBtn.innerHTML = "✅ Place Order & Submit Payment";
+        } else { 
+            alert("❌ Error submitting. Try again or WhatsApp 0750600715"); 
+        }
+        
+        submitBtn.innerHTML = "✅ PLACE ORDER & SUBMIT PAYMENT";
         submitBtn.disabled = false;
     });
 
@@ -968,23 +1431,74 @@
         });
     });
 
-    document.getElementById("submitReview").addEventListener("click", async () => {
+    document.getElementById("submitReview").addEventListener("click", () => {
         const name = document.getElementById("reviewerName").value.trim();
         const review = document.getElementById("reviewText").value.trim();
-        if (!name) { alert("Enter your name"); return; }
-        if (!review) { alert("Write your review"); return; }
-        if (selectedRating === 0) { alert("Select a rating (1-5 stars)"); return; }
+        if (!name) { alert("Please enter your name"); return; }
+        if (!review) { alert("Please write your review"); return; }
+        if (selectedRating === 0) { alert("Please select a star rating (1-5)"); return; }
         
-        // Add review to carousel immediately
-        addReview(name, selectedRating, review);
+        addReviewToAdmin(name, selectedRating, review);
+        alert("⭐ Thank you! Your review has been added.");
         
-        alert("⭐ Thank you for your review! It has been added to our success stories.");
-        
-        // Clear form
         document.getElementById("reviewerName").value = "";
         document.getElementById("reviewText").value = "";
         selectedRating = 0;
         stars.forEach(s => s.classList.remove('active'));
+    });
+
+    // Admin Panel Password Logic
+    const modal = document.getElementById('passwordModal');
+    const adminToggleBtn = document.getElementById('adminToggleBtn');
+    const submitPasswordBtn = document.getElementById('submitPassword');
+    const closeModalBtn = document.getElementById('closePasswordModal');
+    const adminPanel = document.getElementById('adminPanel');
+
+    function showPasswordModal() {
+        modal.classList.add('show');
+        document.getElementById('adminPassword').value = '';
+        document.getElementById('adminPassword').focus();
+    }
+
+    function hidePasswordModal() {
+        modal.classList.remove('show');
+    }
+
+    function checkPassword() {
+        const enteredPassword = document.getElementById('adminPassword').value;
+        if (enteredPassword === ADMIN_PASSWORD) {
+            isAdminLoggedIn = true;
+            hidePasswordModal();
+            adminPanel.classList.add('show');
+            renderAdminOrders();
+            renderAdminReviews();
+            unreadOrders = 0;
+            unreadReviews = 0;
+            updateBadges();
+            alert('✅ Admin access granted! You can now see orders and manage reviews.');
+        } else {
+            alert('❌ Incorrect password! Access denied.');
+            document.getElementById('adminPassword').value = '';
+        }
+    }
+
+    adminToggleBtn.addEventListener('click', showPasswordModal);
+    submitPasswordBtn.addEventListener('click', checkPassword);
+    closeModalBtn.addEventListener('click', hidePasswordModal);
+    document.getElementById('adminPassword').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') checkPassword();
+    });
+    modal.addEventListener('click', (e) => { if (e.target === modal) hidePasswordModal(); });
+
+    // Tab switching
+    document.querySelectorAll('.admin-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            const tabName = tab.dataset.tab;
+            document.getElementById('adminOrdersSection').classList.toggle('active', tabName === 'orders');
+            document.getElementById('adminReviewsSection').classList.toggle('active', tabName === 'reviews');
+        });
     });
 
     // Dark mode
@@ -995,7 +1509,7 @@
         localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
     });
 
-    loadReviewsFromLocal();
+    loadData();
     updateUI();
 </script>
 </body>
