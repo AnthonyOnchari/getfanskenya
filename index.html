@@ -326,7 +326,7 @@
         }
 
         .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: var(--whatsapp); color: white; border-radius: 50px; padding: 8px 14px; display: flex; align-items: center; gap: 6px; text-decoration: none; font-weight: bold; font-size: 0.75rem; z-index: 1000; }
-        .loading { display: inline-block; width: 12px; height: 12px; border: 2px solid white; border-radius: 50%; border-top-color: transparent; animation: spin 0.6s linear infinite; margin-right: 6px; }
+        .loading-spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid white; border-radius: 50%; border-top-color: transparent; animation: spin 0.6s linear infinite; margin-right: 6px; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
         .reviews-section {
@@ -711,21 +711,6 @@
             color: var(--text-light);
         }
 
-        .loading-spinner {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2px solid white;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 0.6s linear infinite;
-            margin-right: 6px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
         @media (max-width: 480px) {
             .main-content { padding: 0 12px 12px 12px; }
             .card { padding: 16px; }
@@ -966,7 +951,7 @@
 
 <script>
     // ========== YOUR GOOGLE SHEETS WEB APP URL ==========
-    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwHVlR6PMrGFR0VSxNuGvuDOsDfazoob85fmrz86KIccKbSZLdnSN4InreJXWk_0yk1rg/exec";
+    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyvxgIdpb2UP3A2LpG15em9wzKP951W7zyfJAPBR1KeVjkcrT2j3UFr5vZIh_iQ-6zyUQ/exec";
     const ADMIN_PASSWORD = "GetFans2024";
 
     let orders = [];
@@ -1195,10 +1180,9 @@
         if (isAdminLoggedIn) renderAdminOrders();
     }
 
-    // FIXED: Status update without mode: 'no-cors' so we can read response
+    // FIXED: Status update - send as no-cors and update local storage
     async function updateOrderStatus(trackingId, newStatus) {
         const selectElement = event?.target;
-        const originalText = selectElement?.innerHTML;
         
         try {
             // Show loading state on the select
@@ -1207,8 +1191,10 @@
                 selectElement.disabled = true;
             }
             
-            const response = await fetch(GOOGLE_SHEET_API_URL, {
+            // Send status update to sheet (no response needed)
+            await fetch(GOOGLE_SHEET_API_URL, {
                 method: 'POST',
+                mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     action: "updateStatus",
@@ -1217,27 +1203,21 @@
                 })
             });
             
-            const result = await response.json();
-            
-            if (result.success) {
-                const orderIndex = orders.findIndex(o => o.trackingId === trackingId);
-                if (orderIndex !== -1) {
-                    orders[orderIndex].status = newStatus;
-                    localStorage.setItem('getfanskenya_orders', JSON.stringify(orders));
-                }
-                showNotification("Status Updated", `${trackingId} is now ${newStatus}`);
-                renderAdminOrders();
-            } else {
-                showNotification("Error", result.error || "Failed to update status", true);
-                // Revert the select value
-                if (selectElement) {
-                    const order = orders.find(o => o.trackingId === trackingId);
-                    if (order) selectElement.value = order.status;
-                }
+            // Update local storage
+            const orderIndex = orders.findIndex(o => o.trackingId === trackingId);
+            if (orderIndex !== -1) {
+                orders[orderIndex].status = newStatus;
+                localStorage.setItem('getfanskenya_orders', JSON.stringify(orders));
             }
+            
+            showNotification("Status Updated", `${trackingId} is now ${newStatus}`);
+            
+            // Refresh the admin orders display to show updated status
+            renderAdminOrders();
+            
         } catch (error) {
             console.error("Error updating status:", error);
-            showNotification("Error", "Network error. Please try again.", true);
+            showNotification("Error", "Could not update status. Please try again.", true);
             // Revert the select value
             if (selectElement) {
                 const order = orders.find(o => o.trackingId === trackingId);
@@ -1251,12 +1231,10 @@
         }
     }
 
-    // FIXED: Track order with loading state
     async function trackOrder(trackingId) {
         const trackBtn = document.getElementById("searchTrackBtn");
         const originalBtnText = trackBtn.innerHTML;
         
-        // Show loading state
         trackBtn.innerHTML = '<span class="loading-spinner"></span> Searching...';
         trackBtn.disabled = true;
         
@@ -1310,7 +1288,6 @@
             resultDiv.innerHTML = `<div style="background: #e74c3c; color: white; padding: 12px; border-radius: 12px; text-align: center;">Error tracking order. Please try again.</div>`;
             resultDiv.classList.add("show");
         } finally {
-            // Restore button state
             trackBtn.innerHTML = originalBtnText;
             trackBtn.disabled = false;
         }
@@ -1349,7 +1326,7 @@
             <div class="order-item">
                 <div><strong>${escapeHtml(o.trackingId)}</strong> <small>${escapeHtml(o.timestamp)}</small></div>
                 <div>${escapeHtml(o.customerName)} • ${escapeHtml(o.service)}<br>📊 ${o.quantity.toLocaleString()} • 💰 KSh ${o.price.toLocaleString()}</div>
-                <select class="order-status-select" data-tracking="${escapeHtml(o.trackingId)}">
+                <select class="order-status-select" data-tracking="${escapeHtml(o.trackingId)}" value="${escapeHtml(o.status)}">
                     <option value="Pending" ${o.status === "Pending" ? "selected" : ""}>⏳ Pending</option>
                     <option value="Processing" ${o.status === "Processing" ? "selected" : ""}>🔄 Processing</option>
                     <option value="Completed" ${o.status === "Completed" ? "selected" : ""}>✅ Completed</option>
@@ -1449,7 +1426,6 @@
     document.getElementById("closeSuccessModal").addEventListener("click", () => successModal.classList.remove("show"));
     successModal.addEventListener("click", (e) => { if (e.target === successModal) successModal.classList.remove("show"); });
 
-    // Submit order with loading state
     document.getElementById("submitOrder").addEventListener("click", async () => {
         const name = document.getElementById("customerName").value.trim();
         const profile = document.getElementById("facebookProfile").value.trim();
@@ -1574,7 +1550,6 @@
     document.getElementById("adminPassword").addEventListener("keypress", (e) => { if (e.key === "Enter") document.getElementById("submitPassword").click(); });
     passwordModalEl.addEventListener("click", (e) => { if (e.target === passwordModalEl) passwordModalEl.classList.remove("show"); });
     
-    // Refresh button for orders
     document.getElementById("refreshOrdersBtn").addEventListener("click", async () => {
         const btn = document.getElementById("refreshOrdersBtn");
         const originalText = btn.innerHTML;
@@ -1670,7 +1645,6 @@
         localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light"); 
     });
 
-    // Load initial data
     async function loadReviewsFromStorage() {
         const savedReviews = localStorage.getItem('getfanskenya_reviews');
         if (savedReviews) { try { reviews = JSON.parse(savedReviews); } catch(e) {} }
