@@ -941,7 +941,7 @@
 
     function showNotification(title, message) {
         const toast = document.createElement('div');
-        toast.style.cssText = `position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:var(--primary); color:white; padding:10px 20px; border-radius:30px; z-index:3000; font-size:0.75rem; animation:fadeInOut 3s ease; font-family:'Poppins',sans-serif;`;
+        toast.style.cssText = `position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:var(--primary); color:white; padding:10px 20px; border-radius:30px; z-index:3000; font-size:0.75rem; font-family:'Poppins',sans-serif;`;
         toast.innerHTML = `<strong>${title}</strong> - ${message}`;
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 3000);
@@ -958,16 +958,21 @@
         orders.unshift({ ...orderData, id: Date.now(), status: "Pending", read: false });
         saveOrders();
         showNotification('New Order', `${orderData.customerName} - ${orderData.platform} ${orderData.service}`);
-        if (typeof renderAdminOrders === 'function') renderAdminOrders();
+        if (isAdminLoggedIn) renderAdminOrders();
     }
 
+    // FIXED: Update order status and refresh admin display
     function updateOrderStatus(trackingId, newStatus) {
         const orderIndex = orders.findIndex(o => o.trackingId === trackingId);
         if (orderIndex !== -1) {
             orders[orderIndex].status = newStatus;
             saveOrders();
             showNotification("Status Updated", `${trackingId} is now ${newStatus}`);
-            if (typeof renderAdminOrders === 'function') renderAdminOrders();
+            // Refresh the admin orders display
+            renderAdminOrders();
+            console.log(`Order ${trackingId} status updated to: ${newStatus}`);
+        } else {
+            console.log(`Order ${trackingId} not found`);
         }
     }
 
@@ -1030,6 +1035,7 @@
         `).join('');
     }
 
+    // FIXED: Render admin orders with proper event listeners
     function renderAdminOrders() {
         const container = document.getElementById('ordersList');
         if (!container) return;
@@ -1050,16 +1056,15 @@
             </div>
         `).join('');
         
+        // Add event listeners to all status dropdowns
         document.querySelectorAll('.order-status-select').forEach(select => {
-            select.removeEventListener('change', handleStatusChange);
-            select.addEventListener('change', handleStatusChange);
+            select.addEventListener('change', function(e) {
+                e.stopPropagation();
+                const trackingId = this.dataset.tracking;
+                const newStatus = this.value;
+                updateOrderStatus(trackingId, newStatus);
+            });
         });
-    }
-    
-    function handleStatusChange(e) {
-        const trackingId = e.target.dataset.tracking;
-        const newStatus = e.target.value;
-        updateOrderStatus(trackingId, newStatus);
     }
 
     function renderAdminReviews() {
@@ -1236,16 +1241,17 @@
     document.getElementById("trackingInput").addEventListener("keypress", (e) => { if (e.key === "Enter") document.getElementById("searchTrackBtn").click(); });
     trackModal.addEventListener("click", (e) => { if (e.target === trackModal) trackModal.classList.remove("show"); });
 
-    // Admin Modal
+    // Admin Modal - FIXED
     let isAdminLoggedIn = false;
     const adminModal = document.getElementById("adminModal");
     const passwordModalEl = document.getElementById("passwordModal");
     
     document.getElementById("adminSmallBtn").addEventListener("click", () => {
         if (isAdminLoggedIn) {
-            adminModal.classList.add("show");
+            // Refresh orders before showing
             renderAdminOrders();
             renderAdminReviews();
+            adminModal.classList.add("show");
         } else {
             passwordModalEl.classList.add("show");
         }
@@ -1259,9 +1265,9 @@
         if (enteredPassword === ADMIN_PASSWORD) {
             isAdminLoggedIn = true;
             passwordModalEl.classList.remove("show");
-            adminModal.classList.add("show");
             renderAdminOrders();
             renderAdminReviews();
+            adminModal.classList.add("show");
             alert("Admin access granted");
         } else {
             alert("Wrong password");
