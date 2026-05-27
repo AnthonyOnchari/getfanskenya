@@ -420,12 +420,13 @@
 
     const serviceNames = { followers: "Followers", likes: "Likes", comments: "Comments", views: "Views", subscribers: "Subscribers" };
 
+    // ========== UPDATED PRICING (7x for Instagram, TikTok, YouTube) ==========
     function calculatePrice(platform, service, qty) {
         const basePrices = {
             facebook: { followers: 0.4, likes: 0.25, comments: 0.3 },
-            instagram: { followers: 0.45, likes: 0.3, views: 0.2 },
-            tiktok: { followers: 0.5, likes: 0.35, views: 0.25 },
-            youtube: { subscribers: 0.8, views: 0.15, likes: 0.4 }
+            instagram: { followers: 2.8, likes: 2.1, views: 1.4 },
+            tiktok: { followers: 2.8, likes: 2.1, views: 1.4 },
+            youtube: { subscribers: 5.6, views: 1.05, likes: 2.8 }
         };
         const rate = basePrices[platform]?.[service] || 0.4;
         let price = Math.round(qty * rate);
@@ -715,7 +716,7 @@
         showNotification('Receipt Downloaded', 'Your receipt has been saved');
     }
 
-    // FIXED: Auto-status progression after 4 seconds
+    // Auto-status progression after 4 seconds
     async function autoProgressStatus(trackingId, currentStatus) {
         if (currentStatus === "Pending") {
             if (autoStatusTimeout) clearTimeout(autoStatusTimeout);
@@ -724,7 +725,6 @@
                 if (order && order.status === "Pending") {
                     await updateOrderStatus(trackingId, "Processing");
                     showNotification("Status Update", "Your order is now being processed!");
-                    // Refresh the tracking display
                     await displayTrackingResult(trackingId);
                 }
             }, 4000);
@@ -785,7 +785,6 @@
             downloadBtn.addEventListener("click", () => downloadReceipt(order));
         }
         
-        // Auto-progress from Pending to Processing after 4 seconds
         await autoProgressStatus(trackingId, currentStatus);
     }
 
@@ -803,7 +802,6 @@
                 if (autoRefreshInterval) {
                     clearInterval(autoRefreshInterval);
                 }
-                // Auto-refresh every 2 seconds
                 autoRefreshInterval = setInterval(async () => {
                     if (currentTrackingIdForAutoRefresh) {
                         await displayTrackingResult(currentTrackingIdForAutoRefresh);
