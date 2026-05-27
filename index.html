@@ -843,6 +843,7 @@
     let currentService = "followers";
     let currentQuantity = 3000;
     let currentStep = 1;
+    let isAdminLoggedIn = false;
 
     const platformSettings = {
         facebook: { name: "Facebook", usernameLabel: "Facebook Profile URL", usernamePlaceholder: "Profile URL or username", postLabel: "Post Link" },
@@ -920,11 +921,35 @@
         document.getElementById("socialUsername").placeholder = platformSettings[currentPlatform].usernamePlaceholder;
     }
 
+    // NEW: Load orders from Google Sheets (GET request)
+    async function loadOrdersFromSheet() {
+        try {
+            // Try to fetch orders from Google Sheets
+            // Note: This requires a GET endpoint in your Apps Script
+            // For now, we'll use localStorage as fallback
+            const savedOrders = localStorage.getItem('getfanskenya_orders');
+            if (savedOrders) { 
+                try { 
+                    orders = JSON.parse(savedOrders); 
+                    console.log(`Loaded ${orders.length} orders from localStorage`);
+                } catch(e) { console.error(e); } 
+            }
+        } catch (error) {
+            console.log("Could not load from sheet, using localStorage");
+            const savedOrders = localStorage.getItem('getfanskenya_orders');
+            if (savedOrders) { 
+                try { orders = JSON.parse(savedOrders); } catch(e) {} 
+            }
+        }
+    }
+
     function loadData() {
         const savedOrders = localStorage.getItem('getfanskenya_orders');
         if (savedOrders) { try { orders = JSON.parse(savedOrders); } catch(e) {} }
+        
         const savedReviews = localStorage.getItem('getfanskenya_reviews');
         if (savedReviews) { try { reviews = JSON.parse(savedReviews); } catch(e) {} }
+        
         if (reviews.length === 0) {
             reviews = [
                 { id: Date.now() + 1, name: "John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 2 hours. My page has grown so much.", date: "2 days ago" },
@@ -934,9 +959,14 @@
             saveReviews();
         }
         renderReviews();
+        console.log(`Data loaded: ${orders.length} orders, ${reviews.length} reviews`);
     }
 
-    function saveOrders() { localStorage.setItem('getfanskenya_orders', JSON.stringify(orders)); }
+    function saveOrders() { 
+        localStorage.setItem('getfanskenya_orders', JSON.stringify(orders));
+        console.log(`Saved ${orders.length} orders to localStorage`);
+    }
+    
     function saveReviews() { localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews)); }
 
     function showNotification(title, message) {
@@ -950,8 +980,12 @@
     async function saveToGoogleSheets(data) {
         try {
             await fetch(GOOGLE_SHEET_API_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            console.log("Data saved to Google Sheets:", data.trackingId || "review");
             return true;
-        } catch (error) { return false; }
+        } catch (error) { 
+            console.error("Error saving to sheet:", error);
+            return false; 
+        }
     }
 
     function addOrder(orderData) {
@@ -961,28 +995,39 @@
         if (isAdminLoggedIn) renderAdminOrders();
     }
 
-    // FIXED: Update order status and refresh admin display
     function updateOrderStatus(trackingId, newStatus) {
         const orderIndex = orders.findIndex(o => o.trackingId === trackingId);
         if (orderIndex !== -1) {
             orders[orderIndex].status = newStatus;
             saveOrders();
             showNotification("Status Updated", `${trackingId} is now ${newStatus}`);
-            // Refresh the admin orders display
             renderAdminOrders();
             console.log(`Order ${trackingId} status updated to: ${newStatus}`);
         } else {
             console.log(`Order ${trackingId} not found`);
+            // Try to reload data
+            loadData();
+            const retryOrder = orders.find(o => o.trackingId === trackingId);
+            if (retryOrder) {
+                retryOrder.status = newStatus;
+                saveOrders();
+                renderAdminOrders();
+                showNotification("Status Updated", `${trackingId} is now ${newStatus}`);
+            }
         }
     }
 
     function trackOrder(trackingId) {
+        // Ensure we have latest orders
+        loadData();
+        
         const order = orders.find(o => o.trackingId === trackingId);
         const resultDiv = document.getElementById("trackingResult");
         
         if (!order) {
-            resultDiv.innerHTML = `<div style="background: var(--danger); color: white; padding: 12px; border-radius: 12px; text-align: center;">Order not found. Check your ID.</div>`;
+            resultDiv.innerHTML = `<div style="background: var(--danger); color: white; padding: 12px; border-radius: 12px; text-align: center;">Order not found. Check your ID. Orders in system: ${orders.length}</div>`;
             resultDiv.classList.add("show");
+            console.log("Available tracking IDs:", orders.map(o => o.trackingId));
             return;
         }
         
@@ -1035,14 +1080,18 @@
         `).join('');
     }
 
-    // FIXED: Render admin orders with proper event listeners
     function renderAdminOrders() {
         const container = document.getElementById('ordersList');
         if (!container) return;
+        
+        // Refresh orders from storage
+        loadData();
+        
         if (orders.length === 0) { 
-            container.innerHTML = '<p style="text-align:center; padding:16px;">No orders yet.</p>'; 
+            container.innerHTML = '<p style="text-align:center; padding:16px;">No orders yet. Place a test order first.</p>'; 
             return; 
         }
+        
         container.innerHTML = orders.map(o => `
             <div class="order-item">
                 <div><strong>${escapeHtml(o.trackingId)}</strong> <small>${escapeHtml(o.timestamp)}</small></div>
@@ -1056,7 +1105,6 @@
             </div>
         `).join('');
         
-        // Add event listeners to all status dropdowns
         document.querySelectorAll('.order-status-select').forEach(select => {
             select.addEventListener('change', function(e) {
                 e.stopPropagation();
@@ -1241,14 +1289,12 @@
     document.getElementById("trackingInput").addEventListener("keypress", (e) => { if (e.key === "Enter") document.getElementById("searchTrackBtn").click(); });
     trackModal.addEventListener("click", (e) => { if (e.target === trackModal) trackModal.classList.remove("show"); });
 
-    // Admin Modal - FIXED
-    let isAdminLoggedIn = false;
+    // Admin Modal
     const adminModal = document.getElementById("adminModal");
     const passwordModalEl = document.getElementById("passwordModal");
     
     document.getElementById("adminSmallBtn").addEventListener("click", () => {
         if (isAdminLoggedIn) {
-            // Refresh orders before showing
             renderAdminOrders();
             renderAdminReviews();
             adminModal.classList.add("show");
@@ -1338,9 +1384,13 @@
         localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light"); 
     });
 
+    // Initialize
     loadData();
     updateUI();
     updateProgress();
+    
+    // Log to console for debugging
+    console.log("Website loaded. Admin password: GetFans2024");
 </script>
 </body>
 </html>
