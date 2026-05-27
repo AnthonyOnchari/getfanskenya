@@ -113,6 +113,10 @@
             transform: scale(0.98);
         }
 
+        .track-btn:active, .admin-small-btn:active {
+            transform: scale(0.95);
+        }
+
         .theme-toggle {
             background: rgba(255,255,255,0.2);
             backdrop-filter: blur(5px);
@@ -209,6 +213,11 @@
             text-align: center;
             font-size: 0.8rem;
             font-family: 'Poppins', sans-serif;
+            transition: all 0.1s ease;
+        }
+
+        .platform-btn:active, .service-btn:active {
+            transform: scale(0.97);
         }
 
         .platform-btn.active, .service-btn.active {
@@ -290,6 +299,10 @@
             cursor: pointer;
             border: none;
             margin-top: 6px;
+            transition: all 0.1s ease;
+        }
+        .btn-next:active, .btn-back:active, .btn-submit:active {
+            transform: scale(0.97);
         }
         .btn-next {
             background: var(--primary);
@@ -388,7 +401,8 @@
         .rating-input { display: flex; gap: 6px; margin-bottom: 10px; justify-content: center; }
         .star-rating { font-size: 1.5rem; cursor: pointer; color: var(--border); transition: color 0.2s; }
         .star-rating.active { color: var(--review-star); }
-        .btn-review { width: 100%; padding: 10px; background: var(--success); color: white; border: none; border-radius: 30px; font-size: 0.8rem; font-weight: bold; cursor: pointer; margin-top: 6px; }
+        .btn-review { width: 100%; padding: 10px; background: var(--success); color: white; border: none; border-radius: 30px; font-size: 0.8rem; font-weight: bold; cursor: pointer; margin-top: 6px; transition: all 0.1s ease; }
+        .btn-review:active { transform: scale(0.97); }
 
         .modal-overlay {
             display: none;
@@ -466,6 +480,10 @@
             border-radius: 12px;
             cursor: pointer;
             font-weight: 600;
+            transition: all 0.1s ease;
+        }
+        .tracking-input-group button:active {
+            transform: scale(0.97);
         }
         .tracking-result {
             display: none;
@@ -559,6 +577,10 @@
             border-radius: 30px;
             font-size: 0.8rem;
             font-weight: 600;
+            transition: all 0.1s ease;
+        }
+        .admin-tab:active {
+            transform: scale(0.97);
         }
         .admin-tab.active {
             background: var(--primary);
@@ -605,6 +627,10 @@
             cursor: pointer;
             font-size: 0.65rem;
             font-weight: 600;
+            transition: all 0.1s ease;
+        }
+        .delete-btn:active {
+            transform: scale(0.97);
         }
 
         .tracking-code {
@@ -627,6 +653,10 @@
             font-size: 0.9rem;
             cursor: pointer;
             font-weight: 600;
+            transition: all 0.1s ease;
+        }
+        .copy-btn:active {
+            transform: scale(0.97);
         }
 
         .password-box {
@@ -651,6 +681,10 @@
             width: 100%;
             margin-top: 8px;
             font-weight: 600;
+            transition: all 0.1s ease;
+        }
+        .password-box button:active {
+            transform: scale(0.97);
         }
 
         .refresh-btn {
@@ -664,6 +698,10 @@
             margin-bottom: 12px;
             width: 100%;
             font-weight: 600;
+            transition: all 0.1s ease;
+        }
+        .refresh-btn:active {
+            transform: scale(0.98);
         }
 
         .sync-status {
@@ -671,6 +709,21 @@
             text-align: center;
             margin-bottom: 10px;
             color: var(--text-light);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid white;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.6s linear infinite;
+            margin-right: 6px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         @media (max-width: 480px) {
@@ -1142,8 +1195,18 @@
         if (isAdminLoggedIn) renderAdminOrders();
     }
 
+    // FIXED: Status update without mode: 'no-cors' so we can read response
     async function updateOrderStatus(trackingId, newStatus) {
+        const selectElement = event?.target;
+        const originalText = selectElement?.innerHTML;
+        
         try {
+            // Show loading state on the select
+            if (selectElement) {
+                selectElement.style.opacity = '0.7';
+                selectElement.disabled = true;
+            }
+            
             const response = await fetch(GOOGLE_SHEET_API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -1165,58 +1228,92 @@
                 showNotification("Status Updated", `${trackingId} is now ${newStatus}`);
                 renderAdminOrders();
             } else {
-                showNotification("Error", "Failed to update status", true);
+                showNotification("Error", result.error || "Failed to update status", true);
+                // Revert the select value
+                if (selectElement) {
+                    const order = orders.find(o => o.trackingId === trackingId);
+                    if (order) selectElement.value = order.status;
+                }
             }
         } catch (error) {
             console.error("Error updating status:", error);
             showNotification("Error", "Network error. Please try again.", true);
+            // Revert the select value
+            if (selectElement) {
+                const order = orders.find(o => o.trackingId === trackingId);
+                if (order) selectElement.value = order.status;
+            }
+        } finally {
+            if (selectElement) {
+                selectElement.style.opacity = '1';
+                selectElement.disabled = false;
+            }
         }
     }
 
+    // FIXED: Track order with loading state
     async function trackOrder(trackingId) {
-        await fetchOrdersFromSheet();
+        const trackBtn = document.getElementById("searchTrackBtn");
+        const originalBtnText = trackBtn.innerHTML;
         
-        const order = orders.find(o => o.trackingId === trackingId);
-        const resultDiv = document.getElementById("trackingResult");
+        // Show loading state
+        trackBtn.innerHTML = '<span class="loading-spinner"></span> Searching...';
+        trackBtn.disabled = true;
         
-        if (!order) {
-            resultDiv.innerHTML = `<div style="background: #e74c3c; color: white; padding: 12px; border-radius: 12px; text-align: center;">Order not found. Check your ID.</div>`;
-            resultDiv.classList.add("show");
-            return;
-        }
-        
-        const currentStatus = order.status;
-        const steps = ["Pending", "Processing", "Completed", "Delivered"];
-        const currentIdx = steps.indexOf(currentStatus);
-        
-        let timelineHtml = '';
-        for (let i = 0; i < steps.length; i++) {
-            const step = steps[i];
-            let stepClass = '';
-            let icon = '○';
-            if (i < currentIdx) {
-                stepClass = 'completed';
-                icon = '✓';
-            } else if (i === currentIdx) {
-                stepClass = 'active';
-                icon = '●';
+        try {
+            await fetchOrdersFromSheet();
+            
+            const order = orders.find(o => o.trackingId === trackingId);
+            const resultDiv = document.getElementById("trackingResult");
+            
+            if (!order) {
+                resultDiv.innerHTML = `<div style="background: #e74c3c; color: white; padding: 12px; border-radius: 12px; text-align: center;">Order not found. Check your ID.</div>`;
+                resultDiv.classList.add("show");
+                return;
             }
-            timelineHtml += `<div class="status-step ${stepClass}"><div class="status-icon">${icon}</div><div class="status-label">${step}</div></div>`;
+            
+            const currentStatus = order.status;
+            const steps = ["Pending", "Processing", "Completed", "Delivered"];
+            const currentIdx = steps.indexOf(currentStatus);
+            
+            let timelineHtml = '';
+            for (let i = 0; i < steps.length; i++) {
+                const step = steps[i];
+                let stepClass = '';
+                let icon = '○';
+                if (i < currentIdx) {
+                    stepClass = 'completed';
+                    icon = '✓';
+                } else if (i === currentIdx) {
+                    stepClass = 'active';
+                    icon = '●';
+                }
+                timelineHtml += `<div class="status-step ${stepClass}"><div class="status-icon">${icon}</div><div class="status-label">${step}</div></div>`;
+            }
+            
+            resultDiv.innerHTML = `
+                <div class="tracking-card">
+                    <div class="info-row"><strong>Tracking ID:</strong> ${escapeHtml(order.trackingId)}</div>
+                    <div class="info-row"><strong>Status:</strong> <span class="status-badge status-${currentStatus.toLowerCase()}">${currentStatus}</span></div>
+                    <div class="status-timeline">${timelineHtml}</div>
+                    <div class="info-row"><span>Platform:</span><strong>${escapeHtml(order.platform)}</strong></div>
+                    <div class="info-row"><span>Service:</span><strong>${escapeHtml(order.service)}</strong></div>
+                    <div class="info-row"><span>Quantity:</span><strong>${order.quantity.toLocaleString()}</strong></div>
+                    <div class="info-row"><span>Amount:</span><strong>KSh ${order.price.toLocaleString()}</strong></div>
+                    <div class="info-row"><span>Delivery Estimate:</span><strong>${getDeliveryTime(order.quantity)}</strong></div>
+                    ${currentStatus === 'Delivered' ? '<div class="info-row" style="color: #2ecc71;"><span>🎉</span><strong>Order Delivered! Thank you for choosing Get Fans Kenya.</strong></div>' : ''}
+                </div>`;
+            resultDiv.classList.add("show");
+        } catch (error) {
+            console.error("Error tracking order:", error);
+            const resultDiv = document.getElementById("trackingResult");
+            resultDiv.innerHTML = `<div style="background: #e74c3c; color: white; padding: 12px; border-radius: 12px; text-align: center;">Error tracking order. Please try again.</div>`;
+            resultDiv.classList.add("show");
+        } finally {
+            // Restore button state
+            trackBtn.innerHTML = originalBtnText;
+            trackBtn.disabled = false;
         }
-        
-        resultDiv.innerHTML = `
-            <div class="tracking-card">
-                <div class="info-row"><strong>Tracking ID:</strong> ${escapeHtml(order.trackingId)}</div>
-                <div class="info-row"><strong>Status:</strong> <span class="status-badge status-${currentStatus.toLowerCase()}">${currentStatus}</span></div>
-                <div class="status-timeline">${timelineHtml}</div>
-                <div class="info-row"><span>Platform:</span><strong>${escapeHtml(order.platform)}</strong></div>
-                <div class="info-row"><span>Service:</span><strong>${escapeHtml(order.service)}</strong></div>
-                <div class="info-row"><span>Quantity:</span><strong>${order.quantity.toLocaleString()}</strong></div>
-                <div class="info-row"><span>Amount:</span><strong>KSh ${order.price.toLocaleString()}</strong></div>
-                <div class="info-row"><span>Delivery Estimate:</span><strong>${getDeliveryTime(order.quantity)}</strong></div>
-                ${currentStatus === 'Delivered' ? '<div class="info-row" style="color: #2ecc71;"><span>🎉</span><strong>Order Delivered! Thank you for choosing Get Fans Kenya.</strong></div>' : ''}
-            </div>`;
-        resultDiv.classList.add("show");
     }
 
     function renderReviews() {
@@ -1352,7 +1449,7 @@
     document.getElementById("closeSuccessModal").addEventListener("click", () => successModal.classList.remove("show"));
     successModal.addEventListener("click", (e) => { if (e.target === successModal) successModal.classList.remove("show"); });
 
-    // Submit order
+    // Submit order with loading state
     document.getElementById("submitOrder").addEventListener("click", async () => {
         const name = document.getElementById("customerName").value.trim();
         const profile = document.getElementById("facebookProfile").value.trim();
@@ -1389,7 +1486,7 @@
         };
 
         const btn = document.getElementById("submitOrder");
-        btn.innerHTML = '<span class="loading"></span>Processing...';
+        btn.innerHTML = '<span class="loading-spinner"></span> Processing...';
         btn.disabled = true;
         
         const saved = await saveToGoogleSheets(orderData);
@@ -1479,8 +1576,16 @@
     
     // Refresh button for orders
     document.getElementById("refreshOrdersBtn").addEventListener("click", async () => {
+        const btn = document.getElementById("refreshOrdersBtn");
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span class="loading-spinner"></span> Syncing...';
+        btn.disabled = true;
+        
         await fetchOrdersFromSheet();
         renderAdminOrders();
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
         showNotification('Refreshed', 'Orders reloaded from database');
     });
     
@@ -1511,6 +1616,11 @@
         if (!review) { showNotification('Error', 'Write your review', true); return; }
         if (selectedRating === 0) { showNotification('Error', 'Select a rating', true); return; }
         
+        const btn = document.getElementById("submitReview");
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span class="loading-spinner"></span> Submitting...';
+        btn.disabled = true;
+        
         const reviewData = { 
             type: "review", 
             name: name, 
@@ -1524,6 +1634,9 @@
         saveReviews(); 
         renderReviews(); 
         if (isAdminLoggedIn) renderAdminReviews();
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
         showNotification('Thank You', 'Your review has been posted');
         document.getElementById("reviewerName").value = ""; 
         document.getElementById("reviewText").value = ""; 
