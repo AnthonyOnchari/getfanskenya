@@ -653,6 +653,26 @@
             font-weight: 600;
         }
 
+        .refresh-btn {
+            background: var(--info);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 12px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-bottom: 12px;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .sync-status {
+            font-size: 0.65rem;
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
         @media (max-width: 480px) {
             .main-content { padding: 0 12px 12px 12px; }
             .card { padding: 16px; }
@@ -861,6 +881,8 @@
                 <div class="admin-tab active" data-tab="orders">Orders</div>
                 <div class="admin-tab" data-tab="reviews">Reviews</div>
             </div>
+            <div class="sync-status" id="syncStatus">🔄 Click refresh to sync orders from Google Sheets</div>
+            <button class="refresh-btn" id="refreshOrdersBtn">🔄 Refresh Orders from Google Sheets</button>
             <div id="adminOrdersSection" class="admin-section active">
                 <div id="ordersList"></div>
             </div>
@@ -890,8 +912,8 @@
 <a href="https://wa.me/254750600715?text=Hi" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
 
 <script>
-    // YOUR GOOGLE SHEETS WEB APP URL
-    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbytZBJEB1BFDeqV5f6m0fnFGUEO2RIoxTXNwjWuemDWh7kulZ9Hd6xl8nU_AulYRiMY/exec";
+    // ========== YOUR NEW GOOGLE SHEETS WEB APP URL ==========
+    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbylzKx591TlX8VruI-Y_bP_bIbCTfJaQXzLMG5YdhEVOqNWGhUUz32VItf_idzvhh_b/exec";
     const ADMIN_PASSWORD = "GetFans2024";
 
     let orders = [];
@@ -1019,25 +1041,79 @@
         updateUI();
     });
 
-    function loadData() {
-        const savedOrders = localStorage.getItem('getfanskenya_orders');
-        if (savedOrders) { try { orders = JSON.parse(savedOrders); } catch(e) {} }
-        
-        const savedReviews = localStorage.getItem('getfanskenya_reviews');
-        if (savedReviews) { try { reviews = JSON.parse(savedReviews); } catch(e) {} }
-        
-        if (reviews.length === 0) {
-            reviews = [
-                { id: Date.now() + 1, name: "John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 30 minutes. My page has grown so much.", date: "2 days ago" },
-                { id: Date.now() + 2, name: "Sarah W.", rating: 5, review: "Got 10,000 Instagram followers. Delivery was very fast. Will order again.", date: "5 days ago" },
-                { id: Date.now() + 3, name: "David K.", rating: 5, review: "Very reliable service. The 3,000 YouTube subscribers came in less than 30 minutes.", date: "1 week ago" }
-            ];
-            saveReviews();
+    // ========== FETCH ORDERS FROM GOOGLE SHEETS (CROSS-DEVICE SYNC) ==========
+    async function fetchOrdersFromSheet() {
+        try {
+            const syncStatus = document.getElementById("syncStatus");
+            if (syncStatus) syncStatus.innerHTML = "🔄 Syncing orders from Google Sheets...";
+            
+            const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=orders`);
+            const data = await response.json();
+            
+            if (Array.isArray(data)) {
+                // Convert sheet data to match our order format
+                orders = data.map(row => ({
+                    trackingId: row["Tracking ID"] || row.trackingId,
+                    service: row.Service || row.service,
+                    platform: row.Service ? row.Service.split(" ")[0] : "Facebook",
+                    quantity: row.Quantity || row.quantity,
+                    price: row["Price (KSh)"] || row.price,
+                    customerName: row["Customer Name"] || row.customerName,
+                    phone: row["Phone Number"] || row.phone,
+                    transactionId: row["Transaction ID"] || row.transactionId,
+                    status: row.Status || row.status || "Pending",
+                    timestamp: row.Timestamp || row.timestamp,
+                    profile: row["Facebook Profile"] || row.profile,
+                    postLink: row["Post Link"] || row.postLink
+                }));
+                
+                // Save to localStorage as cache
+                localStorage.setItem('getfanskenya_orders', JSON.stringify(orders));
+                
+                if (syncStatus) syncStatus.innerHTML = `✅ Synced ${orders.length} orders from Google Sheets`;
+                setTimeout(() => {
+                    if (syncStatus) syncStatus.innerHTML = "🔄 Click refresh to sync orders from Google Sheets";
+                }, 3000);
+                
+                return orders;
+            } else {
+                throw new Error("Invalid data format");
+            }
+        } catch (error) {
+            console.error("Error fetching orders:", error);
+            const syncStatus = document.getElementById("syncStatus");
+            if (syncStatus) syncStatus.innerHTML = "⚠️ Could not sync. Using local cache.";
+            
+            // Fallback to localStorage
+            const savedOrders = localStorage.getItem('getfanskenya_orders');
+            if (savedOrders) {
+                try { orders = JSON.parse(savedOrders); } catch(e) {}
+            }
+            return orders;
         }
-        renderReviews();
     }
 
-    function saveOrders() { localStorage.setItem('getfanskenya_orders', JSON.stringify(orders)); }
+    // ========== FETCH REVIEWS FROM GOOGLE SHEETS ==========
+    async function fetchReviewsFromSheet() {
+        try {
+            const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=reviews`);
+            const data = await response.json();
+            
+            if (Array.isArray(data) && data.length > 0) {
+                reviews = data.map(row => ({
+                    name: row.Name || row.name || "Anonymous",
+                    rating: parseInt(row.Rating || row.rating) || 5,
+                    review: row.Review || row.review || "",
+                    date: row.Timestamp || row.timestamp || new Date().toLocaleString()
+                }));
+                saveReviews();
+                renderReviews();
+            }
+        } catch (error) {
+            console.error("Error fetching reviews:", error);
+        }
+    }
+
     function saveReviews() { localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews)); }
 
     function showNotification(title, message, isError = false) {
@@ -1048,21 +1124,14 @@
         setTimeout(() => toast.remove(), 3000);
     }
 
-    // FIXED: Send data matching your Apps Script exactly
     async function saveToGoogleSheets(data) {
         try {
-            console.log("Sending data to Google Sheets:", data);
-            
-            const response = await fetch(GOOGLE_SHEET_API_URL, {
+            await fetch(GOOGLE_SHEET_API_URL, {
                 method: 'POST',
                 mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
-            
-            console.log("Order sent to Google Sheets successfully");
             return true;
         } catch (error) {
             console.error("Error saving to Google Sheets:", error);
@@ -1072,8 +1141,8 @@
 
     function addOrder(orderData) {
         orders.unshift({ ...orderData, id: Date.now(), status: "Pending", read: false });
-        saveOrders();
-        showNotification('New Order', `${orderData.customerName} - ${orderData.platform} ${orderData.service}`);
+        localStorage.setItem('getfanskenya_orders', JSON.stringify(orders));
+        showNotification('New Order', `${orderData.customerName} - ${orderData.service}`);
         if (isAdminLoggedIn) renderAdminOrders();
     }
 
@@ -1081,14 +1150,16 @@
         const orderIndex = orders.findIndex(o => o.trackingId === trackingId);
         if (orderIndex !== -1) {
             orders[orderIndex].status = newStatus;
-            saveOrders();
+            localStorage.setItem('getfanskenya_orders', JSON.stringify(orders));
             showNotification("Status Updated", `${trackingId} is now ${newStatus}`);
             renderAdminOrders();
         }
     }
 
-    function trackOrder(trackingId) {
-        loadData();
+    async function trackOrder(trackingId) {
+        // First try to get latest orders from sheet
+        await fetchOrdersFromSheet();
+        
         const order = orders.find(o => o.trackingId === trackingId);
         const resultDiv = document.getElementById("trackingResult");
         
@@ -1148,18 +1219,23 @@
         `).join('');
     }
 
-    function renderAdminOrders() {
+    async function renderAdminOrders() {
         const container = document.getElementById('ordersList');
         if (!container) return;
-        loadData();
+        
+        container.innerHTML = '<p style="text-align:center; padding:16px;">Loading orders from Google Sheets...</p>';
+        
+        await fetchOrdersFromSheet();
+        
         if (orders.length === 0) { 
             container.innerHTML = '<p style="text-align:center; padding:16px;">No orders yet. Place a test order first.</p>'; 
             return; 
         }
+        
         container.innerHTML = orders.map(o => `
             <div class="order-item">
                 <div><strong>${escapeHtml(o.trackingId)}</strong> <small>${escapeHtml(o.timestamp)}</small></div>
-                <div>${escapeHtml(o.customerName)} • ${escapeHtml(o.platform)} ${escapeHtml(o.service)}<br>📊 ${o.quantity.toLocaleString()} • 💰 KSh ${o.price.toLocaleString()}</div>
+                <div>${escapeHtml(o.customerName)} • ${escapeHtml(o.service)}<br>📊 ${o.quantity.toLocaleString()} • 💰 KSh ${o.price.toLocaleString()}</div>
                 <select class="order-status-select" data-tracking="${escapeHtml(o.trackingId)}">
                     <option value="Pending" ${o.status === "Pending" ? "selected" : ""}>⏳ Pending</option>
                     <option value="Processing" ${o.status === "Processing" ? "selected" : ""}>🔄 Processing</option>
@@ -1260,7 +1336,7 @@
     document.getElementById("closeSuccessModal").addEventListener("click", () => successModal.classList.remove("show"));
     successModal.addEventListener("click", (e) => { if (e.target === successModal) successModal.classList.remove("show"); });
 
-    // FIXED: Submit order with proper data matching your Apps Script
+    // Submit order
     document.getElementById("submitOrder").addEventListener("click", async () => {
         const name = document.getElementById("customerName").value.trim();
         const profile = document.getElementById("facebookProfile").value.trim();
@@ -1280,7 +1356,6 @@
         let fullServiceName = `${platformSettings[currentPlatform].name} ${serviceNames[currentService]}`;
         let finalTrackingId = currentTrackingId;
 
-        // Data structure matching your Apps Script exactly
         const orderData = {
             trackingId: finalTrackingId,
             service: fullServiceName,
@@ -1288,7 +1363,7 @@
             price: price,
             deliveryTime: deliveryTime,
             customerName: name,
-            profile: profile,        // This matches your script's "profile" field
+            profile: profile,
             postLink: link || "Not provided",
             phone: phone,
             transactionId: transactionId,
@@ -1301,15 +1376,12 @@
         btn.innerHTML = '<span class="loading"></span>Processing...';
         btn.disabled = true;
         
-        // Send to Google Sheets
         const saved = await saveToGoogleSheets(orderData);
         
         if (saved) {
-            // Also save to localStorage for admin panel
             addOrder(orderData);
             showSuccessModal(finalTrackingId);
             
-            // Reset form
             currentTrackingId = generateTrackingId();
             document.getElementById("trackingId").innerText = currentTrackingId;
             document.getElementById("customerName").value = "";
@@ -1389,6 +1461,13 @@
     document.getElementById("adminPassword").addEventListener("keypress", (e) => { if (e.key === "Enter") document.getElementById("submitPassword").click(); });
     passwordModalEl.addEventListener("click", (e) => { if (e.target === passwordModalEl) passwordModalEl.classList.remove("show"); });
     
+    // Refresh button for orders
+    document.getElementById("refreshOrdersBtn").addEventListener("click", async () => {
+        await fetchOrdersFromSheet();
+        renderAdminOrders();
+        showNotification('Refreshed', 'Orders reloaded from Google Sheets');
+    });
+    
     document.querySelectorAll('.admin-tab').forEach(tab => {
         tab.addEventListener('click', () => {
             document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
@@ -1396,6 +1475,8 @@
             const tn = tab.dataset.tab;
             document.getElementById('adminOrdersSection').classList.toggle('active', tn === 'orders');
             document.getElementById('adminReviewsSection').classList.toggle('active', tn === 'reviews');
+            if (tn === 'orders') renderAdminOrders();
+            if (tn === 'reviews') renderAdminReviews();
         });
     });
 
@@ -1460,9 +1541,24 @@
         localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light"); 
     });
 
-    loadData();
+    // Load initial data
+    loadReviewsFromStorage();
     updateUI();
     updateProgress();
+
+    async function loadReviewsFromStorage() {
+        const savedReviews = localStorage.getItem('getfanskenya_reviews');
+        if (savedReviews) { try { reviews = JSON.parse(savedReviews); } catch(e) {} }
+        if (reviews.length === 0) {
+            reviews = [
+                { id: Date.now() + 1, name: "John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 30 minutes. My page has grown so much.", date: "2 days ago" },
+                { id: Date.now() + 2, name: "Sarah W.", rating: 5, review: "Got 10,000 Instagram followers. Delivery was very fast. Will order again.", date: "5 days ago" },
+                { id: Date.now() + 3, name: "David K.", rating: 5, review: "Very reliable service. The 3,000 YouTube subscribers came in less than 30 minutes.", date: "1 week ago" }
+            ];
+            saveReviews();
+        }
+        renderReviews();
+    }
 </script>
 </body>
 </html>
