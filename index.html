@@ -126,7 +126,7 @@
         .status-completed, .status-delivered { background: var(--success); color: white; }
         .auto-refresh-badge { font-size: 0.6rem; color: var(--text-light); text-align: center; margin-top: 8px; }
         .whatsapp-track-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--whatsapp); color: white; padding: 10px 16px; border-radius: 40px; text-decoration: none; font-size: 0.75rem; font-weight: 600; margin-top: 16px; width: 100%; }
-        .download-receipt-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--success); color: white; padding: 12px 20px; border-radius: 40px; text-decoration: none; font-size: 0.85rem; font-weight: 600; margin-top: 12px; width: 100%; cursor: pointer; border: none; }
+        .download-receipt-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--success); color: white; padding: 10px 16px; border-radius: 40px; text-decoration: none; font-size: 0.75rem; font-weight: 600; margin-top: 12px; width: 100%; cursor: pointer; border: none; }
         .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
         .admin-tab { padding: 8px 16px; cursor: pointer; border-radius: 30px; font-size: 0.8rem; font-weight: 600; transition: all 0.1s ease; }
         .admin-tab.active { background: var(--primary); color: white; }
@@ -305,7 +305,7 @@
     </div>
 </div>
 
-<!-- SUCCESS MODAL with Track Button -->
+<!-- SUCCESS MODAL -->
 <div class="modal-overlay" id="successModal">
     <div class="modal-container">
         <div class="modal-header">
@@ -325,7 +325,7 @@
     </div>
 </div>
 
-<!-- TRACK ORDER MODAL with Auto-Refresh (2 seconds) -->
+<!-- TRACK ORDER MODAL -->
 <div class="modal-overlay" id="trackModal">
     <div class="modal-container">
         <div class="modal-header">
@@ -610,14 +610,7 @@
     }
 
     async function updateOrderStatus(trackingId, newStatus) {
-        const selectElement = event?.target;
-        
         try {
-            if (selectElement) {
-                selectElement.style.opacity = '0.7';
-                selectElement.disabled = true;
-            }
-            
             await fetch(GOOGLE_SHEET_API_URL, {
                 method: 'POST',
                 mode: 'no-cors',
@@ -645,48 +638,33 @@
         } catch (error) {
             console.error("Error updating status:", error);
             showNotification("Error", "Could not update status. Please try again.", true);
-            if (selectElement) {
-                const order = orders.find(o => o.trackingId === trackingId);
-                if (order) selectElement.value = order.status;
-            }
-        } finally {
-            if (selectElement) {
-                selectElement.style.opacity = '1';
-                selectElement.disabled = false;
-            }
         }
     }
 
-    // Mobile-friendly receipt - larger text, better spacing
+    // Mobile-friendly receipt - normal size, not zoomed
     function generateReceiptHTML(order) {
         return `
             <!DOCTYPE html>
             <html>
             <head>
                 <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Get Fans Kenya - Order Receipt</title>
                 <style>
                     * { margin: 0; padding: 0; box-sizing: border-box; }
-                    body { font-family: 'Poppins', Arial, sans-serif; padding: 20px; background: #f8f9fc; }
-                    .receipt { max-width: 500px; margin: 0 auto; background: white; border-radius: 24px; padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
-                    .header { text-align: center; border-bottom: 2px solid #0077b6; padding-bottom: 20px; margin-bottom: 20px; }
-                    .header h1 { color: #0077b6; font-size: 1.8rem; margin-bottom: 5px; }
-                    .header p { color: #666; font-size: 0.9rem; margin: 5px 0; }
-                    .order-details { margin: 20px 0; }
-                    .row { display: flex; justify-content: space-between; margin: 12px 0; padding: 8px 0; font-size: 1rem; }
-                    .total { border-top: 2px solid #0077b6; margin-top: 15px; padding-top: 15px; font-weight: bold; font-size: 1.2rem; }
-                    .thankyou { text-align: center; margin: 20px 0; font-size: 1.1rem; color: #2ecc71; font-weight: bold; }
-                    .footer { text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 0.8rem; color: #666; }
-                    .status { display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+                    body { font-family: 'Poppins', Arial, sans-serif; padding: 16px; background: #f8f9fc; }
+                    .receipt { max-width: 400px; margin: 0 auto; background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+                    .header { text-align: center; border-bottom: 2px solid #0077b6; padding-bottom: 15px; margin-bottom: 15px; }
+                    .header h1 { color: #0077b6; font-size: 1.4rem; margin-bottom: 5px; }
+                    .header p { color: #666; font-size: 0.75rem; margin: 3px 0; }
+                    .order-details { margin: 15px 0; }
+                    .row { display: flex; justify-content: space-between; margin: 8px 0; padding: 4px 0; font-size: 0.8rem; }
+                    .total { border-top: 2px solid #0077b6; margin-top: 10px; padding-top: 10px; font-weight: bold; font-size: 0.9rem; }
+                    .thankyou { text-align: center; margin: 15px 0; font-size: 0.85rem; color: #2ecc71; font-weight: bold; }
+                    .footer { text-align: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 0.7rem; color: #666; }
+                    .status { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; }
                     .status-delivered { background: #2ecc71; color: white; }
-                    hr { margin: 15px 0; border-color: #eee; }
-                    @media (max-width: 480px) {
-                        body { padding: 10px; }
-                        .receipt { padding: 18px; }
-                        .row { font-size: 0.9rem; }
-                        .header h1 { font-size: 1.5rem; }
-                    }
+                    hr { margin: 10px 0; border-color: #eee; }
                 </style>
             </head>
             <body>
@@ -737,15 +715,17 @@
         showNotification('Receipt Downloaded', 'Your receipt has been saved');
     }
 
-    // Auto-status progression after 4 seconds
+    // FIXED: Auto-status progression after 4 seconds
     async function autoProgressStatus(trackingId, currentStatus) {
-        if (currentStatus === "Pending" && autoStatusTimeout) {
-            clearTimeout(autoStatusTimeout);
+        if (currentStatus === "Pending") {
+            if (autoStatusTimeout) clearTimeout(autoStatusTimeout);
             autoStatusTimeout = setTimeout(async () => {
                 const order = orders.find(o => o.trackingId === trackingId);
                 if (order && order.status === "Pending") {
                     await updateOrderStatus(trackingId, "Processing");
                     showNotification("Status Update", "Your order is now being processed!");
+                    // Refresh the tracking display
+                    await displayTrackingResult(trackingId);
                 }
             }, 4000);
         }
