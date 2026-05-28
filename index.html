@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Get Fans Kenya | Facebook Growth</title>
+    <title>Get Fans Kenya | Facebook & Instagram Growth</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -21,6 +21,8 @@
             --border: #e5e5e5;
             --primary: #1877f2;
             --primary-dark: #0d65d9;
+            --instagram: #e4405f;
+            --instagram-dark: #c13584;
             --success: #2ecc71;
             --warning: #f39c12;
             --danger: #e74c3c;
@@ -229,6 +231,12 @@
             background: var(--primary);
             color: white;
             border-color: transparent;
+        }
+
+        /* Instagram active state uses Instagram color */
+        .platform-btn[data-platform="instagram"].active {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
         }
 
         .service-buttons {
@@ -806,10 +814,13 @@
             <div class="card">
                 <div class="step-title">Choose Package</div>
                 
-                <!-- Facebook Platform with Real Logo -->
+                <!-- Platform Buttons - Facebook & Instagram -->
                 <div class="platform-buttons" id="platformButtons">
                     <div class="platform-btn active" data-platform="facebook">
                         <i class="fab fa-facebook"></i> Facebook
+                    </div>
+                    <div class="platform-btn" data-platform="instagram">
+                        <i class="fab fa-instagram"></i> Instagram
                     </div>
                 </div>
                 
@@ -834,7 +845,7 @@
                 <div class="step-title">Your Information</div>
                 <div class="form-group">
                     <label id="usernameLabel">Facebook Profile URL <span class="required">*</span></label>
-                    <input type="text" id="facebookProfile" placeholder="Profile URL or username">
+                    <input type="text" id="profileUrl" placeholder="Profile URL or username">
                 </div>
                 <div class="form-group" id="postLinkGroup" style="display: none;">
                     <label id="postLinkLabel">Post Link <span class="required">*</span></label>
@@ -1016,26 +1027,52 @@
     let currentTrackingIdForAutoRefresh = null;
     let autoStatusTimeout = null;
 
+    // Platform settings for Facebook and Instagram
     const platformSettings = {
-        facebook: { name: "Facebook", usernameLabel: "Facebook Profile URL", usernamePlaceholder: "Profile URL or username", postLabel: "Post Link" }
+        facebook: { 
+            name: "Facebook", 
+            usernameLabel: "Facebook Profile URL", 
+            usernamePlaceholder: "Profile URL or username", 
+            postLabel: "Post Link",
+            multiplier: 1
+        },
+        instagram: { 
+            name: "Instagram", 
+            usernameLabel: "Instagram Username", 
+            usernamePlaceholder: "e.g., @username or username", 
+            postLabel: "Post/Reel Link",
+            multiplier: 5  // Instagram is 5x Facebook price
+        }
     };
 
     const serviceOptions = {
-        facebook: ["followers", "likes", "comments"]
+        facebook: ["followers", "likes", "comments"],
+        instagram: ["followers", "likes", "comments"]
     };
 
     const serviceNames = { followers: "Followers", likes: "Likes", comments: "Comments" };
 
+    // Base prices for Facebook (per unit in KES)
+    const basePrices = {
+        facebook: { followers: 0.4, likes: 0.25, comments: 0.3 }
+    };
+
     function calculatePrice(platform, service, qty) {
-        const basePrices = {
-            facebook: { followers: 0.4, likes: 0.25, comments: 0.3 }
-        };
-        const rate = basePrices[platform]?.[service] || 0.4;
+        // Get Facebook base price first
+        let facebookRate = basePrices.facebook[service] || 0.4;
+        
+        // Apply platform multiplier (Instagram = 5x Facebook)
+        let multiplier = platformSettings[platform]?.multiplier || 1;
+        let rate = facebookRate * multiplier;
+        
         let price = Math.round(qty * rate);
+        
+        // Volume discounts (apply after multiplication)
         if (qty >= 10000) price = Math.round(price * 0.9);
         if (qty >= 50000) price = Math.round(price * 0.8);
         if (qty >= 100000) price = Math.round(price * 0.7);
-        return Math.max(price, 25);
+        
+        return Math.max(price, multiplier === 5 ? 125 : 25); // Instagram minimum KSh 125 (5x25)
     }
 
     function getDeliveryTime(qty) {
@@ -1081,6 +1118,7 @@
             document.getElementById("summaryService").innerText = serviceNames[currentService];
             document.getElementById("summaryQty").innerText = currentQuantity.toLocaleString();
             document.getElementById("summaryPrice").innerText = `KSh ${price.toLocaleString()}`;
+            document.getElementById("paymentAmountStep").innerText = `KSh ${price.toLocaleString()}`;
         }
     }
 
@@ -1089,11 +1127,15 @@
         document.getElementById("priceDisplay").innerText = `KSh ${price.toLocaleString()}`;
         document.getElementById("paymentAmountStep").innerText = `KSh ${price.toLocaleString()}`;
         updateDeliveryDisplay(currentQuantity);
+        
         let showPostLink = (currentService === "likes" || currentService === "comments");
         document.getElementById("postLinkGroup").style.display = showPostLink ? "block" : "none";
         document.getElementById("postLinkLabel").innerHTML = `${platformSettings[currentPlatform].postLabel} <span class="required">*</span>`;
         document.getElementById("usernameLabel").innerHTML = `${platformSettings[currentPlatform].usernameLabel} <span class="required">*</span>`;
-        document.getElementById("facebookProfile").placeholder = platformSettings[currentPlatform].usernamePlaceholder;
+        document.getElementById("profileUrl").placeholder = platformSettings[currentPlatform].usernamePlaceholder;
+        
+        // Update tracking ID preview
+        document.getElementById("trackingId").innerText = currentTrackingId;
     }
 
     const quantityInput = document.getElementById("quantityNumber");
@@ -1133,7 +1175,7 @@
                 orders = data.map(row => ({
                     trackingId: row["Tracking ID"] || row.trackingId,
                     service: row.Service || row.service,
-                    platform: row.Service ? row.Service.split(" ")[0] : "Facebook",
+                    platform: row.Platform || row.platform || "Facebook",
                     quantity: row.Quantity || row.quantity,
                     price: row["Price (KSh)"] || row.price,
                     customerName: row["Customer Name"] || row.customerName,
@@ -1141,7 +1183,7 @@
                     transactionId: row["Transaction ID"] || row.transactionId,
                     status: row.Status || row.status || "Pending",
                     timestamp: row.Timestamp || row.timestamp,
-                    profile: row["Facebook Profile"] || row.profile,
+                    profile: row["Profile URL"] || row.profile,
                     postLink: row["Post Link"] || row.postLink
                 }));
                 
@@ -1160,7 +1202,6 @@
         }
     }
 
-    // ========== FIXED: Load reviews from Google Sheets (cross-device sync) ==========
     async function loadReviewsFromSheet() {
         try {
             const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=reviews`);
@@ -1193,15 +1234,15 @@
     function loadDefaultReviews() {
         reviews = [
             { name: "John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 30 minutes. My page has grown so much.", date: "2 days ago" },
-            { name: "Sarah W.", rating: 5, review: "Got 10,000 Facebook followers. Delivery was very fast. Will order again!", date: "5 days ago" },
+            { name: "Sarah W.", rating: 5, review: "Got 10,000 Instagram followers. Delivery was very fast. Will order again!", date: "5 days ago" },
             { name: "David K.", rating: 5, review: "Very reliable service. The 3,000 Facebook likes came in less than 30 minutes.", date: "1 week ago" },
-            { name: "Grace N.", rating: 5, review: "They delivered 50k followers as promised. My Facebook page is now verified!", date: "2 weeks ago" },
+            { name: "Grace N.", rating: 5, review: "They delivered 50k followers as promised. My page is growing fast!", date: "2 weeks ago" },
             { name: "Peter O.", rating: 4, review: "Great service, affordable prices. Got my 5k followers within the promised time.", date: "3 weeks ago" },
-            { name: "Mary A.", rating: 5, review: "Amazing experience! Facebook comments came in super fast. Highly recommend!", date: "1 month ago" },
+            { name: "Mary A.", rating: 5, review: "Amazing experience! Instagram comments came in super fast. Highly recommend!", date: "1 month ago" },
             { name: "James R.", rating: 4, review: "Good service. Delivery took about 2 hours for 15k followers but quality was great.", date: "1 month ago" },
             { name: "Lucy M.", rating: 5, review: "Fast delivery and excellent customer support. Will be ordering again soon!", date: "1 month ago" },
             { name: "Brian T.", rating: 3, review: "Service was okay. Delivery was within the time frame. Would try again.", date: "2 months ago" },
-            { name: "Faith N.", rating: 5, review: "Absolutely love this service! Got 100k Facebook followers and my page is blowing up!", date: "2 months ago" }
+            { name: "Faith N.", rating: 5, review: "Absolutely love this service! Got 100k followers and my page is blowing up!", date: "2 months ago" }
         ];
         localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
         renderReviews();
@@ -1544,7 +1585,8 @@
 
     function updateServiceButtons() {
         const container = document.getElementById('serviceButtons');
-        container.innerHTML = serviceOptions[currentPlatform].map(s => `<div class="service-btn ${s === currentService ? 'active' : ''}" data-service="${s}">${serviceNames[s]}</div>`).join('');
+        const services = serviceOptions[currentPlatform] || [];
+        container.innerHTML = services.map(s => `<div class="service-btn ${s === currentService ? 'active' : ''}" data-service="${s}">${serviceNames[s]}</div>`).join('');
         document.querySelectorAll('.service-btn').forEach(btn => { 
             btn.addEventListener('click', () => { 
                 document.querySelectorAll('.service-btn').forEach(b => b.classList.remove('active')); 
@@ -1555,9 +1597,21 @@
         });
     }
 
-    // Only one platform, so just set it
-    currentPlatform = "facebook";
-    updateServiceButtons();
+    // Platform selection handler
+    function initPlatformButtons() {
+        const platformBtns = document.querySelectorAll('.platform-btn');
+        platformBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                platformBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentPlatform = btn.dataset.platform;
+                // Reset service to followers when switching platform
+                currentService = "followers";
+                updateServiceButtons();
+                updateUI();
+            });
+        });
+    }
 
     function generateTrackingId() { return 'GFK' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substring(2, 4).toUpperCase(); }
     let currentTrackingId = generateTrackingId();
@@ -1598,7 +1652,7 @@
 
     document.getElementById("submitOrder").addEventListener("click", async () => {
         const name = document.getElementById("customerName").value.trim();
-        const profile = document.getElementById("facebookProfile").value.trim();
+        const profile = document.getElementById("profileUrl").value.trim();
         const phone = document.getElementById("customerPhone").value.trim();
         const link = document.getElementById("postLink").value.trim();
         const mpesaText = document.getElementById("mpesaConfirmation").value.trim();
@@ -1617,6 +1671,7 @@
 
         const orderData = {
             trackingId: finalTrackingId,
+            platform: platformSettings[currentPlatform].name,
             service: fullServiceName,
             quantity: currentQuantity,
             price: price,
@@ -1644,7 +1699,7 @@
             currentTrackingId = generateTrackingId();
             document.getElementById("trackingId").innerText = currentTrackingId;
             document.getElementById("customerName").value = "";
-            document.getElementById("facebookProfile").value = "";
+            document.getElementById("profileUrl").value = "";
             document.getElementById("postLink").value = "";
             document.getElementById("customerPhone").value = "";
             document.getElementById("mpesaConfirmation").value = "";
@@ -1773,7 +1828,7 @@
         };
         
         await saveToGoogleSheets(reviewData);
-        await loadReviewsFromSheet(); // Reload from sheet after submitting
+        await loadReviewsFromSheet();
         
         btn.innerHTML = originalText;
         btn.disabled = false;
@@ -1810,8 +1865,10 @@
         localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light"); 
     });
 
-    // Initialize - load reviews from Google Sheets (cross-device sync)
+    // Initialize
     async function initialize() {
+        initPlatformButtons();
+        updateServiceButtons();
         await loadReviewsFromSheet();
         updateUI();
         updateProgress();
