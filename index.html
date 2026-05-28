@@ -420,7 +420,7 @@
 
     const serviceNames = { followers: "Followers", likes: "Likes", comments: "Comments", views: "Views", subscribers: "Subscribers" };
 
-    // ========== UPDATED PRICING (7x for Instagram, TikTok, YouTube) ==========
+    // UPDATED PRICING (7x for Instagram, TikTok, YouTube)
     function calculatePrice(platform, service, qty) {
         const basePrices = {
             facebook: { followers: 0.4, likes: 0.25, comments: 0.3 },
@@ -558,7 +558,8 @@
         }
     }
 
-    async function fetchReviewsFromSheet() {
+    // ========== FIXED: Load reviews from Google Sheets (cross-device) ==========
+    async function loadReviewsFromSheet() {
         try {
             const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=reviews`);
             const data = await response.json();
@@ -570,12 +571,32 @@
                     review: row.Review || row.review || "",
                     date: row.Timestamp || row.timestamp || new Date().toLocaleString()
                 }));
-                saveReviews();
+                localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
                 renderReviews();
+            } else {
+                loadDefaultReviews();
             }
         } catch (error) {
-            console.error("Error fetching reviews:", error);
+            console.error("Error fetching reviews from sheet:", error);
+            // Fallback to localStorage
+            const savedReviews = localStorage.getItem('getfanskenya_reviews');
+            if (savedReviews) {
+                try { reviews = JSON.parse(savedReviews); } catch(e) {}
+                renderReviews();
+            } else {
+                loadDefaultReviews();
+            }
         }
+    }
+
+    function loadDefaultReviews() {
+        reviews = [
+            { name: "John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 30 minutes. My page has grown so much.", date: new Date().toLocaleString() },
+            { name: "Sarah W.", rating: 5, review: "Got 10,000 Instagram followers. Delivery was very fast. Will order again.", date: new Date().toLocaleString() },
+            { name: "David K.", rating: 5, review: "Very reliable service. The 3,000 YouTube subscribers came in less than 30 minutes.", date: new Date().toLocaleString() }
+        ];
+        localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
+        renderReviews();
     }
 
     function saveReviews() { localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews)); }
@@ -642,7 +663,6 @@
         }
     }
 
-    // Mobile-friendly receipt - normal size, not zoomed
     function generateReceiptHTML(order) {
         return `
             <!DOCTYPE html>
@@ -716,7 +736,6 @@
         showNotification('Receipt Downloaded', 'Your receipt has been saved');
     }
 
-    // Auto-status progression after 4 seconds
     async function autoProgressStatus(trackingId, currentStatus) {
         if (currentStatus === "Pending") {
             if (autoStatusTimeout) clearTimeout(autoStatusTimeout);
@@ -892,6 +911,7 @@
                 if (confirm('Delete this review?')) { 
                     reviews.splice(idx, 1); 
                     saveReviews(); 
+                    loadReviewsFromSheet(); 
                     renderReviews(); 
                     renderAdminReviews(); 
                     showNotification('Deleted', 'Review removed');
@@ -1120,7 +1140,7 @@
         });
     });
 
-    // Reviews stars
+    // ========== FIXED: Submit review - saves to sheet and reloads ==========
     let selectedRating = 0;
     document.querySelectorAll('.star-rating').forEach(star => {
         star.addEventListener('click', () => {
@@ -1128,6 +1148,7 @@
             document.querySelectorAll('.star-rating').forEach(s => parseInt(s.dataset.rating) <= selectedRating ? s.classList.add('active') : s.classList.remove('active'));
         });
     });
+    
     document.getElementById("submitReview").addEventListener("click", async () => {
         const name = document.getElementById("reviewerName").value.trim();
         const review = document.getElementById("reviewText").value.trim();
@@ -1148,19 +1169,22 @@
             timestamp: new Date().toLocaleString("en-KE") 
         };
         
-        await saveToGoogleSheets(reviewData);
-        reviews.unshift({ id: Date.now(), name: name, rating: selectedRating, review: review, date: new Date().toLocaleString() });
-        saveReviews(); 
-        renderReviews(); 
-        if (isAdminLoggedIn) renderAdminReviews();
+        const saved = await saveToGoogleSheets(reviewData);
+        
+        if (saved) {
+            // Reload reviews from sheet to show the new one to everyone
+            await loadReviewsFromSheet();
+            showNotification('Thank You', 'Your review has been posted');
+            document.getElementById("reviewerName").value = ""; 
+            document.getElementById("reviewText").value = ""; 
+            selectedRating = 0;
+            document.querySelectorAll('.star-rating').forEach(s => s.classList.remove('active'));
+        } else {
+            showNotification('Error', 'Failed to post review. Try again.', true);
+        }
         
         btn.innerHTML = originalText;
         btn.disabled = false;
-        showNotification('Thank You', 'Your review has been posted');
-        document.getElementById("reviewerName").value = ""; 
-        document.getElementById("reviewText").value = ""; 
-        selectedRating = 0;
-        document.querySelectorAll('.star-rating').forEach(s => s.classList.remove('active'));
     });
 
     // Auto-scroll reviews
@@ -1189,23 +1213,14 @@
         localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light"); 
     });
 
-    async function loadReviewsFromStorage() {
-        const savedReviews = localStorage.getItem('getfanskenya_reviews');
-        if (savedReviews) { try { reviews = JSON.parse(savedReviews); } catch(e) {} }
-        if (reviews.length === 0) {
-            reviews = [
-                { id: Date.now() + 1, name: "John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 30 minutes. My page has grown so much.", date: "2 days ago" },
-                { id: Date.now() + 2, name: "Sarah W.", rating: 5, review: "Got 10,000 Instagram followers. Delivery was very fast. Will order again.", date: "5 days ago" },
-                { id: Date.now() + 3, name: "David K.", rating: 5, review: "Very reliable service. The 3,000 YouTube subscribers came in less than 30 minutes.", date: "1 week ago" }
-            ];
-            saveReviews();
-        }
-        renderReviews();
+    // ========== FIXED: Initialize reviews from Google Sheets ==========
+    async function initialize() {
+        await loadReviewsFromSheet();
+        updateUI();
+        updateProgress();
     }
-
-    loadReviewsFromStorage();
-    updateUI();
-    updateProgress();
+    
+    initialize();
 </script>
 </body>
 </html>
