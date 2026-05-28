@@ -5,235 +5,711 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Get Fans Kenya | Social Media Growth</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --bg: #f8f9fc; --card-bg: #ffffff; --text: #1a1a2e; --text-light: #666;
-            --border: #e5e5e5; --primary: #0077b6; --primary-dark: #023e8a;
-            --success: #2ecc71; --warning: #f39c12; --danger: #e74c3c; --info: #3498db;
-            --whatsapp: #25D366; --instagram: #E4405F; --tiktok: #000000; --youtube: #FF0000;
-            --review-star: #ffc107; --delivery-fast: #2ecc71; --delivery-medium: #f39c12; --delivery-slow: #e74c3c;
-            --header-bg-start: #0077b6; --header-bg-end: #00b4d8;
+            --bg: #f8f9fc;
+            --card-bg: #ffffff;
+            --text: #1a1a2e;
+            --text-light: #666;
+            --border: #e5e5e5;
+            --primary: #0077b6;
+            --primary-dark: #023e8a;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --info: #3498db;
+            --whatsapp: #25D366;
+            --instagram: #E4405F;
+            --tiktok: #000000;
+            --youtube: #FF0000;
+            --review-star: #ffc107;
+            --delivery-fast: #2ecc71;
+            --delivery-medium: #f39c12;
+            --delivery-slow: #e74c3c;
+            --header-bg-start: #0077b6;
+            --header-bg-end: #00b4d8;
         }
+
         body.dark {
-            --bg: #121212; --card-bg: #1e1e2a; --text: #eeeeee; --text-light: #999;
-            --border: #2c2c3a; --header-bg-start: #001f3f; --header-bg-end: #023e8a;
+            --bg: #121212;
+            --card-bg: #1e1e2a;
+            --text: #eeeeee;
+            --text-light: #999;
+            --border: #2c2c3a;
+            --header-bg-start: #001f3f;
+            --header-bg-end: #023e8a;
         }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-        .sticky-header { position: sticky; top: 0; z-index: 100; background: linear-gradient(135deg, var(--header-bg-start), var(--header-bg-end)); padding: 12px 16px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-bottom: 1px solid rgba(255,255,255,0.2); }
-        .container { max-width: 550px; margin: 0 auto; }
-        .header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        h1 { font-size: 1.4rem; font-weight: 800; color: white; letter-spacing: -0.3px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .header-buttons { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
-        .track-btn, .admin-small-btn { background: rgba(255,255,255,0.2); backdrop-filter: blur(5px); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 30px; padding: 6px 14px; font-size: 0.7rem; cursor: pointer; font-weight: 600; white-space: nowrap; transition: all 0.2s ease; }
-        .track-btn:hover, .admin-small-btn:hover { background: rgba(255,255,255,0.3); transform: scale(0.98); }
-        .theme-toggle { background: rgba(255,255,255,0.2); backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.3); border-radius: 30px; padding: 5px 12px; cursor: pointer; font-size: 0.9rem; color: white; }
-        .main-content { padding: 0 16px 16px 16px; }
-        .progress-container { margin-bottom: 20px; }
-        .progress-steps { display: flex; justify-content: space-between; margin-bottom: 8px; }
-        .step-indicator { text-align: center; flex: 1; font-size: 0.65rem; color: var(--text-light); font-weight: 500; }
-        .step-indicator.active { color: var(--primary); font-weight: bold; }
-        .step-indicator.completed { color: var(--success); }
-        .progress-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
-        .progress-fill { height: 100%; width: 0%; background: var(--primary); transition: width 0.3s ease; }
-        .step { display: none; animation: fadeIn 0.3s ease; }
-        .step.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .card { background: var(--card-bg); border-radius: 20px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.1); }
-        .step-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; color: var(--primary); }
-        .platform-buttons, .service-buttons { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-        .platform-btn, .service-btn { flex: 1; padding: 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 30px; cursor: pointer; font-weight: 600; text-align: center; font-size: 0.8rem; transition: all 0.3s ease; }
-        .platform-btn:hover, .service-btn:hover { transform: translateY(-2px); }
-        .platform-btn.active, .service-btn.active { color: white; border-color: transparent; }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, var(--header-bg-start), var(--header-bg-end));
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .container {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -0.3px;
+            font-family: 'Poppins', sans-serif;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .track-btn, .admin-small-btn {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            padding: 6px 14px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .track-btn:hover, .admin-small-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(0.98);
+        }
+
+        .track-btn:active, .admin-small-btn:active {
+            transform: scale(0.95);
+        }
+
+        .theme-toggle {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            padding: 5px 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .main-content {
+            padding: 0 16px 16px 16px;
+        }
+
+        .progress-container {
+            margin-bottom: 20px;
+        }
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .step-indicator {
+            text-align: center;
+            flex: 1;
+            font-size: 0.65rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        .step-indicator.active {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        .step-indicator.completed {
+            color: var(--success);
+        }
+        .progress-bar {
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .step {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .step.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .step-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .platform-buttons, .service-buttons {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .platform-btn, .service-btn {
+            flex: 1;
+            padding: 10px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: center;
+            font-size: 0.8rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.1s ease;
+        }
+
+        .platform-btn:active, .service-btn:active {
+            transform: scale(0.97);
+        }
+
+        .platform-btn.active, .service-btn.active {
+            color: white;
+            border-color: transparent;
+        }
         .platform-btn[data-platform="facebook"].active { background: var(--primary); }
         .platform-btn[data-platform="instagram"].active { background: var(--instagram); }
         .platform-btn[data-platform="tiktok"].active { background: var(--tiktok); }
         .platform-btn[data-platform="youtube"].active { background: var(--youtube); }
         .service-btn.active { background: var(--primary); }
-        .qty-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .qty-row label { font-weight: 600; font-size: 0.85rem; min-width: 60px; }
-        .qty-row input { flex: 1; padding: 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 0.9rem; text-align: center; }
-        
-        /* Slider hint */
-        .slider-wrapper {
-            position: relative;
-            margin: 10px 0;
-        }
-        .slider-hint {
-            position: absolute;
-            right: 0;
-            top: -18px;
-            font-size: 0.6rem;
-            color: var(--text-light);
-            background: var(--bg);
-            padding: 2px 8px;
-            border-radius: 20px;
+
+        .qty-row {
             display: flex;
             align-items: center;
-            gap: 4px;
-            animation: hintBounce 1s ease infinite;
+            gap: 10px;
+            margin-bottom: 10px;
         }
-        .slider-hint i {
-            font-size: 0.5rem;
-        }
-        @keyframes hintBounce {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(5px); }
-        }
-        
+        .qty-row label { font-weight: 600; font-size: 0.85rem; min-width: 60px; font-family: 'Poppins', sans-serif; }
+        .qty-row input { flex: 1; padding: 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 0.9rem; text-align: center; }
         input[type="range"] { width: 100%; height: 4px; -webkit-appearance: none; background: var(--border); border-radius: 4px; margin: 10px 0; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--primary); border-radius: 50%; cursor: pointer; transition: transform 0.1s ease; }
-        input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.3); }
-        
-        .price-row {
-            display: flex;
-            align-items: baseline;
-            justify-content: center;
-            gap: 8px;
-            margin: 8px 0;
-            flex-wrap: wrap;
-        }
-        .price-quantity {
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text-light);
-            background: var(--bg);
-            padding: 4px 12px;
-            border-radius: 30px;
-        }
-        .price-amount {
-            font-size: 1.8rem;
-            font-weight: 800;
-            font-family: 'Inter', monospace;
-            background: linear-gradient(135deg, var(--primary), #00b4d8);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--primary); border-radius: 50%; cursor: pointer; }
+        .price { text-align: center; font-size: 1.5rem; font-weight: 800; color: var(--primary); margin: 8px 0; font-family: 'Poppins', sans-serif; }
+
         .form-group { margin-bottom: 14px; }
-        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.8rem; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.8rem; font-family: 'Poppins', sans-serif; }
         label .required { color: #e74c3c; }
-        input, textarea { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 0.9rem; transition: border 0.2s ease, box-shadow 0.2s ease; }
-        input:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,119,182,0.1); }
+        input, textarea { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 0.9rem; font-family: 'Poppins', sans-serif; }
+
         .trust-badges { display: flex; justify-content: center; gap: 8px; margin: 10px 0; flex-wrap: wrap; }
-        .badge { background: var(--bg); border: 1px solid var(--border); border-radius: 30px; padding: 4px 10px; font-size: 0.65rem; font-weight: 500; transition: all 0.2s ease; }
-        .badge:hover { transform: translateY(-2px); background: var(--primary); color: white; border-color: var(--primary); }
-        .delivery-time-note { padding: 10px; border-radius: 12px; font-size: 0.75rem; text-align: center; margin-bottom: 12px; font-weight: 600; transition: all 0.3s ease; }
-        .delivery-time-note:hover { transform: scale(1.02); }
+        .badge { background: var(--bg); border: 1px solid var(--border); border-radius: 30px; padding: 4px 10px; font-size: 0.65rem; font-weight: 500; font-family: 'Poppins', sans-serif; }
+
+        .delivery-time-note {
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            text-align: center;
+            margin-bottom: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
         .delivery-fast { background: var(--delivery-fast); color: white; }
         .delivery-medium { background: var(--delivery-medium); color: white; }
         .delivery-slow { background: var(--delivery-slow); color: white; }
-        .mpesa-container { background: linear-gradient(135deg, var(--primary-dark), #001f3f); color: white; padding: 14px; border-radius: 16px; margin: 12px 0; transition: transform 0.3s ease; }
-        .mpesa-container:hover { transform: translateY(-2px); }
-        .till-number { font-size: 1.6rem; font-weight: 800; background: white; color: var(--primary-dark); display: inline-block; padding: 4px 16px; border-radius: 40px; margin: 6px 0; font-family: 'Inter', monospace; text-align: center; width: 100%; }
+
+        .mpesa-container { background: linear-gradient(135deg, var(--primary-dark), #001f3f); color: white; padding: 14px; border-radius: 16px; margin: 12px 0; }
+        .till-number { font-size: 1.6rem; font-weight: 800; background: white; color: var(--primary-dark); display: inline-block; padding: 4px 16px; border-radius: 40px; margin: 6px 0; font-family: monospace; text-align: center; width: 100%; }
         .payment-steps { text-align: left; font-size: 0.7rem; margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.2); }
         .mpesa-field { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); }
         .mpesa-field textarea { background: rgba(255,255,255,0.95); color: #333; font-size: 0.8rem; font-family: monospace; }
-        .summary-card { background: var(--bg); border-radius: 14px; padding: 12px; margin: 12px 0; }
+
+        .summary-card {
+            background: var(--bg);
+            border-radius: 14px;
+            padding: 12px;
+            margin: 12px 0;
+        }
         .info-row { display: flex; justify-content: space-between; margin: 8px 0; font-size: 0.8rem; flex-wrap: wrap; gap: 6px; }
         hr { border-color: var(--border); margin: 8px 0; }
-        .btn-next, .btn-back, .btn-submit { padding: 12px 20px; border-radius: 40px; font-size: 0.9rem; font-weight: 700; cursor: pointer; border: none; margin-top: 6px; transition: all 0.2s ease; position: relative; overflow: hidden; }
-        .btn-next:hover, .btn-submit:hover { transform: translateY(-2px); }
-        .btn-next:active, .btn-back:active, .btn-submit:active { transform: scale(0.98); }
-        .btn-next { background: var(--primary); color: white; width: 100%; }
-        .btn-back { background: var(--border); color: var(--text); flex: 1; }
-        .btn-submit { background: var(--success); color: white; width: 100%; }
-        .button-group { display: flex; gap: 10px; margin-top: 6px; }
-        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: var(--whatsapp); color: white; border-radius: 50px; padding: 8px 14px; display: flex; align-items: center; gap: 6px; text-decoration: none; font-weight: bold; font-size: 0.75rem; z-index: 1000; transition: transform 0.2s ease; }
-        .whatsapp-float:hover { transform: scale(1.05); }
+
+        .btn-next, .btn-back, .btn-submit {
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            margin-top: 6px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.1s ease;
+        }
+        .btn-next {
+            background: var(--primary);
+            color: white;
+            width: 100%;
+        }
+        .btn-back {
+            background: var(--border);
+            color: var(--text);
+            flex: 1;
+        }
+        .btn-submit {
+            background: var(--success);
+            color: white;
+            width: 100%;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: var(--whatsapp); color: white; border-radius: 50px; padding: 8px 14px; display: flex; align-items: center; gap: 6px; text-decoration: none; font-weight: bold; font-size: 0.75rem; z-index: 1000; font-family: 'Poppins', sans-serif; }
         .loading-spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid white; border-radius: 50%; border-top-color: transparent; animation: spin 0.6s linear infinite; margin-right: 6px; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .reviews-section { margin-top: 16px; }
-        .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-        .section-header h3 { font-size: 0.9rem; font-weight: 600; }
-        .section-header span { font-size: 0.65rem; color: var(--text-light); }
-        .reviews-carousel { overflow-x: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: thin; cursor: grab; padding-bottom: 8px; margin-bottom: 8px; }
-        .reviews-carousel::-webkit-scrollbar { height: 3px; }
-        .reviews-carousel::-webkit-scrollbar-track { background: var(--border); border-radius: 10px; }
-        .reviews-carousel::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-        .reviews-items { display: inline-flex; gap: 12px; padding: 4px 0; }
-        .review-card { background: var(--card-bg); border-radius: 16px; padding: 14px; min-width: 250px; max-width: 280px; border: 1px solid var(--border); box-shadow: 0 2px 6px rgba(0,0,0,0.04); transition: all 0.3s ease; }
-        .review-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
-        .review-rating { color: var(--review-star); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 8px; }
-        .review-text { font-size: 0.8rem; line-height: 1.4; margin-bottom: 10px; color: var(--text); }
-        .review-author { font-size: 0.65rem; color: var(--text-light); font-weight: 500; }
+
+        .reviews-section {
+            margin-top: 16px;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .section-header h3 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+        .section-header span {
+            font-size: 0.65rem;
+            color: var(--text-light);
+        }
+        .reviews-carousel {
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            cursor: grab;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+        }
+        .reviews-carousel::-webkit-scrollbar {
+            height: 3px;
+        }
+        .reviews-carousel::-webkit-scrollbar-track {
+            background: var(--border);
+            border-radius: 10px;
+        }
+        .reviews-carousel::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+        .reviews-items {
+            display: inline-flex;
+            gap: 12px;
+            padding: 4px 0;
+        }
+        .review-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 14px;
+            min-width: 250px;
+            max-width: 280px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+        .review-rating {
+            color: var(--review-star);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .review-text {
+            font-size: 0.8rem;
+            line-height: 1.4;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+        .review-author {
+            font-size: 0.65rem;
+            color: var(--text-light);
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+        }
+
         .rating-input { display: flex; gap: 6px; margin-bottom: 10px; justify-content: center; }
-        .star-rating { font-size: 1.5rem; cursor: pointer; color: var(--border); transition: color 0.2s, transform 0.1s; }
-        .star-rating:hover { transform: scale(1.1); }
+        .star-rating { font-size: 1.5rem; cursor: pointer; color: var(--border); transition: color 0.2s; }
         .star-rating.active { color: var(--review-star); }
-        .btn-review { width: 100%; padding: 10px; background: var(--success); color: white; border: none; border-radius: 30px; font-size: 0.8rem; font-weight: bold; cursor: pointer; margin-top: 6px; transition: all 0.2s ease; }
-        .btn-review:hover { transform: translateY(-2px); }
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-overlay.show { display: flex; }
-        .modal-container { background: var(--card-bg); border-radius: 24px; width: 90%; max-width: 450px; max-height: 85vh; overflow-y: auto; position: relative; animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        @keyframes modalSlideIn { from { opacity: 0; transform: scale(0.95) translateY(-20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--card-bg); z-index: 10; }
-        .modal-header h3 { font-size: 1rem; font-weight: 600; }
-        .close-modal { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-light); transition: transform 0.1s; }
-        .close-modal:hover { transform: scale(1.1); }
-        .modal-body { padding: 20px; }
-        .tracking-input-group { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tracking-input-group input { flex: 1; padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); font-family: monospace; }
-        .tracking-input-group button { padding: 12px 20px; background: var(--primary); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; }
-        .tracking-input-group button:hover { transform: translateY(-2px); }
-        .tracking-result { display: none; margin-top: 16px; }
-        .tracking-result.show { display: block; }
-        .tracking-card { background: var(--bg); border-radius: 14px; padding: 14px; }
-        .status-timeline { display: flex; justify-content: space-between; margin: 16px 0; flex-wrap: wrap; }
-        .status-step { text-align: center; flex: 1; min-width: 50px; }
-        .status-icon { width: 32px; height: 32px; background: var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px; font-size: 0.8rem; transition: all 0.3s ease; }
-        .status-step.completed .status-icon { background: var(--success); color: white; }
-        .status-step.active .status-icon { background: var(--primary); color: white; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,119,182,0.4); } 70% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(0,119,182,0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,119,182,0); } }
-        .status-label { font-size: 0.6rem; font-weight: bold; }
-        .status-badge { display: inline-block; padding: 3px 8px; border-radius: 20px; font-size: 0.65rem; font-weight: 600; }
+        .btn-review { width: 100%; padding: 10px; background: var(--success); color: white; border: none; border-radius: 30px; font-size: 0.8rem; font-weight: bold; cursor: pointer; margin-top: 6px; font-family: 'Poppins', sans-serif; }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+        .modal-container {
+            background: var(--card-bg);
+            border-radius: 24px;
+            width: 90%;
+            max-width: 450px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn 0.2s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--card-bg);
+            z-index: 10;
+        }
+        .modal-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        .modal-body {
+            padding: 20px;
+        }
+
+        .tracking-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tracking-input-group input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            font-family: monospace;
+        }
+        .tracking-input-group button {
+            padding: 12px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .tracking-result {
+            display: none;
+            margin-top: 16px;
+        }
+        .tracking-result.show {
+            display: block;
+        }
+        .tracking-card {
+            background: var(--bg);
+            border-radius: 14px;
+            padding: 14px;
+        }
+        .status-timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+        .status-step {
+            text-align: center;
+            flex: 1;
+            min-width: 50px;
+        }
+        .status-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 6px;
+            font-size: 0.8rem;
+        }
+        .status-step.completed .status-icon {
+            background: var(--success);
+            color: white;
+        }
+        .status-step.active .status-icon {
+            background: var(--primary);
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,119,182,0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(0,119,182,0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,119,182,0); }
+        }
+        .status-label {
+            font-size: 0.6rem;
+            font-weight: bold;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
         .status-pending { background: var(--warning); color: #000; }
         .status-processing { background: var(--info); color: white; }
         .status-completed, .status-delivered { background: var(--success); color: white; }
-        .auto-refresh-badge { font-size: 0.6rem; color: var(--text-light); text-align: center; margin-top: 8px; }
-        .whatsapp-track-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--whatsapp); color: white; padding: 10px 16px; border-radius: 40px; text-decoration: none; font-size: 0.75rem; font-weight: 600; margin-top: 16px; width: 100%; transition: transform 0.2s; }
-        .whatsapp-track-link:hover { transform: scale(1.02); }
-        .download-receipt-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--success); color: white; padding: 10px 16px; border-radius: 40px; text-decoration: none; font-size: 0.75rem; font-weight: 600; margin-top: 12px; width: 100%; cursor: pointer; border: none; transition: transform 0.2s; }
-        .download-receipt-btn:hover { transform: translateY(-2px); }
-        .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-        .admin-tab { padding: 8px 16px; cursor: pointer; border-radius: 30px; font-size: 0.8rem; font-weight: 600; transition: all 0.2s ease; }
-        .admin-tab:hover { transform: translateY(-2px); }
-        .admin-tab.active { background: var(--primary); color: white; }
-        .admin-section { display: none; }
-        .admin-section.active { display: block; }
-        .order-item { background: var(--bg); border-radius: 12px; padding: 12px; margin-bottom: 10px; border: 1px solid var(--border); font-size: 0.75rem; transition: all 0.2s; }
-        .order-item:hover { transform: translateX(4px); }
-        .order-status-select { padding: 6px 8px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; margin-top: 8px; width: 100%; background: var(--card-bg); border: 1px solid var(--border); }
-        .review-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--border); font-size: 0.75rem; }
-        .delete-btn { background: var(--danger); color: white; border: none; border-radius: 20px; padding: 4px 12px; cursor: pointer; font-size: 0.65rem; font-weight: 600; transition: all 0.2s ease; }
-        .delete-btn:hover { transform: scale(1.05); }
-        .tracking-code { background: var(--bg); padding: 12px; border-radius: 12px; font-family: 'Inter', monospace; font-size: 1.1rem; font-weight: bold; letter-spacing: 2px; margin: 12px 0; border: 2px dashed var(--primary); }
-        .copy-btn, .track-order-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 40px; font-size: 0.9rem; cursor: pointer; font-weight: 600; transition: all 0.2s ease; margin: 5px; }
-        .copy-btn:hover, .track-order-btn:hover { transform: translateY(-2px); }
-        .track-order-btn { background: var(--info); }
-        .password-box { text-align: center; }
-        .password-box input { margin: 16px 0; text-align: center; width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); }
-        .password-box button { background: var(--primary); color: white; border: none; border-radius: 30px; padding: 10px 16px; cursor: pointer; width: 100%; margin-top: 8px; font-weight: 600; transition: all 0.2s ease; }
-        .password-box button:hover { transform: translateY(-2px); }
-        .refresh-btn { background: var(--info); color: white; border: none; border-radius: 30px; padding: 8px 12px; font-size: 0.7rem; cursor: pointer; margin-bottom: 12px; width: 100%; font-weight: 600; transition: all 0.2s ease; }
-        .refresh-btn:hover { transform: translateY(-2px); }
-        .sync-status { font-size: 0.65rem; text-align: center; margin-bottom: 10px; color: var(--text-light); }
-        .button-group-inline { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
-        
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+        .auto-refresh-badge {
+            font-size: 0.6rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 8px;
         }
-        .animate-on-scroll.animated {
-            opacity: 1;
-            transform: translateY(0);
+
+        .whatsapp-track-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--whatsapp);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 16px;
+            width: 100%;
         }
-        
+
+        .download-receipt-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--success);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 12px;
+            width: 100%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+        .admin-tab {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+        .admin-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+        .admin-section {
+            display: none;
+        }
+        .admin-section.active {
+            display: block;
+        }
+        .order-item {
+            background: var(--bg);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            font-size: 0.75rem;
+        }
+        .order-status-select {
+            padding: 6px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-top: 8px;
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            font-family: 'Poppins', sans-serif;
+        }
+        .review-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.75rem;
+        }
+        .delete-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 4px 12px;
+            cursor: pointer;
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        .tracking-code {
+            background: var(--bg);
+            padding: 12px;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin: 12px 0;
+            border: 2px dashed var(--primary);
+        }
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .password-box {
+            text-align: center;
+        }
+        .password-box input {
+            margin: 16px 0;
+            text-align: center;
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            font-family: 'Poppins', sans-serif;
+        }
+        .password-box button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 8px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .refresh-btn {
+            background: var(--info);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 12px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-bottom: 12px;
+            width: 100%;
+            font-weight: 600;
+        }
+
+        .sync-status {
+            font-size: 0.65rem;
+            text-align: center;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .button-group-inline {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
         @media (max-width: 480px) {
             .main-content { padding: 0 12px 12px 12px; }
             .card { padding: 16px; }
@@ -244,7 +720,6 @@
             h1 { font-size: 1.2rem; }
             .track-btn, .admin-small-btn { padding: 5px 10px; font-size: 0.65rem; }
             .theme-toggle { padding: 4px 10px; font-size: 0.8rem; }
-            .price-amount { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -264,14 +739,14 @@
 
 <div class="main-content">
     <div class="container">
-        <div class="trust-badges animate-on-scroll">
+        <div class="trust-badges">
             <span class="badge">Instant Start</span>
             <span class="badge">No Password</span>
             <span class="badge">Delivery Guarantee</span>
             <span class="badge">24/7 Support</span>
         </div>
 
-        <div class="progress-container animate-on-scroll">
+        <div class="progress-container">
             <div class="progress-steps">
                 <div class="step-indicator" id="step1Indicator">1. Select</div>
                 <div class="step-indicator" id="step2Indicator">2. Details</div>
@@ -283,7 +758,7 @@
         </div>
 
         <!-- STEP 1 -->
-        <div class="step active animate-on-scroll" id="step1">
+        <div class="step active" id="step1">
             <div class="card">
                 <div class="step-title">Choose Package</div>
                 <div class="platform-buttons" id="platformButtons">
@@ -297,16 +772,8 @@
                     <label>Quantity</label>
                     <input type="text" id="quantityNumber" inputmode="numeric" pattern="[0-9]*" value="3000">
                 </div>
-                <div class="slider-wrapper">
-                    <div class="slider-hint">
-                        <i class="fas fa-arrows-alt-h"></i> drag to adjust
-                    </div>
-                    <input type="range" id="quantitySlider" min="100" max="1000000" step="100" value="3000">
-                </div>
-                <div class="price-row">
-                    <span class="price-quantity" id="quantityLabel">3,000 Followers</span>
-                    <span class="price-amount" id="priceDisplay">KSh 1,199</span>
-                </div>
+                <input type="range" id="quantitySlider" min="100" max="1000000" step="100" value="3000">
+                <div class="price" id="priceDisplay">KSh 1,199</div>
                 <div class="delivery-time-note delivery-fast" id="deliveryTimeNote">
                     ⚡ <span id="deliveryEstimate">30 minutes</span> delivery
                 </div>
@@ -315,7 +782,7 @@
         </div>
 
         <!-- STEP 2 -->
-        <div class="step animate-on-scroll" id="step2">
+        <div class="step" id="step2">
             <div class="card">
                 <div class="step-title">Your Information</div>
                 <div class="form-group">
@@ -342,7 +809,7 @@
         </div>
 
         <!-- STEP 3 -->
-        <div class="step animate-on-scroll" id="step3">
+        <div class="step" id="step3">
             <div class="card">
                 <div class="step-title">Complete Payment</div>
                 <div class="mpesa-container" style="margin-top: 0;">
@@ -374,7 +841,7 @@
         </div>
 
         <!-- REVIEWS CAROUSEL SECTION -->
-        <div class="reviews-section animate-on-scroll">
+        <div class="reviews-section">
             <div class="section-header">
                 <h3>Customer Reviews</h3>
                 <span>← swipe →</span>
@@ -383,7 +850,7 @@
                 <div class="reviews-items" id="reviewsItems"></div>
             </div>
             <div class="card" style="margin-top: 8px; padding: 14px;">
-                <div style="font-weight: 600; margin-bottom: 10px; font-size: 0.8rem;">Leave a Review</div>
+                <div style="font-weight: 600; margin-bottom: 10px; font-size: 0.8rem; font-family: 'Poppins', sans-serif;">Leave a Review</div>
                 <div class="rating-input" id="ratingStars">
                     <span class="star-rating" data-rating="1">★</span>
                     <span class="star-rating" data-rating="2">★</span>
@@ -397,13 +864,13 @@
             </div>
         </div>
 
-        <footer style="text-align: center; font-size: 0.6rem; color: var(--text-light); margin: 16px 0;">
+        <footer style="text-align: center; font-size: 0.6rem; color: var(--text-light); margin: 16px 0; font-family: 'Poppins', sans-serif;">
             Get Fans Kenya • Till 8941840
         </footer>
     </div>
 </div>
 
-<!-- SUCCESS MODAL -->
+<!-- SUCCESS MODAL with Track Button -->
 <div class="modal-overlay" id="successModal">
     <div class="modal-container">
         <div class="modal-header">
@@ -423,7 +890,7 @@
     </div>
 </div>
 
-<!-- TRACK ORDER MODAL -->
+<!-- TRACK ORDER MODAL with Auto-Refresh -->
 <div class="modal-overlay" id="trackModal">
     <div class="modal-container">
         <div class="modal-header">
@@ -487,19 +954,7 @@
 <a href="https://wa.me/254750600715?text=Hi" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
 
 <script>
-    function initScrollAnimations() {
-        const animatedElements = document.querySelectorAll('.animate-on-scroll');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animated');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        animatedElements.forEach(el => observer.observe(el));
-    }
-
+    // ========== YOUR GOOGLE SHEETS WEB APP URL ==========
     const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyvxgIdpb2UP3A2LpG15em9wzKP951W7zyfJAPBR1KeVjkcrT2j3UFr5vZIh_iQ-6zyUQ/exec";
     const ADMIN_PASSWORD = "GetFans2024";
 
@@ -533,9 +988,9 @@
     function calculatePrice(platform, service, qty) {
         const basePrices = {
             facebook: { followers: 0.4, likes: 0.25, comments: 0.3 },
-            instagram: { followers: 2.8, likes: 2.1, views: 1.4 },
-            tiktok: { followers: 2.8, likes: 2.1, views: 1.4 },
-            youtube: { subscribers: 5.6, views: 1.05, likes: 2.8 }
+            instagram: { followers: 0.45, likes: 0.3, views: 0.2 },
+            tiktok: { followers: 0.5, likes: 0.35, views: 0.25 },
+            youtube: { subscribers: 0.8, views: 0.15, likes: 0.4 }
         };
         const rate = basePrices[platform]?.[service] || 0.4;
         let price = Math.round(qty * rate);
@@ -545,18 +1000,15 @@
         return Math.max(price, 25);
     }
 
-    // Updated delivery times: 1-50k = 30min, 50k-300k = 3hrs, 300k-600k = 6hrs, 600k+ = 8hrs
     function getDeliveryTime(qty) {
         if (qty <= 50000) return "30 minutes";
         if (qty <= 300000) return "3 hours";
-        if (qty <= 600000) return "6 hours";
-        return "8 hours";
+        return "6 hours";
     }
 
     function getDeliveryClass(qty) {
         if (qty <= 50000) return "delivery-fast";
         if (qty <= 300000) return "delivery-medium";
-        if (qty <= 600000) return "delivery-medium";
         return "delivery-slow";
     }
 
@@ -596,8 +1048,6 @@
 
     function updateUI() {
         let price = calculatePrice(currentPlatform, currentService, currentQuantity);
-        let serviceWord = serviceNames[currentService];
-        document.getElementById("quantityLabel").innerText = `${currentQuantity.toLocaleString()} ${serviceWord}`;
         document.getElementById("priceDisplay").innerText = `KSh ${price.toLocaleString()}`;
         document.getElementById("paymentAmountStep").innerText = `KSh ${price.toLocaleString()}`;
         updateDeliveryDisplay(currentQuantity);
@@ -605,7 +1055,7 @@
         document.getElementById("postLinkGroup").style.display = showPostLink ? "block" : "none";
         document.getElementById("postLinkLabel").innerHTML = `${platformSettings[currentPlatform].postLabel} <span class="required">*</span>`;
         document.getElementById("usernameLabel").innerHTML = `${platformSettings[currentPlatform].usernameLabel} <span class="required">*</span>`;
-        document.getElementById("facebookProfile").placeholder = platformSettings[currentPlatform].usernamePlaceholder;
+        document.getElementById("socialUsername").placeholder = platformSettings[currentPlatform].usernamePlaceholder;
     }
 
     const quantityInput = document.getElementById("quantityNumber");
@@ -636,10 +1086,12 @@
         updateUI();
     });
 
+    // ========== FETCH ORDERS FROM DATABASE ==========
     async function fetchOrdersFromSheet() {
         try {
             const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=orders`);
             const data = await response.json();
+            
             if (Array.isArray(data)) {
                 orders = data.map(row => ({
                     trackingId: row["Tracking ID"] || row.trackingId,
@@ -655,39 +1107,27 @@
                     profile: row["Facebook Profile"] || row.profile,
                     postLink: row["Post Link"] || row.postLink
                 }));
+                
                 localStorage.setItem('getfanskenya_orders', JSON.stringify(orders));
+                return orders;
+            } else {
+                throw new Error("Invalid data format");
             }
         } catch (error) {
+            console.error("Error fetching orders:", error);
             const savedOrders = localStorage.getItem('getfanskenya_orders');
-            if (savedOrders) { try { orders = JSON.parse(savedOrders); } catch(e) {} }
+            if (savedOrders) {
+                try { orders = JSON.parse(savedOrders); } catch(e) {}
+            }
+            return orders;
         }
-        return orders;
     }
 
-    // 10+ reviews (12 total)
-    function loadDefaultReviews() {
-        reviews = [
-            { name: "John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 30 minutes! My page has grown so much.", date: "2 days ago" },
-            { name: "Sarah W.", rating: 5, review: "Got 10,000 Instagram followers. Delivery was super fast. Will order again!", date: "5 days ago" },
-            { name: "David K.", rating: 5, review: "Very reliable service. The 3,000 YouTube subscribers came in less than 30 minutes.", date: "1 week ago" },
-            { name: "Grace N.", rating: 5, review: "They delivered 50k followers as promised. My Facebook page is now verified!", date: "2 weeks ago" },
-            { name: "Peter O.", rating: 4, review: "Great service, affordable prices. Got my 5k followers within the promised time.", date: "3 weeks ago" },
-            { name: "Mary A.", rating: 5, review: "Amazing experience! TikTok views came in super fast. Highly recommend!", date: "1 month ago" },
-            { name: "James R.", rating: 4, review: "Good service. Delivery took about 2 hours for 15k followers but quality was great.", date: "1 month ago" },
-            { name: "Lucy M.", rating: 5, review: "Fast delivery and excellent customer support. Will be ordering again soon!", date: "1 month ago" },
-            { name: "Brian T.", rating: 3, review: "Service was okay. Delivery was within the time frame. Would try again.", date: "2 months ago" },
-            { name: "Faith N.", rating: 5, review: "Absolutely love this service! Got 100k Facebook followers and my page is blowing up!", date: "2 months ago" },
-            { name: "Chris A.", rating: 4, review: "Good value for money. The 20k TikTok followers arrived in about 4 hours.", date: "3 months ago" },
-            { name: "Eunice K.", rating: 5, review: "Best social media growth service in Kenya! Very responsive customer care.", date: "3 months ago" }
-        ];
-        localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
-        renderReviews();
-    }
-
-    async function loadReviewsFromSheet() {
+    async function fetchReviewsFromSheet() {
         try {
             const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=reviews`);
             const data = await response.json();
+            
             if (Array.isArray(data) && data.length > 0) {
                 reviews = data.map(row => ({
                     name: row.Name || row.name || "Anonymous",
@@ -695,17 +1135,15 @@
                     review: row.Review || row.review || "",
                     date: row.Timestamp || row.timestamp || new Date().toLocaleString()
                 }));
-                localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
+                saveReviews();
                 renderReviews();
-            } else {
-                loadDefaultReviews();
             }
         } catch (error) {
-            const savedReviews = localStorage.getItem('getfanskenya_reviews');
-            if (savedReviews) { try { reviews = JSON.parse(savedReviews); } catch(e) {}; renderReviews(); }
-            else { loadDefaultReviews(); }
+            console.error("Error fetching reviews:", error);
         }
     }
+
+    function saveReviews() { localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews)); }
 
     function showNotification(title, message, isError = false) {
         const toast = document.createElement('div');
@@ -717,9 +1155,17 @@
 
     async function saveToGoogleSheets(data) {
         try {
-            await fetch(GOOGLE_SHEET_API_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            await fetch(GOOGLE_SHEET_API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
             return true;
-        } catch (error) { return false; }
+        } catch (error) {
+            console.error("Error saving:", error);
+            return false;
+        }
     }
 
     function addOrder(orderData) {
@@ -729,94 +1175,77 @@
         if (isAdminLoggedIn) renderAdminOrders();
     }
 
+    // FIXED: Status update - send as no-cors and update local storage
     async function updateOrderStatus(trackingId, newStatus) {
+        const selectElement = event?.target;
+        
         try {
-            await fetch(GOOGLE_SHEET_API_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: "updateStatus", trackingId: trackingId, newStatus: newStatus }) });
+            if (selectElement) {
+                selectElement.style.opacity = '0.7';
+                selectElement.disabled = true;
+            }
+            
+            await fetch(GOOGLE_SHEET_API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: "updateStatus",
+                    trackingId: trackingId,
+                    newStatus: newStatus
+                })
+            });
+            
             const orderIndex = orders.findIndex(o => o.trackingId === trackingId);
-            if (orderIndex !== -1) { orders[orderIndex].status = newStatus; localStorage.setItem('getfanskenya_orders', JSON.stringify(orders)); }
+            if (orderIndex !== -1) {
+                orders[orderIndex].status = newStatus;
+                localStorage.setItem('getfanskenya_orders', JSON.stringify(orders));
+            }
+            
             showNotification("Status Updated", `${trackingId} is now ${newStatus}`);
             renderAdminOrders();
-            if (currentTrackingIdForAutoRefresh === trackingId) { await displayTrackingResult(trackingId); }
-        } catch (error) { showNotification("Error", "Could not update status.", true); }
-    }
-
-    async function autoProgressStatus(trackingId, currentStatus) {
-        if (currentStatus === "Pending") {
-            if (autoStatusTimeout) clearTimeout(autoStatusTimeout);
-            autoStatusTimeout = setTimeout(async () => {
+            
+            if (currentTrackingIdForAutoRefresh === trackingId) {
+                await displayTrackingResult(trackingId);
+            }
+            
+        } catch (error) {
+            console.error("Error updating status:", error);
+            showNotification("Error", "Could not update status. Please try again.", true);
+            if (selectElement) {
                 const order = orders.find(o => o.trackingId === trackingId);
-                if (order && order.status === "Pending") {
-                    await updateOrderStatus(trackingId, "Processing");
-                    showNotification("Status Update", "Your order is now being processed!");
-                    await displayTrackingResult(trackingId);
-                }
-            }, 4000);
+                if (order) selectElement.value = order.status;
+            }
+        } finally {
+            if (selectElement) {
+                selectElement.style.opacity = '1';
+                selectElement.disabled = false;
+            }
         }
     }
 
-    async function displayTrackingResult(trackingId) {
-        await fetchOrdersFromSheet();
-        const order = orders.find(o => o.trackingId === trackingId);
-        const resultDiv = document.getElementById("trackingResult");
-        if (!order) { resultDiv.innerHTML = `<div style="background: #e74c3c; color: white; padding: 12px; border-radius: 12px; text-align: center;">Order not found. Check your ID.</div>`; resultDiv.classList.add("show"); return; }
-        const currentStatus = order.status;
-        const steps = ["Pending", "Processing", "Completed", "Delivered"];
-        const currentIdx = steps.indexOf(currentStatus);
-        let timelineHtml = '';
-        for (let i = 0; i < steps.length; i++) {
-            const step = steps[i];
-            let stepClass = '';
-            let icon = '○';
-            if (i < currentIdx) { stepClass = 'completed'; icon = '✓'; }
-            else if (i === currentIdx) { stepClass = 'active'; icon = '●'; }
-            timelineHtml += `<div class="status-step ${stepClass}"><div class="status-icon">${icon}</div><div class="status-label">${step}</div></div>`;
-        }
-        resultDiv.innerHTML = `
-            <div class="tracking-card">
-                <div class="info-row"><strong>Tracking ID:</strong> ${escapeHtml(order.trackingId)}</div>
-                <div class="info-row"><strong>Status:</strong> <span class="status-badge status-${currentStatus.toLowerCase()}">${currentStatus}</span></div>
-                <div class="status-timeline">${timelineHtml}</div>
-                <div class="info-row"><span>Platform:</span><strong>${escapeHtml(order.platform)}</strong></div>
-                <div class="info-row"><span>Service:</span><strong>${escapeHtml(order.service)}</strong></div>
-                <div class="info-row"><span>Quantity:</span><strong>${order.quantity.toLocaleString()}</strong></div>
-                <div class="info-row"><span>Amount:</span><strong>KSh ${order.price.toLocaleString()}</strong></div>
-                <div class="info-row"><span>Delivery Estimate:</span><strong>${getDeliveryTime(order.quantity)}</strong></div>
-                ${currentStatus === 'Delivered' ? `
-                    <button class="download-receipt-btn" id="downloadReceiptBtn">
-                        <i class="fas fa-download"></i> Download Receipt
-                    </button>
-                ` : ''}
-                ${currentStatus === 'Delivered' ? '<div class="info-row" style="color: #2ecc71; margin-top: 10px;"><span>🎉</span><strong>Order Delivered! Thank you for choosing Get Fans Kenya.</strong></div>' : ''}
-            </div>`;
-        resultDiv.classList.add("show");
-        const downloadBtn = document.getElementById("downloadReceiptBtn");
-        if (downloadBtn) { downloadBtn.addEventListener("click", () => downloadReceipt(order)); }
-        await autoProgressStatus(trackingId, currentStatus);
-    }
-
+    // Function to generate receipt HTML
     function generateReceiptHTML(order) {
         return `
             <!DOCTYPE html>
             <html>
             <head>
                 <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>Get Fans Kenya - Order Receipt</title>
                 <style>
-                    * { margin: 0; padding: 0; box-sizing: border-box; }
-                    body { font-family: 'Poppins', Arial, sans-serif; padding: 16px; background: #f8f9fc; }
-                    .receipt { max-width: 400px; margin: 0 auto; background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-                    .header { text-align: center; border-bottom: 2px solid #0077b6; padding-bottom: 15px; margin-bottom: 15px; }
-                    .header h1 { color: #0077b6; font-size: 1.4rem; margin-bottom: 5px; }
-                    .header p { color: #666; font-size: 0.75rem; margin: 3px 0; }
-                    .order-details { margin: 15px 0; }
-                    .row { display: flex; justify-content: space-between; margin: 8px 0; padding: 4px 0; font-size: 0.8rem; }
-                    .total { border-top: 2px solid #0077b6; margin-top: 10px; padding-top: 10px; font-weight: bold; font-size: 0.9rem; }
-                    .thankyou { text-align: center; margin: 15px 0; font-size: 0.85rem; color: #2ecc71; font-weight: bold; }
-                    .footer { text-align: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 0.7rem; color: #666; }
-                    .status { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; }
+                    body { font-family: 'Poppins', Arial, sans-serif; padding: 40px; max-width: 500px; margin: 0 auto; background: #f8f9fc; }
+                    .receipt { border: 2px solid #0077b6; border-radius: 20px; padding: 30px; background: white; }
+                    .header { text-align: center; border-bottom: 2px solid #0077b6; padding-bottom: 20px; margin-bottom: 20px; }
+                    .header h1 { color: #0077b6; margin: 0; font-size: 1.8rem; }
+                    .header p { color: #666; margin: 5px 0; }
+                    .order-details { margin: 20px 0; }
+                    .row { display: flex; justify-content: space-between; margin: 10px 0; padding: 5px 0; }
+                    .total { border-top: 2px solid #0077b6; margin-top: 15px; padding-top: 15px; font-weight: bold; font-size: 1.2rem; }
+                    .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 0.8rem; color: #666; }
+                    .thankyou { text-align: center; margin-top: 20px; font-size: 1.2rem; color: #2ecc71; }
+                    .status { display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
                     .status-delivered { background: #2ecc71; color: white; }
-                    hr { margin: 10px 0; border-color: #eee; }
+                    hr { border-color: #e5e5e5; margin: 15px 0; }
                 </style>
             </head>
             <body>
@@ -853,6 +1282,7 @@
         `;
     }
 
+    // Download receipt
     function downloadReceipt(order) {
         const receiptHtml = generateReceiptHTML(order);
         const blob = new Blob([receiptHtml], { type: 'text/html' });
@@ -867,30 +1297,107 @@
         showNotification('Receipt Downloaded', 'Your receipt has been saved');
     }
 
+    // Display tracking result with download button if delivered
+    async function displayTrackingResult(trackingId) {
+        await fetchOrdersFromSheet();
+        const order = orders.find(o => o.trackingId === trackingId);
+        const resultDiv = document.getElementById("trackingResult");
+        
+        if (!order) {
+            resultDiv.innerHTML = `<div style="background: #e74c3c; color: white; padding: 12px; border-radius: 12px; text-align: center;">Order not found. Check your ID.</div>`;
+            resultDiv.classList.add("show");
+            return;
+        }
+        
+        const currentStatus = order.status;
+        const steps = ["Pending", "Processing", "Completed", "Delivered"];
+        const currentIdx = steps.indexOf(currentStatus);
+        
+        let timelineHtml = '';
+        for (let i = 0; i < steps.length; i++) {
+            const step = steps[i];
+            let stepClass = '';
+            let icon = '○';
+            if (i < currentIdx) {
+                stepClass = 'completed';
+                icon = '✓';
+            } else if (i === currentIdx) {
+                stepClass = 'active';
+                icon = '●';
+            }
+            timelineHtml += `<div class="status-step ${stepClass}"><div class="status-icon">${icon}</div><div class="status-label">${step}</div></div>`;
+        }
+        
+        resultDiv.innerHTML = `
+            <div class="tracking-card">
+                <div class="info-row"><strong>Tracking ID:</strong> ${escapeHtml(order.trackingId)}</div>
+                <div class="info-row"><strong>Status:</strong> <span class="status-badge status-${currentStatus.toLowerCase()}">${currentStatus}</span></div>
+                <div class="status-timeline">${timelineHtml}</div>
+                <div class="info-row"><span>Platform:</span><strong>${escapeHtml(order.platform)}</strong></div>
+                <div class="info-row"><span>Service:</span><strong>${escapeHtml(order.service)}</strong></div>
+                <div class="info-row"><span>Quantity:</span><strong>${order.quantity.toLocaleString()}</strong></div>
+                <div class="info-row"><span>Amount:</span><strong>KSh ${order.price.toLocaleString()}</strong></div>
+                <div class="info-row"><span>Delivery Estimate:</span><strong>${getDeliveryTime(order.quantity)}</strong></div>
+                ${currentStatus === 'Delivered' ? `
+                    <button class="download-receipt-btn" id="downloadReceiptBtn">
+                        <i class="fas fa-download"></i> Download Receipt
+                    </button>
+                ` : ''}
+                ${currentStatus === 'Delivered' ? '<div class="info-row" style="color: #2ecc71; margin-top: 10px;"><span>🎉</span><strong>Order Delivered! Thank you for choosing Get Fans Kenya.</strong></div>' : ''}
+            </div>`;
+        resultDiv.classList.add("show");
+        
+        const downloadBtn = document.getElementById("downloadReceiptBtn");
+        if (downloadBtn) {
+            downloadBtn.addEventListener("click", () => downloadReceipt(order));
+        }
+    }
+
     async function trackOrder(trackingId, isAutoRefresh = false) {
         if (!isAutoRefresh) {
             const trackBtn = document.getElementById("searchTrackBtn");
             const originalBtnText = trackBtn.innerHTML;
             trackBtn.innerHTML = '<span class="loading-spinner"></span> Searching...';
             trackBtn.disabled = true;
+            
             try {
                 await displayTrackingResult(trackingId);
                 currentTrackingIdForAutoRefresh = trackingId;
-                if (autoRefreshInterval) clearInterval(autoRefreshInterval);
-                autoRefreshInterval = setInterval(async () => { if (currentTrackingIdForAutoRefresh) { await displayTrackingResult(currentTrackingIdForAutoRefresh); } }, 2000);
-            } catch (error) { console.error(error); }
-            finally { trackBtn.innerHTML = originalBtnText; trackBtn.disabled = false; }
-        } else { await displayTrackingResult(trackingId); }
+                
+                if (autoRefreshInterval) {
+                    clearInterval(autoRefreshInterval);
+                }
+                autoRefreshInterval = setInterval(async () => {
+                    if (currentTrackingIdForAutoRefresh) {
+                        await displayTrackingResult(currentTrackingIdForAutoRefresh);
+                    }
+                }, 2000);
+                
+            } catch (error) {
+                console.error("Error tracking order:", error);
+                const resultDiv = document.getElementById("trackingResult");
+                resultDiv.innerHTML = `<div style="background: #e74c3c; color: white; padding: 12px; border-radius: 12px; text-align: center;">Error tracking order. Please try again.</div>`;
+                resultDiv.classList.add("show");
+            } finally {
+                trackBtn.innerHTML = originalBtnText;
+                trackBtn.disabled = false;
+            }
+        } else {
+            await displayTrackingResult(trackingId);
+        }
     }
 
     function renderReviews() {
         const container = document.getElementById('reviewsItems');
         if (!container) return;
-        if (reviews.length === 0) { container.innerHTML = '<div style="padding: 20px; text-align: center;">No reviews yet</div>'; return; }
-        container.innerHTML = reviews.slice(0, 12).map(r => `
+        if (reviews.length === 0) {
+            container.innerHTML = '<div style="padding: 20px; text-align: center;">No reviews yet</div>';
+            return;
+        }
+        container.innerHTML = reviews.map(r => `
             <div class="review-card">
                 <div class="review-rating">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
-                <div class="review-text">"${escapeHtml(r.review)}"</div>
+                <div class="review-text">${escapeHtml(r.review)}</div>
                 <div class="review-author">— ${escapeHtml(r.name)}</div>
             </div>
         `).join('');
@@ -899,9 +1406,16 @@
     async function renderAdminOrders() {
         const container = document.getElementById('ordersList');
         if (!container) return;
+        
         container.innerHTML = '<p style="text-align:center; padding:16px;">Loading orders from database...</p>';
+        
         await fetchOrdersFromSheet();
-        if (orders.length === 0) { container.innerHTML = '<p style="text-align:center; padding:16px;">No orders yet. Place a test order first.</p>'; return; }
+        
+        if (orders.length === 0) { 
+            container.innerHTML = '<p style="text-align:center; padding:16px;">No orders yet. Place a test order first.</p>'; 
+            return; 
+        }
+        
         container.innerHTML = orders.map(o => `
             <div class="order-item">
                 <div><strong>${escapeHtml(o.trackingId)}</strong> <small>${escapeHtml(o.timestamp)}</small></div>
@@ -914,29 +1428,61 @@
                 </select>
             </div>
         `).join('');
-        document.querySelectorAll('.order-status-select').forEach(select => { select.addEventListener('change', function(e) { updateOrderStatus(this.dataset.tracking, this.value); }); });
+        
+        document.querySelectorAll('.order-status-select').forEach(select => {
+            select.addEventListener('change', function(e) {
+                const trackingId = this.dataset.tracking;
+                const newStatus = this.value;
+                updateOrderStatus(trackingId, newStatus);
+            });
+        });
     }
 
-    async function renderAdminReviews() {
+    function renderAdminReviews() {
         const container = document.getElementById('adminReviewsList');
         if (!container) return;
-        await loadReviewsFromSheet();
-        if (reviews.length === 0) { container.innerHTML = '<p style="text-align:center; padding:16px;">No reviews yet.</p>'; return; }
+        if (reviews.length === 0) { 
+            container.innerHTML = '<p style="text-align:center; padding:16px;">No reviews yet.</p>'; 
+            return; 
+        }
         container.innerHTML = reviews.map((r, i) => `
             <div class="review-item">
-                <div><strong>${escapeHtml(r.name)}</strong> (${'★'.repeat(r.rating)})<br><small>"${escapeHtml(r.review.substring(0, 40))}${r.review.length > 40 ? '...' : ''}"</small></div>
+                <div><strong>${escapeHtml(r.name)}</strong> (${'★'.repeat(r.rating)})<br><small>${escapeHtml(r.review.substring(0, 40))}${r.review.length > 40 ? '...' : ''}</small></div>
                 <button class="delete-btn" data-index="${i}">Delete</button>
             </div>
         `).join('');
-        document.querySelectorAll('.delete-btn').forEach(btn => { btn.addEventListener('click', (e) => { const idx = parseInt(btn.dataset.index); if (confirm('Delete this review?')) { reviews.splice(idx, 1); localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews)); renderReviews(); renderAdminReviews(); showNotification('Deleted', 'Review removed'); } }); });
+        document.querySelectorAll('.delete-btn').forEach(btn => { 
+            btn.addEventListener('click', (e) => { 
+                const idx = parseInt(btn.dataset.index); 
+                if (confirm('Delete this review?')) { 
+                    reviews.splice(idx, 1); 
+                    saveReviews(); 
+                    renderReviews(); 
+                    renderAdminReviews(); 
+                    showNotification('Deleted', 'Review removed');
+                } 
+            }); 
+        });
     }
 
-    function escapeHtml(text) { if (!text) return ''; const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+    function escapeHtml(text) { 
+        if (!text) return '';
+        const div = document.createElement('div'); 
+        div.textContent = text; 
+        return div.innerHTML; 
+    }
 
     function updateServiceButtons() {
         const container = document.getElementById('serviceButtons');
         container.innerHTML = serviceOptions[currentPlatform].map(s => `<div class="service-btn ${s === currentService ? 'active' : ''}" data-service="${s}">${serviceNames[s]}</div>`).join('');
-        document.querySelectorAll('.service-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.service-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); currentService = btn.dataset.service; updateUI(); }); });
+        document.querySelectorAll('.service-btn').forEach(btn => { 
+            btn.addEventListener('click', () => { 
+                document.querySelectorAll('.service-btn').forEach(b => b.classList.remove('active')); 
+                btn.classList.add('active'); 
+                currentService = btn.dataset.service; 
+                updateUI(); 
+            }); 
+        });
     }
 
     document.querySelectorAll('.platform-btn').forEach(btn => {
@@ -961,11 +1507,31 @@
     document.getElementById("nextToStep3").addEventListener("click", () => showStep(3));
     document.getElementById("backToStep2").addEventListener("click", () => showStep(2));
 
+    // Success Modal
     const successModal = document.getElementById("successModal");
     let lastPlacedTrackingId = "";
-    function showSuccessModal(id) { lastPlacedTrackingId = id; document.getElementById("successTrackingId").innerText = id; successModal.classList.add("show"); }
-    document.getElementById("copyTrackingBtn").addEventListener("click", () => { navigator.clipboard.writeText(document.getElementById("successTrackingId").innerText); showNotification('Copied', 'Tracking ID copied to clipboard'); });
-    document.getElementById("trackFromSuccessBtn").addEventListener("click", () => { successModal.classList.remove("show"); document.getElementById("trackingInput").value = lastPlacedTrackingId; document.getElementById("trackModal").classList.add("show"); setTimeout(() => { trackOrder(lastPlacedTrackingId); }, 500); });
+    
+    function showSuccessModal(id) {
+        lastPlacedTrackingId = id;
+        document.getElementById("successTrackingId").innerText = id;
+        successModal.classList.add("show");
+    }
+    
+    document.getElementById("copyTrackingBtn").addEventListener("click", () => { 
+        navigator.clipboard.writeText(document.getElementById("successTrackingId").innerText); 
+        showNotification('Copied', 'Tracking ID copied to clipboard');
+    });
+    
+    document.getElementById("trackFromSuccessBtn").addEventListener("click", () => {
+        successModal.classList.remove("show");
+        const trackModal = document.getElementById("trackModal");
+        document.getElementById("trackingInput").value = lastPlacedTrackingId;
+        trackModal.classList.add("show");
+        setTimeout(() => {
+            trackOrder(lastPlacedTrackingId);
+        }, 500);
+    });
+
     document.getElementById("closeSuccessModal").addEventListener("click", () => successModal.classList.remove("show"));
     successModal.addEventListener("click", (e) => { if (e.target === successModal) successModal.classList.remove("show"); });
 
@@ -988,15 +1554,32 @@
         let fullServiceName = `${platformSettings[currentPlatform].name} ${serviceNames[currentService]}`;
         let finalTrackingId = currentTrackingId;
 
-        const orderData = { trackingId: finalTrackingId, service: fullServiceName, quantity: currentQuantity, price: price, deliveryTime: deliveryTime, customerName: name, profile: profile, postLink: link || "Not provided", phone: phone, transactionId: transactionId, mpesaConfirmation: mpesaText.substring(0, 500), status: "Pending", timestamp: new Date().toLocaleString("en-KE") };
+        const orderData = {
+            trackingId: finalTrackingId,
+            service: fullServiceName,
+            quantity: currentQuantity,
+            price: price,
+            deliveryTime: deliveryTime,
+            customerName: name,
+            profile: profile,
+            postLink: link || "Not provided",
+            phone: phone,
+            transactionId: transactionId,
+            mpesaConfirmation: mpesaText.substring(0, 500),
+            status: "Pending",
+            timestamp: new Date().toLocaleString("en-KE")
+        };
 
         const btn = document.getElementById("submitOrder");
         btn.innerHTML = '<span class="loading-spinner"></span> Processing...';
         btn.disabled = true;
+        
         const saved = await saveToGoogleSheets(orderData);
+        
         if (saved) {
             addOrder(orderData);
             showSuccessModal(finalTrackingId);
+            
             currentTrackingId = generateTrackingId();
             document.getElementById("trackingId").innerText = currentTrackingId;
             document.getElementById("customerName").value = "";
@@ -1014,29 +1597,82 @@
             updateServiceButtons();
             updateUI();
             showStep(1);
+            
             showNotification('Success', 'Order placed successfully!');
-        } else { showNotification('Error', 'Failed to save order. Please try again.', true); }
+        } else {
+            showNotification('Error', 'Failed to save order. Please try again.', true);
+        }
+        
         btn.innerHTML = "Place Order";
         btn.disabled = false;
     });
 
+    // Track Modal
     const trackModal = document.getElementById("trackModal");
-    document.getElementById("trackOrderBtn").addEventListener("click", () => { trackModal.classList.add("show"); document.getElementById("trackingResult").classList.remove("show"); document.getElementById("trackingInput").value = ""; });
+    document.getElementById("trackOrderBtn").addEventListener("click", () => { 
+        trackModal.classList.add("show"); 
+        document.getElementById("trackingResult").classList.remove("show"); 
+        document.getElementById("trackingInput").value = ""; 
+    });
     document.getElementById("closeModalBtn").addEventListener("click", () => trackModal.classList.remove("show"));
-    document.getElementById("searchTrackBtn").addEventListener("click", () => { if (document.getElementById("trackingInput").value.trim()) { trackOrder(document.getElementById("trackingInput").value.trim().toUpperCase()); } else { showNotification('Error', 'Enter Tracking ID', true); } });
+    document.getElementById("searchTrackBtn").addEventListener("click", () => { 
+        if (document.getElementById("trackingInput").value.trim()) {
+            const trackingId = document.getElementById("trackingInput").value.trim().toUpperCase();
+            trackOrder(trackingId);
+        } else {
+            showNotification('Error', 'Enter Tracking ID', true);
+        }
+    });
     document.getElementById("trackingInput").addEventListener("keypress", (e) => { if (e.key === "Enter") document.getElementById("searchTrackBtn").click(); });
     trackModal.addEventListener("click", (e) => { if (e.target === trackModal) trackModal.classList.remove("show"); });
 
+    // Admin Modal
     const adminModal = document.getElementById("adminModal");
     const passwordModalEl = document.getElementById("passwordModal");
-    document.getElementById("adminSmallBtn").addEventListener("click", () => { if (isAdminLoggedIn) { renderAdminOrders(); renderAdminReviews(); adminModal.classList.add("show"); } else { passwordModalEl.classList.add("show"); } });
+    
+    document.getElementById("adminSmallBtn").addEventListener("click", () => {
+        if (isAdminLoggedIn) {
+            renderAdminOrders();
+            renderAdminReviews();
+            adminModal.classList.add("show");
+        } else {
+            passwordModalEl.classList.add("show");
+        }
+    });
+    
     document.getElementById("closeAdminModal").addEventListener("click", () => adminModal.classList.remove("show"));
     document.getElementById("closePasswordModal").addEventListener("click", () => passwordModalEl.classList.remove("show"));
-    document.getElementById("submitPassword").addEventListener("click", () => { if (document.getElementById("adminPassword").value === ADMIN_PASSWORD) { isAdminLoggedIn = true; passwordModalEl.classList.remove("show"); renderAdminOrders(); renderAdminReviews(); adminModal.classList.add("show"); showNotification('Access Granted', 'Welcome to Admin Panel'); } else { showNotification('Access Denied', 'Wrong password', true); } });
+    
+    document.getElementById("submitPassword").addEventListener("click", () => {
+        const enteredPassword = document.getElementById("adminPassword").value;
+        if (enteredPassword === ADMIN_PASSWORD) {
+            isAdminLoggedIn = true;
+            passwordModalEl.classList.remove("show");
+            renderAdminOrders();
+            renderAdminReviews();
+            adminModal.classList.add("show");
+            showNotification('Access Granted', 'Welcome to Admin Panel');
+        } else {
+            showNotification('Access Denied', 'Wrong password', true);
+        }
+    });
     document.getElementById("adminPassword").addEventListener("keypress", (e) => { if (e.key === "Enter") document.getElementById("submitPassword").click(); });
     passwordModalEl.addEventListener("click", (e) => { if (e.target === passwordModalEl) passwordModalEl.classList.remove("show"); });
-    document.getElementById("refreshOrdersBtn").addEventListener("click", async () => { await fetchOrdersFromSheet(); renderAdminOrders(); showNotification('Refreshed', 'Orders reloaded from database'); });
-
+    
+    document.getElementById("refreshOrdersBtn").addEventListener("click", async () => {
+        const btn = document.getElementById("refreshOrdersBtn");
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span class="loading-spinner"></span> Syncing...';
+        btn.disabled = true;
+        
+        await fetchOrdersFromSheet();
+        renderAdminOrders();
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        showNotification('Refreshed', 'Orders reloaded from database');
+    });
+    
     document.querySelectorAll('.admin-tab').forEach(tab => {
         tab.addEventListener('click', () => {
             document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
@@ -1049,6 +1685,7 @@
         });
     });
 
+    // Reviews stars
     let selectedRating = 0;
     document.querySelectorAll('.star-rating').forEach(star => {
         star.addEventListener('click', () => {
@@ -1062,28 +1699,40 @@
         if (!name) { showNotification('Error', 'Enter your name', true); return; }
         if (!review) { showNotification('Error', 'Write your review', true); return; }
         if (selectedRating === 0) { showNotification('Error', 'Select a rating', true); return; }
+        
         const btn = document.getElementById("submitReview");
         const originalText = btn.innerHTML;
         btn.innerHTML = '<span class="loading-spinner"></span> Submitting...';
         btn.disabled = true;
-        const reviewData = { type: "review", name: name, rating: selectedRating, review: review, timestamp: new Date().toLocaleString("en-KE") };
-        const saved = await saveToGoogleSheets(reviewData);
-        if (saved) {
-            await loadReviewsFromSheet();
-            showNotification('Thank You', 'Your review has been posted');
-            document.getElementById("reviewerName").value = "";
-            document.getElementById("reviewText").value = "";
-            selectedRating = 0;
-            document.querySelectorAll('.star-rating').forEach(s => s.classList.remove('active'));
-        } else { showNotification('Error', 'Failed to post review. Try again.', true); }
+        
+        const reviewData = { 
+            type: "review", 
+            name: name, 
+            rating: selectedRating, 
+            review: review, 
+            timestamp: new Date().toLocaleString("en-KE") 
+        };
+        
+        await saveToGoogleSheets(reviewData);
+        reviews.unshift({ id: Date.now(), name: name, rating: selectedRating, review: review, date: new Date().toLocaleString() });
+        saveReviews(); 
+        renderReviews(); 
+        if (isAdminLoggedIn) renderAdminReviews();
+        
         btn.innerHTML = originalText;
         btn.disabled = false;
+        showNotification('Thank You', 'Your review has been posted');
+        document.getElementById("reviewerName").value = ""; 
+        document.getElementById("reviewText").value = ""; 
+        selectedRating = 0;
+        document.querySelectorAll('.star-rating').forEach(s => s.classList.remove('active'));
     });
 
+    // Auto-scroll reviews
     const revCarousel = document.getElementById('reviewsCarousel');
     if (revCarousel) {
         let scrolling = false, pos = 0;
-        setInterval(() => {
+        const scrollInterval = setInterval(() => {
             if (!scrolling && revCarousel && revCarousel.scrollWidth > revCarousel.clientWidth) {
                 const max = revCarousel.scrollWidth - revCarousel.clientWidth;
                 if (max > 0) {
@@ -1097,17 +1746,31 @@
         revCarousel.addEventListener('mouseleave', () => { scrolling = false; });
     }
 
+    // Dark mode
     const themeToggle = document.getElementById("themeToggle");
     if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark");
-    themeToggle.addEventListener("click", () => { document.body.classList.toggle("dark"); localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light"); });
+    themeToggle.addEventListener("click", () => { 
+        document.body.classList.toggle("dark"); 
+        localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light"); 
+    });
 
-    async function initialize() {
-        initScrollAnimations();
-        await loadReviewsFromSheet();
-        updateUI();
-        updateProgress();
+    async function loadReviewsFromStorage() {
+        const savedReviews = localStorage.getItem('getfanskenya_reviews');
+        if (savedReviews) { try { reviews = JSON.parse(savedReviews); } catch(e) {} }
+        if (reviews.length === 0) {
+            reviews = [
+                { id: Date.now() + 1, name: "John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 30 minutes. My page has grown so much.", date: "2 days ago" },
+                { id: Date.now() + 2, name: "Sarah W.", rating: 5, review: "Got 10,000 Instagram followers. Delivery was very fast. Will order again.", date: "5 days ago" },
+                { id: Date.now() + 3, name: "David K.", rating: 5, review: "Very reliable service. The 3,000 YouTube subscribers came in less than 30 minutes.", date: "1 week ago" }
+            ];
+            saveReviews();
+        }
+        renderReviews();
     }
-    initialize();
+
+    loadReviewsFromStorage();
+    updateUI();
+    updateProgress();
 </script>
 </body>
 </html>
