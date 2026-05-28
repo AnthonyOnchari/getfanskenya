@@ -19,8 +19,8 @@
             --text: #1a1a2e;
             --text-light: #666;
             --border: #e5e5e5;
-            --primary: #0077b6;
-            --primary-dark: #023e8a;
+            --primary: #1877f2;
+            --primary-dark: #0d65d9;
             --success: #2ecc71;
             --warning: #f39c12;
             --danger: #e74c3c;
@@ -30,8 +30,8 @@
             --delivery-fast: #2ecc71;
             --delivery-medium: #f39c12;
             --delivery-slow: #e74c3c;
-            --header-bg-start: #0077b6;
-            --header-bg-end: #00b4d8;
+            --header-bg-start: #1877f2;
+            --header-bg-end: #0d65d9;
         }
 
         body.dark {
@@ -40,8 +40,8 @@
             --text: #eeeeee;
             --text-light: #999;
             --border: #2c2c3a;
-            --header-bg-start: #001f3f;
-            --header-bg-end: #023e8a;
+            --header-bg-start: #0d65d9;
+            --header-bg-end: #0a4faa;
         }
 
         body {
@@ -201,16 +201,24 @@
 
         .platform-btn {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             background: var(--bg);
             border: 1px solid var(--border);
             border-radius: 30px;
             cursor: pointer;
             font-weight: 600;
             text-align: center;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-family: 'Poppins', sans-serif;
             transition: all 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .platform-btn i {
+            font-size: 1.1rem;
         }
 
         .platform-btn:active {
@@ -669,7 +677,7 @@
             margin: 12px 0;
             border: 2px dashed var(--primary);
         }
-        .copy-btn {
+        .copy-btn, .track-order-btn {
             background: var(--primary);
             color: white;
             border: none;
@@ -678,7 +686,18 @@
             font-size: 0.9rem;
             cursor: pointer;
             font-weight: 600;
+            transition: all 0.2s ease;
+            margin: 5px;
             font-family: 'Poppins', sans-serif;
+        }
+        .track-order-btn {
+            background: var(--info);
+        }
+        .copy-btn:hover, .track-order-btn:hover {
+            transform: translateY(-2px);
+        }
+        .copy-btn:active, .track-order-btn:active {
+            transform: scale(0.98);
         }
 
         .password-box {
@@ -734,56 +753,6 @@
             margin-top: 10px;
         }
 
-        /* Fixed Track Order Button in Success Modal */
-.track-order-btn {
-    background: var(--info);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 40px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.track-order-btn:hover {
-    transform: translateY(-2px);
-    background: #2980b9;
-}
-
-.track-order-btn:active {
-    transform: scale(0.98);
-}
-
-.copy-btn {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 40px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
-
-.copy-btn:hover {
-    transform: translateY(-2px);
-    background: #005f8c;
-}
-
-.copy-btn:active {
-    transform: scale(0.98);
-}
-
-.button-group-inline {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 10px;
-}
-
         @media (max-width: 480px) {
             .main-content { padding: 0 12px 12px 12px; }
             .card { padding: 16px; }
@@ -794,6 +763,7 @@
             h1 { font-size: 1.2rem; }
             .track-btn, .admin-small-btn { padding: 5px 10px; font-size: 0.65rem; }
             .theme-toggle { padding: 4px 10px; font-size: 0.8rem; }
+            .platform-btn { font-size: 0.8rem; padding: 8px; }
         }
     </style>
 </head>
@@ -836,9 +806,11 @@
             <div class="card">
                 <div class="step-title">Choose Package</div>
                 
-                <!-- Only Facebook Platform -->
+                <!-- Facebook Platform with Real Logo -->
                 <div class="platform-buttons" id="platformButtons">
-                    <div class="platform-btn active" data-platform="facebook">📘 Facebook</div>
+                    <div class="platform-btn active" data-platform="facebook">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </div>
                 </div>
                 
                 <div class="service-buttons" id="serviceButtons"></div>
@@ -1188,7 +1160,8 @@
         }
     }
 
-    async function fetchReviewsFromSheet() {
+    // ========== FIXED: Load reviews from Google Sheets (cross-device sync) ==========
+    async function loadReviewsFromSheet() {
         try {
             const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=reviews`);
             const data = await response.json();
@@ -1200,12 +1173,38 @@
                     review: row.Review || row.review || "",
                     date: row.Timestamp || row.timestamp || new Date().toLocaleString()
                 }));
-                saveReviews();
+                localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
                 renderReviews();
+            } else {
+                loadDefaultReviews();
             }
         } catch (error) {
-            console.error("Error fetching reviews:", error);
+            console.error("Error fetching reviews from sheet:", error);
+            const savedReviews = localStorage.getItem('getfanskenya_reviews');
+            if (savedReviews) {
+                try { reviews = JSON.parse(savedReviews); } catch(e) {}
+                renderReviews();
+            } else {
+                loadDefaultReviews();
+            }
         }
+    }
+
+    function loadDefaultReviews() {
+        reviews = [
+            { name: "John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 30 minutes. My page has grown so much.", date: "2 days ago" },
+            { name: "Sarah W.", rating: 5, review: "Got 10,000 Facebook followers. Delivery was very fast. Will order again!", date: "5 days ago" },
+            { name: "David K.", rating: 5, review: "Very reliable service. The 3,000 Facebook likes came in less than 30 minutes.", date: "1 week ago" },
+            { name: "Grace N.", rating: 5, review: "They delivered 50k followers as promised. My Facebook page is now verified!", date: "2 weeks ago" },
+            { name: "Peter O.", rating: 4, review: "Great service, affordable prices. Got my 5k followers within the promised time.", date: "3 weeks ago" },
+            { name: "Mary A.", rating: 5, review: "Amazing experience! Facebook comments came in super fast. Highly recommend!", date: "1 month ago" },
+            { name: "James R.", rating: 4, review: "Good service. Delivery took about 2 hours for 15k followers but quality was great.", date: "1 month ago" },
+            { name: "Lucy M.", rating: 5, review: "Fast delivery and excellent customer support. Will be ordering again soon!", date: "1 month ago" },
+            { name: "Brian T.", rating: 3, review: "Service was okay. Delivery was within the time frame. Would try again.", date: "2 months ago" },
+            { name: "Faith N.", rating: 5, review: "Absolutely love this service! Got 100k Facebook followers and my page is blowing up!", date: "2 months ago" }
+        ];
+        localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
+        renderReviews();
     }
 
     function saveReviews() { localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews)); }
@@ -1294,47 +1293,57 @@
             <html>
             <head>
                 <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
                 <title>Get Fans Kenya - Order Receipt</title>
                 <style>
-                    body { font-family: 'Poppins', Arial, sans-serif; padding: 40px; max-width: 500px; margin: 0 auto; background: #f8f9fc; }
-                    .receipt { border: 2px solid #0077b6; border-radius: 20px; padding: 30px; background: white; }
-                    .header { text-align: center; border-bottom: 2px solid #0077b6; padding-bottom: 20px; margin-bottom: 20px; }
-                    .header h1 { color: #0077b6; margin: 0; font-size: 1.8rem; }
-                    .header p { color: #666; margin: 5px 0; }
-                    .order-details { margin: 20px 0; }
-                    .row { display: flex; justify-content: space-between; margin: 10px 0; padding: 5px 0; }
-                    .total { border-top: 2px solid #0077b6; margin-top: 15px; padding-top: 15px; font-weight: bold; font-size: 1.2rem; }
-                    .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 0.8rem; color: #666; }
-                    .thankyou { text-align: center; margin-top: 20px; font-size: 1.2rem; color: #2ecc71; }
-                    .status { display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
-                    .status-delivered { background: #2ecc71; color: white; }
-                    hr { border-color: #e5e5e5; margin: 15px 0; }
+                    * { margin: 0; padding: 0; box-sizing: border-box; }
+                    body { font-family: 'Poppins', Arial, sans-serif; padding: 16px; background: #f0f2f5; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+                    .receipt { max-width: 450px; width: 100%; margin: 0 auto; background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+                    .receipt-header { background: linear-gradient(135deg, #1877f2, #0d65d9); color: white; padding: 24px 20px; text-align: center; }
+                    .receipt-header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 4px; }
+                    .receipt-header p { font-size: 0.75rem; opacity: 0.9; }
+                    .receipt-body { padding: 24px 20px; }
+                    .status-badge { display: inline-block; background: #2ecc71; color: white; padding: 6px 16px; border-radius: 30px; font-size: 0.75rem; font-weight: 600; margin-bottom: 16px; }
+                    .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 0.85rem; }
+                    .info-label { font-weight: 600; color: #555; }
+                    .info-value { font-weight: 500; color: #1a1a2e; text-align: right; }
+                    .total-row { margin-top: 16px; padding-top: 16px; border-top: 2px solid #1877f2; display: flex; justify-content: space-between; font-weight: 700; font-size: 1rem; }
+                    .thankyou { text-align: center; margin: 20px 0; padding: 16px; background: #e8f8f5; border-radius: 16px; }
+                    .thankyou p { color: #2ecc71; font-weight: 600; font-size: 0.9rem; }
+                    .receipt-footer { background: #f8f9fc; padding: 20px; text-align: center; border-top: 1px solid #e5e5e5; }
+                    .receipt-footer p { font-size: 0.7rem; color: #666; margin: 4px 0; }
+                    hr { margin: 12px 0; border-color: #eee; }
+                    @media (max-width: 480px) {
+                        body { padding: 12px; }
+                        .receipt-header { padding: 20px 16px; }
+                        .receipt-header h1 { font-size: 1.4rem; }
+                        .receipt-body { padding: 20px 16px; }
+                        .info-row { font-size: 0.8rem; padding: 8px 0; }
+                    }
                 </style>
             </head>
             <body>
                 <div class="receipt">
-                    <div class="header">
+                    <div class="receipt-header">
                         <h1>📱 Get Fans Kenya</h1>
                         <p>Social Media Growth Services</p>
                         <p>Till Number: 8941840</p>
                     </div>
-                    <div class="order-details">
-                        <div class="row"><strong>Order Receipt</strong><span>#${escapeHtml(order.trackingId)}</span></div>
-                        <div class="row"><strong>Date:</strong><span>${escapeHtml(order.timestamp)}</span></div>
-                        <div class="row"><strong>Status:</strong><span class="status status-delivered">✓ Delivered</span></div>
+                    <div class="receipt-body">
+                        <div style="text-align: center;"><span class="status-badge">✓ DELIVERED</span></div>
+                        <div class="info-row"><span class="info-label">Order Receipt</span><span class="info-value">#${escapeHtml(order.trackingId)}</span></div>
+                        <div class="info-row"><span class="info-label">Date</span><span class="info-value">${escapeHtml(order.timestamp)}</span></div>
                         <hr>
-                        <div class="row"><strong>Customer Name:</strong><span>${escapeHtml(order.customerName)}</span></div>
-                        <div class="row"><strong>WhatsApp:</strong><span>${escapeHtml(order.phone)}</span></div>
+                        <div class="info-row"><span class="info-label">Customer Name</span><span class="info-value">${escapeHtml(order.customerName)}</span></div>
+                        <div class="info-row"><span class="info-label">WhatsApp</span><span class="info-value">${escapeHtml(order.phone)}</span></div>
                         <hr>
-                        <div class="row"><strong>Platform:</strong><span>${escapeHtml(order.platform)}</span></div>
-                        <div class="row"><strong>Service:</strong><span>${escapeHtml(order.service)}</span></div>
-                        <div class="row"><strong>Quantity:</strong><span>${order.quantity.toLocaleString()}</span></div>
-                        <div class="row total"><strong>Total Paid:</strong><span>KSh ${order.price.toLocaleString()}</span></div>
+                        <div class="info-row"><span class="info-label">Platform</span><span class="info-value">${escapeHtml(order.platform)}</span></div>
+                        <div class="info-row"><span class="info-label">Service</span><span class="info-value">${escapeHtml(order.service)}</span></div>
+                        <div class="info-row"><span class="info-label">Quantity</span><span class="info-value">${order.quantity.toLocaleString()}</span></div>
+                        <div class="total-row"><span class="info-label">Total Paid</span><span class="info-value">KSh ${order.price.toLocaleString()}</span></div>
                     </div>
-                    <div class="thankyou">
-                        🎉 Thank you for choosing Get Fans Kenya! 🎉
-                    </div>
-                    <div class="footer">
+                    <div class="thankyou"><p>🎉 Thank you for choosing Get Fans Kenya! 🎉</p></div>
+                    <div class="receipt-footer">
                         <p>Need help? WhatsApp: 0750600715</p>
                         <p>Come back soon for more growth! 🚀</p>
                         <p>www.getfanskenya.store</p>
@@ -1458,7 +1467,7 @@
         container.innerHTML = reviews.map(r => `
             <div class="review-card">
                 <div class="review-rating">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
-                <div class="review-text">${escapeHtml(r.review)}</div>
+                <div class="review-text">"${escapeHtml(r.review)}"</div>
                 <div class="review-author">— ${escapeHtml(r.name)}</div>
             </div>
         `).join('');
@@ -1508,7 +1517,7 @@
         }
         container.innerHTML = reviews.map((r, i) => `
             <div class="review-item">
-                <div><strong>${escapeHtml(r.name)}</strong> (${'★'.repeat(r.rating)})<br><small>${escapeHtml(r.review.substring(0, 40))}${r.review.length > 40 ? '...' : ''}</small></div>
+                <div><strong>${escapeHtml(r.name)}</strong> (${'★'.repeat(r.rating)})<br><small>"${escapeHtml(r.review.substring(0, 40))}${r.review.length > 40 ? '...' : ''}"</small></div>
                 <button class="delete-btn" data-index="${i}">Delete</button>
             </div>
         `).join('');
@@ -1764,10 +1773,7 @@
         };
         
         await saveToGoogleSheets(reviewData);
-        reviews.unshift({ id: Date.now(), name: name, rating: selectedRating, review: review, date: new Date().toLocaleString() });
-        saveReviews(); 
-        renderReviews(); 
-        if (isAdminLoggedIn) renderAdminReviews();
+        await loadReviewsFromSheet(); // Reload from sheet after submitting
         
         btn.innerHTML = originalText;
         btn.disabled = false;
@@ -1804,23 +1810,13 @@
         localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light"); 
     });
 
-    async function loadReviewsFromStorage() {
-        const savedReviews = localStorage.getItem('getfanskenya_reviews');
-        if (savedReviews) { try { reviews = JSON.parse(savedReviews); } catch(e) {} }
-        if (reviews.length === 0) {
-            reviews = [
-                { id: Date.now() + 1, name: "John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 30 minutes. My page has grown so much.", date: "2 days ago" },
-                { id: Date.now() + 2, name: "Sarah W.", rating: 5, review: "Got 10,000 Instagram followers. Delivery was very fast. Will order again.", date: "5 days ago" },
-                { id: Date.now() + 3, name: "David K.", rating: 5, review: "Very reliable service. The 3,000 YouTube subscribers came in less than 30 minutes.", date: "1 week ago" }
-            ];
-            saveReviews();
-        }
-        renderReviews();
+    // Initialize - load reviews from Google Sheets (cross-device sync)
+    async function initialize() {
+        await loadReviewsFromSheet();
+        updateUI();
+        updateProgress();
     }
-
-    loadReviewsFromStorage();
-    updateUI();
-    updateProgress();
+    initialize();
 </script>
 </body>
 </html>
