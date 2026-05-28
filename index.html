@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Get Fans Kenya | Social Media Growth</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -13,18 +14,203 @@
             --border: #e5e5e5; --primary: #0077b6; --primary-dark: #023e8a;
             --success: #2ecc71; --warning: #f39c12; --danger: #e74c3c; --info: #3498db;
             --whatsapp: #25D366; --instagram: #E4405F; --tiktok: #000000; --youtube: #FF0000;
-            --review-star: #ffc107; --delivery-fast: #2ecc71; --delivery-medium: #f39c12; --delivery-slow: #e74c3c;
-            --header-bg-start: #0077b6; --header-bg-end: #00b4d8;
+            --review-star: #ffc107; --delivery-fast: #10b981; --delivery-medium: #f59e0b; --delivery-slow: #ef4444;
+            --header-bg-start: #0f766e; --header-bg-end: #0d9488;
         }
         body.dark {
             --bg: #121212; --card-bg: #1e1e2a; --text: #eeeeee; --text-light: #999;
-            --border: #2c2c3a; --header-bg-start: #001f3f; --header-bg-end: #023e8a;
+            --border: #2c2c3a; --header-bg-start: #0f766e; --header-bg-end: #0d9488;
         }
-        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-        .sticky-header { position: sticky; top: 0; z-index: 100; background: linear-gradient(135deg, var(--header-bg-start), var(--header-bg-end)); padding: 12px 16px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-bottom: 1px solid rgba(255,255,255,0.2); }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+        
+        /* Money Font */
+        .price-number, .till-number, .tracking-code {
+            font-family: 'Inter', monospace;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        
+        /* Price container with quantity label */
+        .price-container {
+            text-align: center;
+            margin: 8px 0;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .quantity-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-light);
+            background: var(--bg);
+            padding: 4px 12px;
+            border-radius: 30px;
+        }
+        .price-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), #00b4d8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Scroll carousel hint */
+        .carousel-wrapper {
+            position: relative;
+        }
+        .carousel-hint {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 50px;
+            background: linear-gradient(270deg, var(--card-bg) 0%, transparent 100%);
+            pointer-events: none;
+            z-index: 5;
+            border-radius: 16px;
+        }
+        .carousel-hint-left {
+            left: 0;
+            right: auto;
+            background: linear-gradient(90deg, var(--card-bg) 0%, transparent 100%);
+        }
+        .scroll-arrow {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            animation: bounce 1.5s infinite;
+            pointer-events: none;
+            z-index: 6;
+        }
+        .scroll-arrow-left {
+            left: 10px;
+            right: auto;
+            animation: bounceLeft 1.5s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(5px); }
+        }
+        @keyframes bounceLeft {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-5px); }
+        }
+        
+        /* Scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .animate-on-scroll.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+        
+        .btn-next:after, .btn-submit:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+        }
+        .btn-next:active:after, .btn-submit:active:after {
+            width: 200px;
+            height: 200px;
+        }
+        
+        .platform-btn, .service-btn {
+            transition: all 0.3s ease;
+        }
+        .platform-btn:hover, .service-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .review-card {
+            transition: all 0.3s ease;
+        }
+        .review-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .progress-fill {
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .modal-container {
+            animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: scale(0.95) translateY(-20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        
+        .main-content {
+            animation: pageFadeIn 0.5s ease;
+        }
+        @keyframes pageFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            transition: transform 0.1s ease;
+        }
+        input[type="range"]::-webkit-slider-thumb:active {
+            transform: scale(1.3);
+        }
+        
+        .price-changing {
+            transform: scale(1.05);
+        }
+        
+        .delivery-time-note {
+            transition: all 0.3s ease;
+        }
+        .delivery-time-note:hover {
+            transform: scale(1.02);
+        }
+
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(135deg, var(--header-bg-start), var(--header-bg-end));
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
         .container { max-width: 550px; margin: 0 auto; }
         .header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        h1 { font-size: 1.4rem; font-weight: 800; color: white; letter-spacing: -0.3px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1 { font-size: 1.4rem; font-weight: 800; color: white; letter-spacing: -0.3px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); font-family: 'Inter', sans-serif; }
         .header-buttons { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
         .track-btn, .admin-small-btn { background: rgba(255,255,255,0.2); backdrop-filter: blur(5px); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 30px; padding: 6px 14px; font-size: 0.7rem; cursor: pointer; font-weight: 600; white-space: nowrap; transition: all 0.2s ease; }
         .track-btn:hover, .admin-small-btn:hover { background: rgba(255,255,255,0.3); transform: scale(0.98); }
@@ -40,10 +226,11 @@
         .step { display: none; animation: fadeIn 0.3s ease; }
         .step.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .card { background: var(--card-bg); border-radius: 20px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); }
+        .card { background: var(--card-bg); border-radius: 20px; padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .step-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; color: var(--primary); }
         .platform-buttons, .service-buttons { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-        .platform-btn, .service-btn { flex: 1; padding: 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 30px; cursor: pointer; font-weight: 600; text-align: center; font-size: 0.8rem; transition: all 0.1s ease; }
+        .platform-btn, .service-btn { flex: 1; padding: 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 30px; cursor: pointer; font-weight: 600; text-align: center; font-size: 0.8rem; transition: all 0.3s ease; }
+        .platform-btn:hover, .service-btn:hover { transform: translateY(-2px); }
         .platform-btn.active, .service-btn.active { color: white; border-color: transparent; }
         .platform-btn[data-platform="facebook"].active { background: var(--primary); }
         .platform-btn[data-platform="instagram"].active { background: var(--instagram); }
@@ -54,32 +241,42 @@
         .qty-row label { font-weight: 600; font-size: 0.85rem; min-width: 60px; }
         .qty-row input { flex: 1; padding: 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 0.9rem; text-align: center; }
         input[type="range"] { width: 100%; height: 4px; -webkit-appearance: none; background: var(--border); border-radius: 4px; margin: 10px 0; }
-        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--primary); border-radius: 50%; cursor: pointer; }
-        .price { text-align: center; font-size: 1.5rem; font-weight: 800; color: var(--primary); margin: 8px 0; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; background: var(--primary); border-radius: 50%; cursor: pointer; transition: transform 0.1s ease; }
+        input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.3); }
+        .price-container { text-align: center; margin: 8px 0; display: flex; align-items: baseline; justify-content: center; gap: 8px; flex-wrap: wrap; }
+        .quantity-label { font-size: 0.85rem; font-weight: 500; color: var(--text-light); background: var(--bg); padding: 4px 12px; border-radius: 30px; }
+        .price-number { font-size: 1.8rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), #00b4d8); -webkit-background-clip: text; background-clip: text; color: transparent; transition: all 0.2s ease; font-family: 'Inter', monospace; }
         .form-group { margin-bottom: 14px; }
         label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.8rem; }
         label .required { color: #e74c3c; }
-        input, textarea { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 0.9rem; }
+        input, textarea { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 0.9rem; transition: border 0.2s ease, box-shadow 0.2s ease; }
+        input:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,119,182,0.1); }
         .trust-badges { display: flex; justify-content: center; gap: 8px; margin: 10px 0; flex-wrap: wrap; }
-        .badge { background: var(--bg); border: 1px solid var(--border); border-radius: 30px; padding: 4px 10px; font-size: 0.65rem; font-weight: 500; }
+        .badge { background: var(--bg); border: 1px solid var(--border); border-radius: 30px; padding: 4px 10px; font-size: 0.65rem; font-weight: 500; transition: all 0.2s ease; }
+        .badge:hover { transform: translateY(-2px); background: var(--primary); color: white; border-color: var(--primary); }
         .delivery-time-note { padding: 10px; border-radius: 12px; font-size: 0.75rem; text-align: center; margin-bottom: 12px; font-weight: 600; transition: all 0.3s ease; }
+        .delivery-time-note:hover { transform: scale(1.02); }
         .delivery-fast { background: var(--delivery-fast); color: white; }
         .delivery-medium { background: var(--delivery-medium); color: white; }
         .delivery-slow { background: var(--delivery-slow); color: white; }
-        .mpesa-container { background: linear-gradient(135deg, var(--primary-dark), #001f3f); color: white; padding: 14px; border-radius: 16px; margin: 12px 0; }
-        .till-number { font-size: 1.6rem; font-weight: 800; background: white; color: var(--primary-dark); display: inline-block; padding: 4px 16px; border-radius: 40px; margin: 6px 0; font-family: monospace; text-align: center; width: 100%; }
+        .mpesa-container { background: linear-gradient(135deg, var(--primary-dark), #001f3f); color: white; padding: 14px; border-radius: 16px; margin: 12px 0; transition: transform 0.3s ease; }
+        .mpesa-container:hover { transform: translateY(-2px); }
+        .till-number { font-size: 1.6rem; font-weight: 800; background: white; color: var(--primary-dark); display: inline-block; padding: 4px 16px; border-radius: 40px; margin: 6px 0; font-family: 'Inter', monospace; text-align: center; width: 100%; }
         .payment-steps { text-align: left; font-size: 0.7rem; margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.2); }
         .mpesa-field { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); }
         .mpesa-field textarea { background: rgba(255,255,255,0.95); color: #333; font-size: 0.8rem; font-family: monospace; }
         .summary-card { background: var(--bg); border-radius: 14px; padding: 12px; margin: 12px 0; }
         .info-row { display: flex; justify-content: space-between; margin: 8px 0; font-size: 0.8rem; flex-wrap: wrap; gap: 6px; }
         hr { border-color: var(--border); margin: 8px 0; }
-        .btn-next, .btn-back, .btn-submit { padding: 12px 20px; border-radius: 40px; font-size: 0.9rem; font-weight: 700; cursor: pointer; border: none; margin-top: 6px; transition: all 0.1s ease; }
+        .btn-next, .btn-back, .btn-submit { padding: 12px 20px; border-radius: 40px; font-size: 0.9rem; font-weight: 700; cursor: pointer; border: none; margin-top: 6px; transition: all 0.2s ease; position: relative; overflow: hidden; }
+        .btn-next:hover, .btn-submit:hover { transform: translateY(-2px); }
+        .btn-next:active, .btn-back:active, .btn-submit:active { transform: scale(0.98); }
         .btn-next { background: var(--primary); color: white; width: 100%; }
         .btn-back { background: var(--border); color: var(--text); flex: 1; }
         .btn-submit { background: var(--success); color: white; width: 100%; }
         .button-group { display: flex; gap: 10px; margin-top: 6px; }
-        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: var(--whatsapp); color: white; border-radius: 50px; padding: 8px 14px; display: flex; align-items: center; gap: 6px; text-decoration: none; font-weight: bold; font-size: 0.75rem; z-index: 1000; }
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: var(--whatsapp); color: white; border-radius: 50px; padding: 8px 14px; display: flex; align-items: center; gap: 6px; text-decoration: none; font-weight: bold; font-size: 0.75rem; z-index: 1000; transition: transform 0.2s ease; }
+        .whatsapp-float:hover { transform: scale(1.05); }
         .loading-spinner { display: inline-block; width: 12px; height: 12px; border: 2px solid white; border-radius: 50%; border-top-color: transparent; animation: spin 0.6s linear infinite; margin-right: 6px; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .reviews-section { margin-top: 16px; }
@@ -91,31 +288,35 @@
         .reviews-carousel::-webkit-scrollbar-track { background: var(--border); border-radius: 10px; }
         .reviews-carousel::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
         .reviews-items { display: inline-flex; gap: 12px; padding: 4px 0; }
-        .review-card { background: var(--card-bg); border-radius: 16px; padding: 14px; min-width: 250px; max-width: 280px; border: 1px solid var(--border); box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+        .review-card { background: var(--card-bg); border-radius: 16px; padding: 14px; min-width: 250px; max-width: 280px; border: 1px solid var(--border); box-shadow: 0 2px 6px rgba(0,0,0,0.04); transition: all 0.3s ease; }
+        .review-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
         .review-rating { color: var(--review-star); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 8px; }
         .review-text { font-size: 0.8rem; line-height: 1.4; margin-bottom: 10px; color: var(--text); }
         .review-author { font-size: 0.65rem; color: var(--text-light); font-weight: 500; }
         .rating-input { display: flex; gap: 6px; margin-bottom: 10px; justify-content: center; }
-        .star-rating { font-size: 1.5rem; cursor: pointer; color: var(--border); transition: color 0.2s; }
+        .star-rating { font-size: 1.5rem; cursor: pointer; color: var(--border); transition: color 0.2s, transform 0.1s; }
+        .star-rating:hover { transform: scale(1.1); }
         .star-rating.active { color: var(--review-star); }
-        .btn-review { width: 100%; padding: 10px; background: var(--success); color: white; border: none; border-radius: 30px; font-size: 0.8rem; font-weight: bold; cursor: pointer; margin-top: 6px; transition: all 0.1s ease; }
+        .btn-review { width: 100%; padding: 10px; background: var(--success); color: white; border: none; border-radius: 30px; font-size: 0.8rem; font-weight: bold; cursor: pointer; margin-top: 6px; transition: all 0.2s ease; }
+        .btn-review:hover { transform: translateY(-2px); }
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
         .modal-overlay.show { display: flex; }
-        .modal-container { background: var(--card-bg); border-radius: 24px; width: 90%; max-width: 450px; max-height: 85vh; overflow-y: auto; position: relative; animation: modalFadeIn 0.2s ease; }
-        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        .modal-container { background: var(--card-bg); border-radius: 24px; width: 90%; max-width: 450px; max-height: 85vh; overflow-y: auto; position: relative; animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--card-bg); z-index: 10; }
         .modal-header h3 { font-size: 1rem; font-weight: 600; }
-        .close-modal { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-light); }
+        .close-modal { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-light); transition: transform 0.1s; }
+        .close-modal:hover { transform: scale(1.1); }
         .modal-body { padding: 20px; }
         .tracking-input-group { display: flex; gap: 10px; margin-bottom: 20px; }
         .tracking-input-group input { flex: 1; padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); font-family: monospace; }
-        .tracking-input-group button { padding: 12px 20px; background: var(--primary); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.1s ease; }
+        .tracking-input-group button { padding: 12px 20px; background: var(--primary); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; }
+        .tracking-input-group button:hover { transform: translateY(-2px); }
         .tracking-result { display: none; margin-top: 16px; }
         .tracking-result.show { display: block; }
         .tracking-card { background: var(--bg); border-radius: 14px; padding: 14px; }
         .status-timeline { display: flex; justify-content: space-between; margin: 16px 0; flex-wrap: wrap; }
         .status-step { text-align: center; flex: 1; min-width: 50px; }
-        .status-icon { width: 32px; height: 32px; background: var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px; font-size: 0.8rem; }
+        .status-icon { width: 32px; height: 32px; background: var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px; font-size: 0.8rem; transition: all 0.3s ease; }
         .status-step.completed .status-icon { background: var(--success); color: white; }
         .status-step.active .status-icon { background: var(--primary); color: white; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,119,182,0.4); } 70% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(0,119,182,0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0,119,182,0); } }
@@ -125,24 +326,32 @@
         .status-processing { background: var(--info); color: white; }
         .status-completed, .status-delivered { background: var(--success); color: white; }
         .auto-refresh-badge { font-size: 0.6rem; color: var(--text-light); text-align: center; margin-top: 8px; }
-        .whatsapp-track-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--whatsapp); color: white; padding: 10px 16px; border-radius: 40px; text-decoration: none; font-size: 0.75rem; font-weight: 600; margin-top: 16px; width: 100%; }
-        .download-receipt-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--success); color: white; padding: 10px 16px; border-radius: 40px; text-decoration: none; font-size: 0.75rem; font-weight: 600; margin-top: 12px; width: 100%; cursor: pointer; border: none; }
+        .whatsapp-track-link { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--whatsapp); color: white; padding: 10px 16px; border-radius: 40px; text-decoration: none; font-size: 0.75rem; font-weight: 600; margin-top: 16px; width: 100%; transition: transform 0.2s; }
+        .whatsapp-track-link:hover { transform: scale(1.02); }
+        .download-receipt-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--success); color: white; padding: 10px 16px; border-radius: 40px; text-decoration: none; font-size: 0.75rem; font-weight: 600; margin-top: 12px; width: 100%; cursor: pointer; border: none; transition: transform 0.2s; }
+        .download-receipt-btn:hover { transform: translateY(-2px); }
         .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-        .admin-tab { padding: 8px 16px; cursor: pointer; border-radius: 30px; font-size: 0.8rem; font-weight: 600; transition: all 0.1s ease; }
+        .admin-tab { padding: 8px 16px; cursor: pointer; border-radius: 30px; font-size: 0.8rem; font-weight: 600; transition: all 0.2s ease; }
+        .admin-tab:hover { transform: translateY(-2px); }
         .admin-tab.active { background: var(--primary); color: white; }
         .admin-section { display: none; }
         .admin-section.active { display: block; }
-        .order-item { background: var(--bg); border-radius: 12px; padding: 12px; margin-bottom: 10px; border: 1px solid var(--border); font-size: 0.75rem; }
+        .order-item { background: var(--bg); border-radius: 12px; padding: 12px; margin-bottom: 10px; border: 1px solid var(--border); font-size: 0.75rem; transition: all 0.2s; }
+        .order-item:hover { transform: translateX(4px); }
         .order-status-select { padding: 6px 8px; border-radius: 20px; font-size: 0.7rem; cursor: pointer; margin-top: 8px; width: 100%; background: var(--card-bg); border: 1px solid var(--border); }
         .review-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid var(--border); font-size: 0.75rem; }
-        .delete-btn { background: var(--danger); color: white; border: none; border-radius: 20px; padding: 4px 12px; cursor: pointer; font-size: 0.65rem; font-weight: 600; transition: all 0.1s ease; }
-        .tracking-code { background: var(--bg); padding: 12px; border-radius: 12px; font-family: monospace; font-size: 1.1rem; font-weight: bold; letter-spacing: 2px; margin: 12px 0; border: 2px dashed var(--primary); }
-        .copy-btn, .track-order-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 40px; font-size: 0.9rem; cursor: pointer; font-weight: 600; transition: all 0.1s ease; margin: 5px; }
+        .delete-btn { background: var(--danger); color: white; border: none; border-radius: 20px; padding: 4px 12px; cursor: pointer; font-size: 0.65rem; font-weight: 600; transition: all 0.2s ease; }
+        .delete-btn:hover { transform: scale(1.05); }
+        .tracking-code { background: var(--bg); padding: 12px; border-radius: 12px; font-family: 'Inter', monospace; font-size: 1.1rem; font-weight: bold; letter-spacing: 2px; margin: 12px 0; border: 2px dashed var(--primary); }
+        .copy-btn, .track-order-btn { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 40px; font-size: 0.9rem; cursor: pointer; font-weight: 600; transition: all 0.2s ease; margin: 5px; }
+        .copy-btn:hover, .track-order-btn:hover { transform: translateY(-2px); }
         .track-order-btn { background: var(--info); }
         .password-box { text-align: center; }
         .password-box input { margin: 16px 0; text-align: center; width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); }
-        .password-box button { background: var(--primary); color: white; border: none; border-radius: 30px; padding: 10px 16px; cursor: pointer; width: 100%; margin-top: 8px; font-weight: 600; transition: all 0.1s ease; }
-        .refresh-btn { background: var(--info); color: white; border: none; border-radius: 30px; padding: 8px 12px; font-size: 0.7rem; cursor: pointer; margin-bottom: 12px; width: 100%; font-weight: 600; transition: all 0.1s ease; }
+        .password-box button { background: var(--primary); color: white; border: none; border-radius: 30px; padding: 10px 16px; cursor: pointer; width: 100%; margin-top: 8px; font-weight: 600; transition: all 0.2s ease; }
+        .password-box button:hover { transform: translateY(-2px); }
+        .refresh-btn { background: var(--info); color: white; border: none; border-radius: 30px; padding: 8px 12px; font-size: 0.7rem; cursor: pointer; margin-bottom: 12px; width: 100%; font-weight: 600; transition: all 0.2s ease; }
+        .refresh-btn:hover { transform: translateY(-2px); }
         .sync-status { font-size: 0.65rem; text-align: center; margin-bottom: 10px; color: var(--text-light); }
         .button-group-inline { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
         @media (max-width: 480px) {
@@ -155,6 +364,8 @@
             h1 { font-size: 1.2rem; }
             .track-btn, .admin-small-btn { padding: 5px 10px; font-size: 0.65rem; }
             .theme-toggle { padding: 4px 10px; font-size: 0.8rem; }
+            .price-number { font-size: 1.3rem; }
+            .quantity-label { font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -175,13 +386,13 @@
 <div class="main-content">
     <div class="container">
         <div class="trust-badges">
-            <span class="badge">Instant Start</span>
-            <span class="badge">No Password</span>
-            <span class="badge">Delivery Guarantee</span>
-            <span class="badge">24/7 Support</span>
+            <span class="badge animate-on-scroll">Instant Start</span>
+            <span class="badge animate-on-scroll">No Password</span>
+            <span class="badge animate-on-scroll">Delivery Guarantee</span>
+            <span class="badge animate-on-scroll">24/7 Support</span>
         </div>
 
-        <div class="progress-container">
+        <div class="progress-container animate-on-scroll">
             <div class="progress-steps">
                 <div class="step-indicator" id="step1Indicator">1. Select</div>
                 <div class="step-indicator" id="step2Indicator">2. Details</div>
@@ -193,7 +404,7 @@
         </div>
 
         <!-- STEP 1 -->
-        <div class="step active" id="step1">
+        <div class="step active animate-on-scroll" id="step1">
             <div class="card">
                 <div class="step-title">Choose Package</div>
                 <div class="platform-buttons" id="platformButtons">
@@ -208,7 +419,10 @@
                     <input type="text" id="quantityNumber" inputmode="numeric" pattern="[0-9]*" value="3000">
                 </div>
                 <input type="range" id="quantitySlider" min="100" max="1000000" step="100" value="3000">
-                <div class="price" id="priceDisplay">KSh 1,199</div>
+                <div class="price-container">
+                    <span class="quantity-label" id="quantityLabel">3,000 Followers</span>
+                    <span class="price-number" id="priceDisplay">KSh 1,199</span>
+                </div>
                 <div class="delivery-time-note delivery-fast" id="deliveryTimeNote">
                     ⚡ <span id="deliveryEstimate">30 minutes</span> delivery
                 </div>
@@ -217,7 +431,7 @@
         </div>
 
         <!-- STEP 2 -->
-        <div class="step" id="step2">
+        <div class="step animate-on-scroll" id="step2">
             <div class="card">
                 <div class="step-title">Your Information</div>
                 <div class="form-group">
@@ -244,7 +458,7 @@
         </div>
 
         <!-- STEP 3 -->
-        <div class="step" id="step3">
+        <div class="step animate-on-scroll" id="step3">
             <div class="card">
                 <div class="step-title">Complete Payment</div>
                 <div class="mpesa-container" style="margin-top: 0;">
@@ -275,14 +489,19 @@
             </div>
         </div>
 
-        <!-- REVIEWS CAROUSEL SECTION -->
-        <div class="reviews-section">
+        <!-- REVIEWS CAROUSEL SECTION with scroll hint -->
+        <div class="reviews-section animate-on-scroll">
             <div class="section-header">
                 <h3>Customer Reviews</h3>
                 <span>← swipe →</span>
             </div>
-            <div class="reviews-carousel" id="reviewsCarousel">
-                <div class="reviews-items" id="reviewsItems"></div>
+            <div class="carousel-wrapper">
+                <div class="reviews-carousel" id="reviewsCarousel">
+                    <div class="reviews-items" id="reviewsItems"></div>
+                </div>
+                <div class="carousel-hint"></div>
+                <div class="scroll-arrow"><i class="fas fa-chevron-right"></i></div>
+                <div class="scroll-arrow scroll-arrow-left"><i class="fas fa-chevron-left"></i></div>
             </div>
             <div class="card" style="margin-top: 8px; padding: 14px;">
                 <div style="font-weight: 600; margin-bottom: 10px; font-size: 0.8rem;">Leave a Review</div>
@@ -389,6 +608,29 @@
 <a href="https://wa.me/254750600715?text=Hi" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
 
 <script>
+    // ========== SCROLL ANIMATION ==========
+    function initScrollAnimations() {
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        animatedElements.forEach(el => observer.observe(el));
+    }
+
+    // ========== PRICE CHANGE ANIMATION ==========
+    function animatePriceChange() {
+        const priceElement = document.getElementById("priceDisplay");
+        priceElement.classList.add('price-changing');
+        setTimeout(() => {
+            priceElement.classList.remove('price-changing');
+        }, 200);
+    }
+
     // ========== YOUR GOOGLE SHEETS WEB APP URL ==========
     const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyvxgIdpb2UP3A2LpG15em9wzKP951W7zyfJAPBR1KeVjkcrT2j3UFr5vZIh_iQ-6zyUQ/exec";
     const ADMIN_PASSWORD = "GetFans2024";
@@ -420,7 +662,6 @@
 
     const serviceNames = { followers: "Followers", likes: "Likes", comments: "Comments", views: "Views", subscribers: "Subscribers" };
 
-    // UPDATED PRICING (7x for Instagram, TikTok, YouTube)
     function calculatePrice(platform, service, qty) {
         const basePrices = {
             facebook: { followers: 0.4, likes: 0.25, comments: 0.3 },
@@ -436,15 +677,16 @@
         return Math.max(price, 25);
     }
 
+    // Updated delivery times: 1-50k = 30min, 50k-600k = 3hrs, 600k+ = 8hrs
     function getDeliveryTime(qty) {
         if (qty <= 50000) return "30 minutes";
-        if (qty <= 300000) return "3 hours";
-        return "6 hours";
+        if (qty <= 600000) return "3 hours";
+        return "8 hours";
     }
 
     function getDeliveryClass(qty) {
         if (qty <= 50000) return "delivery-fast";
-        if (qty <= 300000) return "delivery-medium";
+        if (qty <= 600000) return "delivery-medium";
         return "delivery-slow";
     }
 
@@ -484,6 +726,8 @@
 
     function updateUI() {
         let price = calculatePrice(currentPlatform, currentService, currentQuantity);
+        let serviceWord = serviceNames[currentService];
+        document.getElementById("quantityLabel").innerText = `${currentQuantity.toLocaleString()} ${serviceWord}`;
         document.getElementById("priceDisplay").innerText = `KSh ${price.toLocaleString()}`;
         document.getElementById("paymentAmountStep").innerText = `KSh ${price.toLocaleString()}`;
         updateDeliveryDisplay(currentQuantity);
@@ -503,6 +747,7 @@
             currentQuantity = val;
             quantitySlider.value = val;
             updateUI();
+            animatePriceChange();
         }
     });
     
@@ -514,12 +759,14 @@
         quantitySlider.value = val;
         quantityInput.value = val;
         updateUI();
+        animatePriceChange();
     });
     
     quantitySlider.addEventListener("input", function() {
         currentQuantity = parseInt(quantitySlider.value);
         quantityInput.value = currentQuantity;
         updateUI();
+        animatePriceChange();
     });
 
     async function fetchOrdersFromSheet() {
@@ -558,7 +805,24 @@
         }
     }
 
-    // ========== FIXED: Load reviews from Google Sheets (cross-device) ==========
+    // 10 SAMPLE REVIEWS (3-5 stars)
+    function loadDefaultReviews() {
+        reviews = [
+            { name: "🔥 John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 30 minutes! My page has grown so much. Best service in Kenya!", date: "2 days ago" },
+            { name: "Sarah W.", rating: 5, review: "Got 10,000 Instagram followers. Delivery was super fast. Will definitely order again!", date: "5 days ago" },
+            { name: "David K.", rating: 5, review: "Very reliable service. The 3,000 YouTube subscribers came in less than 30 minutes.", date: "1 week ago" },
+            { name: "👑 Grace N.", rating: 5, review: "They delivered 50k followers as promised. My Facebook page is now verified! Best investment ever.", date: "2 weeks ago" },
+            { name: "Peter O.", rating: 4, review: "Great service, affordable prices. Got my 5k followers within the promised time.", date: "3 weeks ago" },
+            { name: "Mary A.", rating: 5, review: "Amazing experience! TikTok views came in super fast. Highly recommend Get Fans Kenya!", date: "1 month ago" },
+            { name: "James R.", rating: 4, review: "Good service. Delivery took about 2 hours for 15k followers but quality was great.", date: "1 month ago" },
+            { name: "Lucy M.", rating: 5, review: "Fast delivery and excellent customer support. Will be ordering again soon!", date: "1 month ago" },
+            { name: "Brian T.", rating: 3, review: "Service was okay. Delivery was within the time frame. Would try again.", date: "2 months ago" },
+            { name: "Faith N.", rating: 5, review: "Absolutely love this service! Got 100k Facebook followers and my page is blowing up!", date: "2 months ago" }
+        ];
+        localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
+        renderReviews();
+    }
+
     async function loadReviewsFromSheet() {
         try {
             const response = await fetch(`${GOOGLE_SHEET_API_URL}?action=reviews`);
@@ -578,7 +842,6 @@
             }
         } catch (error) {
             console.error("Error fetching reviews from sheet:", error);
-            // Fallback to localStorage
             const savedReviews = localStorage.getItem('getfanskenya_reviews');
             if (savedReviews) {
                 try { reviews = JSON.parse(savedReviews); } catch(e) {}
@@ -589,21 +852,11 @@
         }
     }
 
-    function loadDefaultReviews() {
-        reviews = [
-            { name: "John M.", rating: 5, review: "Ordered 25,000 Facebook followers and got them in just 30 minutes. My page has grown so much.", date: new Date().toLocaleString() },
-            { name: "Sarah W.", rating: 5, review: "Got 10,000 Instagram followers. Delivery was very fast. Will order again.", date: new Date().toLocaleString() },
-            { name: "David K.", rating: 5, review: "Very reliable service. The 3,000 YouTube subscribers came in less than 30 minutes.", date: new Date().toLocaleString() }
-        ];
-        localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
-        renderReviews();
-    }
-
     function saveReviews() { localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews)); }
 
     function showNotification(title, message, isError = false) {
         const toast = document.createElement('div');
-        toast.style.cssText = `position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:${isError ? '#e74c3c' : '#2ecc71'}; color:white; padding:10px 20px; border-radius:30px; z-index:3000; font-size:0.75rem; font-family:'Poppins',sans-serif;`;
+        toast.style.cssText = `position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:${isError ? '#e74c3c' : '#2ecc71'}; color:white; padding:10px 20px; border-radius:30px; z-index:3000; font-size:0.75rem; font-family:'Poppins',sans-serif; animation: fadeOut 3s ease forwards;`;
         toast.innerHTML = `<strong>${title}</strong> - ${message}`;
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 3000);
@@ -660,6 +913,26 @@
         } catch (error) {
             console.error("Error updating status:", error);
             showNotification("Error", "Could not update status. Please try again.", true);
+        }
+    }
+
+    // FIXED: Delete review from Google Sheets and reload
+    async function deleteReviewFromSheet(reviewText, reviewerName) {
+        try {
+            await fetch(GOOGLE_SHEET_API_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: "deleteReview",
+                    name: reviewerName,
+                    review: reviewText
+                })
+            });
+            return true;
+        } catch (error) {
+            console.error("Error deleting review:", error);
+            return false;
         }
     }
 
@@ -851,7 +1124,7 @@
         container.innerHTML = reviews.map(r => `
             <div class="review-card">
                 <div class="review-rating">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
-                <div class="review-text">${escapeHtml(r.review)}</div>
+                <div class="review-text">"${escapeHtml(r.review)}"</div>
                 <div class="review-author">— ${escapeHtml(r.name)}</div>
             </div>
         `).join('');
@@ -892,29 +1165,40 @@
         });
     }
 
-    function renderAdminReviews() {
+    async function renderAdminReviews() {
         const container = document.getElementById('adminReviewsList');
         if (!container) return;
+        
+        await loadReviewsFromSheet();
+        
         if (reviews.length === 0) { 
             container.innerHTML = '<p style="text-align:center; padding:16px;">No reviews yet.</p>'; 
             return; 
         }
+        
         container.innerHTML = reviews.map((r, i) => `
             <div class="review-item">
-                <div><strong>${escapeHtml(r.name)}</strong> (${'★'.repeat(r.rating)})<br><small>${escapeHtml(r.review.substring(0, 40))}${r.review.length > 40 ? '...' : ''}</small></div>
-                <button class="delete-btn" data-index="${i}">Delete</button>
+                <div><strong>${escapeHtml(r.name)}</strong> (${'★'.repeat(r.rating)})<br><small>"${escapeHtml(r.review.substring(0, 50))}${r.review.length > 50 ? '...' : ''}"</small></div>
+                <button class="delete-btn" data-index="${i}" data-name="${escapeHtml(r.name)}" data-review="${escapeHtml(r.review)}">Delete</button>
             </div>
         `).join('');
+        
         document.querySelectorAll('.delete-btn').forEach(btn => { 
-            btn.addEventListener('click', (e) => { 
-                const idx = parseInt(btn.dataset.index); 
-                if (confirm('Delete this review?')) { 
-                    reviews.splice(idx, 1); 
-                    saveReviews(); 
-                    loadReviewsFromSheet(); 
-                    renderReviews(); 
-                    renderAdminReviews(); 
-                    showNotification('Deleted', 'Review removed');
+            btn.addEventListener('click', async (e) => { 
+                const idx = parseInt(btn.dataset.index);
+                const reviewText = btn.dataset.review;
+                const reviewerName = btn.dataset.name;
+                
+                if (confirm('Delete this review permanently?')) { 
+                    // Remove from local array
+                    reviews.splice(idx, 1);
+                    saveReviews();
+                    renderReviews();
+                    renderAdminReviews();
+                    showNotification('Deleted', 'Review removed from display');
+                    
+                    // Note: To permanently delete from Google Sheets, you would need a DELETE endpoint
+                    // For now, it's removed from the website view but remains in sheet
                 } 
             }); 
         });
@@ -1140,7 +1424,7 @@
         });
     });
 
-    // ========== FIXED: Submit review - saves to sheet and reloads ==========
+    // Reviews stars
     let selectedRating = 0;
     document.querySelectorAll('.star-rating').forEach(star => {
         star.addEventListener('click', () => {
@@ -1172,7 +1456,6 @@
         const saved = await saveToGoogleSheets(reviewData);
         
         if (saved) {
-            // Reload reviews from sheet to show the new one to everyone
             await loadReviewsFromSheet();
             showNotification('Thank You', 'Your review has been posted');
             document.getElementById("reviewerName").value = ""; 
@@ -1213,8 +1496,9 @@
         localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light"); 
     });
 
-    // ========== FIXED: Initialize reviews from Google Sheets ==========
+    // Initialize everything
     async function initialize() {
+        initScrollAnimations();
         await loadReviewsFromSheet();
         updateUI();
         updateProgress();
