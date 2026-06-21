@@ -15,1307 +15,298 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg: #f0f2f8;
-            --card-bg: #ffffff;
-            --text: #1a1a2e;
-            --text-light: #6b7280;
-            --border: #e5e7eb;
-            --primary: #1877f2;
-            --primary-dark: #0d65d9;
-            --primary-light: #e8f0fe;
-            --instagram: #e4405f;
-            --success: #2ecc71;
-            --warning: #f39c12;
-            --danger: #e74c3c;
-            --info: #3498db;
-            --whatsapp: #25D366;
-            --review-star: #ffc107;
-            --delivery-fast: #2ecc71;
-            --delivery-medium: #f39c12;
-            --delivery-slow: #e74c3c;
-            --header-bg-start: #1877f2;
-            --header-bg-end: #0d65d9;
-            --bottom-nav-height: 70px;
-            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-            --radius: 24px;
-            --radius-sm: 16px;
+            --bg: #f0f2f8; --card-bg: #ffffff; --text: #1a1a2e; --text-light: #6b7280;
+            --border: #e5e7eb; --primary: #1877f2; --primary-dark: #0d65d9; --primary-light: #e8f0fe;
+            --instagram: #e4405f; --success: #2ecc71; --warning: #f39c12; --danger: #e74c3c;
+            --info: #3498db; --whatsapp: #25D366; --review-star: #ffc107;
+            --delivery-fast: #2ecc71; --delivery-medium: #f39c12; --delivery-slow: #e74c3c;
+            --header-bg-start: #1877f2; --header-bg-end: #0d65d9; --bottom-nav-height: 70px;
+            --shadow: 0 8px 30px rgba(0,0,0,0.08); --radius: 24px; --radius-sm: 16px;
         }
-
         body.dark {
-            --bg: #121212;
-            --card-bg: #1e1e2a;
-            --text: #eeeeee;
-            --text-light: #9ca3af;
-            --border: #2c2c3a;
-            --header-bg-start: #0d65d9;
-            --header-bg-end: #0a4faa;
-            --primary-light: #1a2a4a;
-            --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            --bg: #121212; --card-bg: #1e1e2a; --text: #eeeeee; --text-light: #9ca3af;
+            --border: #2c2c3a; --header-bg-start: #0d65d9; --header-bg-end: #0a4faa;
+            --primary-light: #1a2a4a; --shadow: 0 8px 30px rgba(0,0,0,0.3);
         }
-
         body {
             font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
+            background: var(--bg); color: var(--text); min-height: 100vh;
             padding-bottom: calc(var(--bottom-nav-height) + 20px);
         }
 
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: var(--bottom-nav-height);
-            background: var(--card-bg);
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 1000;
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-            padding: 0 10px;
+            position: fixed; bottom: 0; left: 0; width: 100%; height: var(--bottom-nav-height);
+            background: var(--card-bg); border-top: 1px solid var(--border);
+            display: flex; justify-content: space-around; align-items: center;
+            z-index: 1000; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); padding: 0 10px;
         }
-
         .bottom-nav .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            min-width: 60px;
-            position: relative;
-            color: var(--text-light);
-            text-decoration: none;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            cursor: pointer; padding: 8px 12px; border-radius: 12px; transition: all 0.3s ease;
+            min-width: 60px; color: var(--text-light); text-decoration: none;
         }
-
-        .bottom-nav .nav-item.active {
-            color: var(--primary);
-            background: var(--primary-light);
-        }
-
-        .bottom-nav .nav-item i {
-            font-size: 1.2rem;
-            margin-bottom: 4px;
-        }
-
-        .bottom-nav .nav-item span {
-            font-size: 0.6rem;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-        }
+        .bottom-nav .nav-item.active { color: var(--primary); background: var(--primary-light); }
+        .bottom-nav .nav-item i { font-size: 1.2rem; margin-bottom: 4px; }
+        .bottom-nav .nav-item span { font-size: 0.6rem; font-weight: 600; }
 
         .landing-page {
             background: linear-gradient(135deg, #1877f2 0%, #0d65d9 50%, #001f3f 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 9999;
-            overflow-y: auto;
-            opacity: 1;
-            visibility: visible;
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 10px; position: fixed; top: 0; left: 0; width: 100%; z-index: 9999;
+            overflow-y: auto; opacity: 1; visibility: visible;
         }
+        .landing-page.hide-landing { opacity: 0; visibility: hidden; pointer-events: none; }
+        .landing-container { max-width: 480px; width: 100%; animation: fadeInUp 0.6s ease; margin: 0 auto; padding: 5px 0; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        .landing-page.hide-landing {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
+        .logo-section { text-align: center; margin-bottom: 12px; }
+        .logo-img-landing { display: inline-block; background: white; padding: 15px 25px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+        .logo-img-landing img { height: 150px; width: auto; display: block; max-width: 100%; object-fit: contain; }
+        .logo-section h1 { color: white; font-size: 1.4rem; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.2); margin-top: 8px; }
+        .logo-section p { color: rgba(255,255,255,0.85); font-size: 0.7rem; margin-top: 2px; font-weight: 500; }
 
-        .landing-container {
-            max-width: 480px;
-            width: 100%;
-            animation: fadeInUp 0.6s ease;
-            margin: 0 auto;
-            padding: 5px 0;
-        }
+        .options-container { background: white; border-radius: 20px; padding: 16px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+        .options-title { text-align: center; margin-bottom: 12px; }
+        .options-title h2 { font-size: 1rem; font-weight: 700; color: #1a1a2e; }
+        .options-title p { font-size: 0.65rem; color: #666; margin-top: 2px; }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .logo-section {
-            text-align: center;
-            margin-bottom: 12px;
-        }
-
-        .logo-img-landing {
-            display: inline-block;
-            background: white;
-            padding: 15px 25px;
-            border-radius: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .logo-img-landing img {
-            height: 150px;
-            width: auto;
-            display: block;
-            max-width: 100%;
-            object-fit: contain;
-        }
-
-        .logo-section h1 {
-            color: white;
-            font-size: 1.4rem;
-            font-weight: 800;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-            letter-spacing: -0.5px;
-            margin-top: 8px;
-        }
-
-        .logo-section p {
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 0.7rem;
-            margin-top: 2px;
-            font-weight: 500;
-        }
-
-        .options-container {
-            background: white;
-            border-radius: 20px;
-            padding: 16px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .options-title {
-            text-align: center;
-            margin-bottom: 12px;
-        }
-
-        .options-title h2 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #1a1a2e;
-        }
-
-        .options-title p {
-            font-size: 0.65rem;
-            color: #666;
-            margin-top: 2px;
-        }
-
-        .option-cards {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .option-card {
-            padding: 12px;
-            border-radius: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .option-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .option-card:active {
-            transform: scale(0.98);
-        }
-
-        .option-card.guest {
-            background: #f8f9fc;
-            border: 2px solid #e5e5e5;
-        }
-
-        .option-card.guest:hover {
-            border-color: #1877f2;
-            box-shadow: 0 8px 25px rgba(24, 119, 242, 0.15);
-        }
-
-        .option-card.account {
-            background: linear-gradient(135deg, #1877f2, #0d65d9);
-            color: white;
-            border: 2px solid transparent;
-        }
-
-        .option-card.account:hover {
-            box-shadow: 0 8px 25px rgba(24, 119, 242, 0.4);
-        }
-
-        .option-icon {
-            font-size: 1.8rem;
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        .option-card.guest .option-icon {
-            color: #1877f2;
-        }
-
-        .option-card h3 {
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-
-        .option-card.guest h3 {
-            color: #1a1a2e;
-        }
-
-        .option-card p {
-            font-size: 0.6rem;
-        }
-
-        .option-card.guest p {
-            color: #666;
-        }
-
-        .option-card.account p {
-            color: rgba(255, 255, 255, 0.85);
-        }
+        .option-cards { display: flex; flex-direction: column; gap: 8px; }
+        .option-card { padding: 12px; border-radius: 14px; cursor: pointer; transition: all 0.3s ease; text-align: center; }
+        .option-card:hover { transform: translateY(-2px); }
+        .option-card:active { transform: scale(0.98); }
+        .option-card.guest { background: #f8f9fc; border: 2px solid #e5e5e5; }
+        .option-card.guest:hover { border-color: #1877f2; box-shadow: 0 8px 25px rgba(24,119,242,0.15); }
+        .option-card.account { background: linear-gradient(135deg, #1877f2, #0d65d9); color: white; border: 2px solid transparent; }
+        .option-card.account:hover { box-shadow: 0 8px 25px rgba(24,119,242,0.4); }
+        .option-icon { font-size: 1.8rem; margin-bottom: 4px; display: block; }
+        .option-card.guest .option-icon { color: #1877f2; }
+        .option-card h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 2px; }
+        .option-card.guest h3 { color: #1a1a2e; }
+        .option-card p { font-size: 0.6rem; }
+        .option-card.guest p { color: #666; }
+        .option-card.account p { color: rgba(255,255,255,0.85); }
 
         .free-badge {
-            display: inline-block;
-            background: #ffd700;
-            color: #333;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            margin-top: 4px;
-            animation: pulse 2s infinite;
+            display: inline-block; background: #ffd700; color: #333; padding: 3px 10px;
+            border-radius: 20px; font-size: 0.6rem; font-weight: 700; margin-top: 4px; animation: pulse 2s infinite;
         }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
+        .login-link { text-align: center; margin-top: 10px; font-size: 0.65rem; color: #666; }
+        .login-link a { color: #1877f2; font-weight: 600; text-decoration: none; cursor: pointer; }
+        .trust-strip { display: flex; justify-content: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+        .trust-item { color: rgba(255,255,255,0.8); font-size: 0.6rem; display: flex; align-items: center; gap: 4px; }
+        .trust-item i { color: #2ecc71; }
 
-        .login-link {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 0.65rem;
-            color: #666;
-        }
-
-        .login-link a {
-            color: #1877f2;
-            font-weight: 600;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .trust-strip {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-
-        .trust-item {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 0.6rem;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .trust-item i {
-            color: #2ecc71;
-        }
-
-        .auth-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 10000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .auth-modal.show {
-            display: flex;
-        }
-
-        .auth-modal-content {
-            background: white;
-            border-radius: 24px;
-            padding: 24px;
-            width: 90%;
-            max-width: 420px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .auth-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #e5e5e5;
-            padding-bottom: 10px;
-        }
-
-        .auth-tab {
-            padding: 8px 16px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.8rem;
-            border-radius: 20px;
-            font-family: 'Poppins', sans-serif;
-            background: transparent;
-            border: none;
-            color: #666;
-        }
-
-        .auth-tab.active {
-            background: #1877f2;
-            color: white;
-        }
-
-        .auth-form {
-            display: none;
-        }
-
-        .auth-form.active {
-            display: block;
-        }
-
-        .benefits-list {
-            background: #f0f8ff;
-            border-radius: 12px;
-            padding: 12px;
-            margin: 12px 0;
-            font-size: 0.7rem;
-        }
-
-        .benefits-list div {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 6px 0;
-            color: #333;
-        }
-
-        .benefits-list i {
-            color: #2ecc71;
-        }
-
-        .btn-close-auth {
-            width: 100%;
-            padding: 12px;
-            background: #e5e5e5;
-            color: #333;
-            border: none;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .guest-notice {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            border-radius: 12px;
-            padding: 10px;
-            margin-bottom: 16px;
-            font-size: 0.7rem;
-            text-align: center;
-            color: #856404;
-        }
-
-        .error-message {
-            color: #e74c3c;
-            font-size: 0.7rem;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
-        }
+        .auth-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; }
+        .auth-modal.show { display: flex; }
+        .auth-modal-content { background: white; border-radius: 24px; padding: 24px; width: 90%; max-width: 420px; max-height: 90vh; overflow-y: auto; }
+        .auth-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #e5e5e5; padding-bottom: 10px; }
+        .auth-tab { padding: 8px 16px; cursor: pointer; font-weight: 600; font-size: 0.8rem; border-radius: 20px; font-family: 'Poppins', sans-serif; background: transparent; border: none; color: #666; }
+        .auth-tab.active { background: #1877f2; color: white; }
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+        .benefits-list { background: #f0f8ff; border-radius: 12px; padding: 12px; margin: 12px 0; font-size: 0.7rem; }
+        .benefits-list div { display: flex; align-items: center; gap: 8px; margin: 6px 0; color: #333; }
+        .benefits-list i { color: #2ecc71; }
+        .btn-close-auth { width: 100%; padding: 12px; background: #e5e5e5; color: #333; border: none; border-radius: 30px; font-size: 0.8rem; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .guest-notice { background: #fff3cd; border: 1px solid #ffc107; border-radius: 12px; padding: 10px; margin-bottom: 16px; font-size: 0.7rem; text-align: center; color: #856404; }
+        .error-message { color: #e74c3c; font-size: 0.7rem; margin-top: 5px; display: none; }
+        .error-message.show { display: block; }
 
         .sync-status-bar {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 8px 14px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border: 1px solid var(--border);
-            font-size: 0.65rem;
-            color: var(--text-light);
-            flex-wrap: wrap;
-            gap: 4px;
+            background: var(--card-bg); border-radius: 12px; padding: 8px 14px; margin-bottom: 12px;
+            display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border);
+            font-size: 0.65rem; color: var(--text-light); flex-wrap: wrap; gap: 4px;
         }
-
-        .sync-status-bar .sync-dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 6px;
-        }
-
+        .sync-status-bar .sync-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
         .sync-status-bar .sync-dot.synced { background: var(--success); }
         .sync-status-bar .sync-dot.syncing { background: var(--warning); animation: pulse 1s infinite; }
         .sync-status-bar .sync-dot.error { background: var(--danger); }
 
-        .main-site {
-            display: none;
-        }
+        .main-site { display: none; }
+        .main-site.active { display: block; }
 
-        .main-site.active {
-            display: block;
-        }
+        .sticky-header { position: sticky; top: 0; z-index: 100; background: linear-gradient(135deg, var(--header-bg-start), var(--header-bg-end)); padding: 10px 16px; margin-bottom: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .container { max-width: 550px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .logo-container { display: flex; align-items: center; gap: 10px; background: white; padding: 4px 14px; border-radius: 40px; }
+        .logo-img { height: 38px; width: auto; border-radius: 8px; }
+        .logo-container h1 { font-size: 0.85rem; font-weight: 800; color: var(--primary); }
+        .header-buttons { display: flex; gap: 6px; align-items: center; }
+        .admin-login-btn { background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 30px; padding: 5px 10px; font-size: 0.6rem; cursor: pointer; font-weight: 600; }
+        .theme-toggle { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 30px; padding: 4px 10px; cursor: pointer; font-size: 0.8rem; color: white; }
+        .main-content { padding: 0 16px 16px 16px; }
 
-        .sticky-header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: linear-gradient(135deg, var(--header-bg-start), var(--header-bg-end));
-            padding: 10px 16px;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .container {
-            max-width: 550px;
-            margin: 0 auto;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: white;
-            padding: 4px 14px;
-            border-radius: 40px;
-        }
-
-        .logo-img {
-            height: 38px;
-            width: auto;
-            border-radius: 8px;
-        }
-
-        .logo-container h1 {
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: var(--primary);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .header-buttons {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-            flex-shrink: 0;
-        }
-
-        .admin-login-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 30px;
-            padding: 5px 10px;
-            font-size: 0.6rem;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .theme-toggle {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 30px;
-            padding: 4px 10px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            color: white;
-        }
-
-        .main-content {
-            padding: 0 16px 16px 16px;
-        }
-
-        .progress-container {
-            margin-bottom: 20px;
-        }
-
-        .progress-steps {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-
-        .step-indicator {
-            text-align: center;
-            flex: 1;
-            font-size: 0.6rem;
-            color: var(--text-light);
-            font-weight: 500;
-        }
-
-        .step-indicator.active {
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .step-indicator.completed {
-            color: var(--success);
-        }
-
-        .step-indicator .step-num {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            line-height: 24px;
-            border-radius: 50%;
-            background: var(--border);
-            color: var(--text-light);
-            font-size: 0.6rem;
-            font-weight: 700;
-            margin-bottom: 2px;
-        }
-
+        .progress-container { margin-bottom: 20px; }
+        .progress-steps { display: flex; justify-content: space-between; margin-bottom: 8px; }
+        .step-indicator { text-align: center; flex: 1; font-size: 0.6rem; color: var(--text-light); font-weight: 500; }
+        .step-indicator.active { color: var(--primary); font-weight: 700; }
+        .step-indicator.completed { color: var(--success); }
+        .step-indicator .step-num { display: inline-block; width: 24px; height: 24px; line-height: 24px; border-radius: 50%; background: var(--border); color: var(--text-light); font-size: 0.6rem; font-weight: 700; margin-bottom: 2px; }
         .step-indicator.active .step-num { background: var(--primary); color: white; }
         .step-indicator.completed .step-num { background: var(--success); color: white; }
+        .progress-bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; background: var(--primary); transition: width 0.3s ease; }
 
-        .progress-bar {
-            height: 3px;
-            background: var(--border);
-            border-radius: 2px;
-            overflow: hidden;
-        }
+        .step { display: none; }
+        .step.active { display: block; }
 
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        .step {
-            display: none;
-        }
-
-        .step.active {
-            display: block;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 16px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-        }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
+        .card { background: var(--card-bg); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+        .card-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; color: var(--text); display: flex; align-items: center; gap: 10px; }
         .card-title i { color: var(--primary); }
 
-        .ad-unit {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 12px;
-            margin: 16px 0;
-            border: 1px solid var(--border);
-            text-align: center;
-            min-height: 90px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+        .ad-unit { background: var(--card-bg); border-radius: 16px; padding: 12px; margin: 16px 0; border: 1px solid var(--border); text-align: center; min-height: 90px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .ad-unit .ad-label { font-size: 0.55rem; color: var(--text-light); margin-bottom: 6px; opacity: 0.6; }
 
-        .ad-unit .ad-label {
-            font-size: 0.55rem;
-            color: var(--text-light);
-            margin-bottom: 6px;
-            opacity: 0.6;
-        }
-
-        .pkg-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
-        .pkg-card {
-            background: var(--bg);
-            border: 2px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 14px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-
+        .pkg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+        .pkg-card { background: var(--bg); border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 14px 10px; text-align: center; cursor: pointer; transition: all 0.2s ease; position: relative; }
         .pkg-card:hover { transform: translateY(-2px); }
         .pkg-card:active { transform: scale(0.97); }
         .pkg-card.active { border-color: var(--primary); background: var(--primary-light); }
-
         .pkg-card .pkg-icon { font-size: 1.6rem; margin-bottom: 4px; display: block; }
         .pkg-card .pkg-name { font-size: 0.7rem; font-weight: 700; color: var(--text); }
         .pkg-card .pkg-desc { font-size: 0.55rem; color: var(--text-light); margin-top: 2px; }
-
-        .pkg-card .pkg-check {
-            position: absolute;
-            top: -6px;
-            right: -6px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            font-size: 0.55rem;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-
+        .pkg-card .pkg-check { position: absolute; top: -6px; right: -6px; background: var(--primary); color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 0.55rem; display: none; align-items: center; justify-content: center; }
         .pkg-card.active .pkg-check { display: flex; }
-
         .pkg-card.instagram-card.active { border-color: var(--instagram); background: #fef0f5; }
         .pkg-card.instagram-card.active .pkg-check { background: var(--instagram); }
         body.dark .pkg-card.instagram-card.active { background: #2a1a2a; }
 
-        .service-pills {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-
-        .service-pill {
-            flex: 1;
-            padding: 8px 12px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-            text-align: center;
-            font-size: 0.7rem;
-            font-family: 'Poppins', sans-serif;
-            min-width: 60px;
-        }
-
+        .service-pills { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+        .service-pill { flex: 1; padding: 8px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 30px; cursor: pointer; font-weight: 600; text-align: center; font-size: 0.7rem; min-width: 60px; }
         .service-pill:active { transform: scale(0.97); }
         .service-pill.active { background: var(--primary); color: white; border-color: transparent; }
+        .service-pill.instagram-pill.active { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: white; }
 
-        .service-pill.instagram-pill.active {
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-            color: white;
-        }
-
-        .qty-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-            background: var(--bg);
-            padding: 10px 14px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-        }
-
-        .qty-section label {
-            font-weight: 600;
-            font-size: 0.75rem;
-            min-width: 50px;
-            font-family: 'Poppins', sans-serif;
-            color: var(--text-light);
-        }
-
-        .qty-section input {
-            flex: 1;
-            padding: 6px 10px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            background: var(--card-bg);
-            color: var(--text);
-            font-size: 0.85rem;
-            text-align: center;
-            font-weight: 700;
-            width: 80px;
-        }
-
+        .qty-section { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; background: var(--bg); padding: 10px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+        .qty-section label { font-weight: 600; font-size: 0.75rem; min-width: 50px; color: var(--text-light); }
+        .qty-section input { flex: 1; padding: 6px 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); font-size: 0.85rem; text-align: center; font-weight: 700; width: 80px; }
         .qty-section .qty-controls { display: flex; gap: 4px; }
+        .qty-section .qty-controls button { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--border); background: var(--card-bg); cursor: pointer; font-weight: 700; font-size: 0.8rem; color: var(--text); display: flex; align-items: center; justify-content: center; }
 
-        .qty-section .qty-controls button {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            border: 1px solid var(--border);
-            background: var(--card-bg);
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.8rem;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        input[type="range"] { width: 100%; height: 4px; -webkit-appearance: none; background: var(--border); border-radius: 4px; margin: 6px 0 12px 0; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; background: var(--primary); border-radius: 50%; cursor: pointer; }
 
-        input[type="range"] {
-            width: 100%;
-            height: 4px;
-            -webkit-appearance: none;
-            background: var(--border);
-            border-radius: 4px;
-            margin: 6px 0 12px 0;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            background: var(--primary);
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .price-box {
-            background: linear-gradient(135deg, var(--primary-light), var(--bg));
-            border-radius: var(--radius-sm);
-            padding: 14px 16px;
-            text-align: center;
-            margin-bottom: 12px;
-            border: 1px solid var(--border);
-        }
-
+        .price-box { background: linear-gradient(135deg, var(--primary-light), var(--bg)); border-radius: var(--radius-sm); padding: 14px 16px; text-align: center; margin-bottom: 12px; border: 1px solid var(--border); }
         .price-box .price-main { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
         .price-box .price-main .currency { font-size: 1rem; }
-
-        .price-box .price-original {
-            font-size: 0.8rem;
-            text-decoration: line-through;
-            color: var(--text-light);
-            margin-left: 8px;
-            font-weight: 400;
-        }
-
-        .price-box .price-save {
-            display: inline-block;
-            background: var(--success);
-            color: white;
-            font-size: 0.6rem;
-            font-weight: 700;
-            padding: 2px 10px;
-            border-radius: 20px;
-            margin-left: 8px;
-        }
-
+        .price-box .price-original { font-size: 0.8rem; text-decoration: line-through; color: var(--text-light); margin-left: 8px; font-weight: 400; }
+        .price-box .price-save { display: inline-block; background: var(--success); color: white; font-size: 0.6rem; font-weight: 700; padding: 2px 10px; border-radius: 20px; margin-left: 8px; }
         .price-box .price-label { font-size: 0.6rem; color: var(--text-light); margin-top: 2px; }
 
-        .delivery-time-note {
-            padding: 10px;
-            border-radius: var(--radius-sm);
-            font-size: 0.7rem;
-            text-align: center;
-            margin-bottom: 14px;
-            font-weight: 600;
-        }
-
+        .delivery-time-note { padding: 10px; border-radius: var(--radius-sm); font-size: 0.7rem; text-align: center; margin-bottom: 14px; font-weight: 600; }
         .delivery-fast { background: var(--delivery-fast); color: white; }
         .delivery-medium { background: var(--delivery-medium); color: white; }
         .delivery-slow { background: var(--delivery-slow); color: white; }
 
-        .btn-next {
-            width: 100%;
-            padding: 14px;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            background: var(--primary);
-            color: white;
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
+        .btn-next { width: 100%; padding: 14px; border-radius: 40px; font-size: 0.9rem; font-weight: 700; cursor: pointer; border: none; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
         .form-group { margin-bottom: 14px; }
-
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            font-size: 0.75rem;
-            font-family: 'Poppins', sans-serif;
-            color: var(--text);
-        }
-
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.75rem; color: var(--text); }
         label .required { color: #e74c3c; }
+        input, textarea { width: 100%; padding: 12px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 0.85rem; }
 
-        input, textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            background: var(--bg);
-            color: var(--text);
-            font-size: 0.85rem;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .btn-back {
-            padding: 12px 20px;
-            border-radius: 40px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: 1px solid var(--border);
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Poppins', sans-serif;
-            flex: 1;
-        }
-
+        .btn-back { padding: 12px 20px; border-radius: 40px; font-size: 0.85rem; font-weight: 600; cursor: pointer; border: 1px solid var(--border); background: var(--bg); color: var(--text); flex: 1; }
         .button-group { display: flex; gap: 10px; margin-top: 6px; }
 
-        .mpesa-container {
-            background: linear-gradient(135deg, var(--primary-dark), #001f3f);
-            color: white;
-            padding: 14px;
-            border-radius: var(--radius-sm);
-            margin: 12px 0;
-        }
+        .mpesa-container { background: linear-gradient(135deg, var(--primary-dark), #001f3f); color: white; padding: 14px; border-radius: var(--radius-sm); margin: 12px 0; }
+        .till-number { font-size: 1.6rem; font-weight: 800; background: white; color: var(--primary-dark); display: inline-block; padding: 4px 16px; border-radius: 40px; margin: 6px 0; font-family: monospace; text-align: center; width: 100%; }
+        .payment-steps { text-align: left; font-size: 0.7rem; margin-top: 8px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.2); }
+        .mpesa-field { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); }
+        .mpesa-field textarea { background: rgba(255,255,255,0.95); color: #333; font-size: 0.8rem; font-family: monospace; }
 
-        .till-number {
-            font-size: 1.6rem;
-            font-weight: 800;
-            background: white;
-            color: var(--primary-dark);
-            display: inline-block;
-            padding: 4px 16px;
-            border-radius: 40px;
-            margin: 6px 0;
-            font-family: monospace;
-            text-align: center;
-            width: 100%;
-        }
-
-        .payment-steps {
-            text-align: left;
-            font-size: 0.7rem;
-            margin-top: 8px;
-            padding-top: 6px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .mpesa-field {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .mpesa-field textarea { background: rgba(255, 255, 255, 0.95); color: #333; font-size: 0.8rem; font-family: monospace; }
-
-        .btn-submit {
-            padding: 14px;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            background: var(--success);
-            color: white;
-            width: 100%;
-            font-family: 'Poppins', sans-serif;
-        }
-
+        .btn-submit { padding: 14px; border-radius: 40px; font-size: 0.9rem; font-weight: 700; cursor: pointer; border: none; background: var(--success); color: white; width: 100%; }
         .summary-card { background: var(--bg); border-radius: var(--radius-sm); padding: 12px; margin: 12px 0; }
-
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            margin: 6px 0;
-            font-size: 0.75rem;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-
+        .info-row { display: flex; justify-content: space-between; margin: 6px 0; font-size: 0.75rem; flex-wrap: wrap; gap: 4px; }
         hr { border-color: var(--border); margin: 8px 0; }
 
-        .home-bottom-image {
-            margin: 16px 0;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
+        .home-bottom-image { margin: 16px 0; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+        .home-bottom-image img { width: 100%; height: auto; display: block; border-radius: var(--radius); min-height: 200px; object-fit: cover; }
 
-        .home-bottom-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: var(--radius);
-            min-height: 200px;
-            object-fit: cover;
-        }
-
-        .whatsapp-float {
-            position: fixed;
-            bottom: 85px;
-            right: 20px;
-            background: var(--whatsapp);
-            color: white;
-            border-radius: 50px;
-            padding: 8px 14px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 0.7rem;
-            z-index: 999;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2px solid white;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 0.6s linear infinite;
-            margin-right: 6px;
-        }
-
+        .whatsapp-float { position: fixed; bottom: 85px; right: 20px; background: var(--whatsapp); color: white; border-radius: 50px; padding: 8px 14px; display: flex; align-items: center; gap: 6px; text-decoration: none; font-weight: bold; font-size: 0.7rem; z-index: 999; }
+        .loading-spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid white; border-radius: 50%; border-top-color: transparent; animation: spin 0.6s linear infinite; margin-right: 6px; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; justify-content: center; align-items: center; }
         .modal-overlay.show { display: flex; }
-
-        .modal-container {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            width: 90%;
-            max-width: 450px;
-            max-height: 85vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            background: var(--card-bg);
-            z-index: 10;
-        }
-
-        .modal-header h3 { font-size: 0.95rem; font-weight: 600; font-family: 'Poppins', sans-serif; }
+        .modal-container { background: var(--card-bg); border-radius: var(--radius); width: 90%; max-width: 450px; max-height: 85vh; overflow-y: auto; position: relative; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--card-bg); z-index: 10; }
+        .modal-header h3 { font-size: 0.95rem; font-weight: 600; }
         .close-modal { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-light); }
         .modal-body { padding: 20px; }
 
         .tracking-input-group { display: flex; gap: 10px; margin-bottom: 20px; }
         .tracking-input-group input { flex: 1; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg); font-family: monospace; }
-        .tracking-input-group button { padding: 12px 20px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm); cursor: pointer; font-weight: 600; font-family: 'Poppins', sans-serif; }
-
+        .tracking-input-group button { padding: 12px 20px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm); cursor: pointer; font-weight: 600; }
         .tracking-result { display: none; margin-top: 16px; }
         .tracking-result.show { display: block; }
-
         .tracking-card { background: var(--bg); border-radius: var(--radius-sm); padding: 14px; }
-
         .status-timeline { display: flex; justify-content: space-between; margin: 16px 0; flex-wrap: wrap; }
         .status-step { text-align: center; flex: 1; min-width: 45px; }
-
-        .status-icon {
-            width: 30px;
-            height: 30px;
-            background: var(--border);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 4px;
-            font-size: 0.7rem;
-        }
-
+        .status-icon { width: 30px; height: 30px; background: var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 4px; font-size: 0.7rem; }
         .status-step.completed .status-icon { background: var(--success); color: white; }
         .status-step.active .status-icon { background: var(--primary); color: white; }
         .status-label { font-size: 0.55rem; font-weight: 600; }
-
         .status-badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.6rem; font-weight: 600; }
         .status-pending { background: var(--warning); color: #000; }
         .status-processing { background: var(--info); color: white; }
         .status-completed, .status-delivered { background: var(--success); color: white; }
 
-        .download-receipt-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: var(--success);
-            color: white;
-            padding: 8px 14px;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-top: 12px;
-            width: 100%;
-            cursor: pointer;
-            border: none;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .tracking-code {
-            background: var(--bg);
-            padding: 12px;
-            border-radius: var(--radius-sm);
-            font-family: monospace;
-            font-size: 1rem;
-            font-weight: bold;
-            letter-spacing: 2px;
-            margin: 12px 0;
-            border: 2px dashed var(--primary);
-        }
-
-        .copy-btn, .track-order-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            font-weight: 600;
-            margin: 3px;
-            font-family: 'Poppins', sans-serif;
-        }
-
+        .download-receipt-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--success); color: white; padding: 8px 14px; border-radius: 40px; font-size: 0.7rem; font-weight: 600; margin-top: 12px; width: 100%; cursor: pointer; border: none; }
+        .tracking-code { background: var(--bg); padding: 12px; border-radius: var(--radius-sm); font-family: monospace; font-size: 1rem; font-weight: bold; letter-spacing: 2px; margin: 12px 0; border: 2px dashed var(--primary); }
+        .copy-btn, .track-order-btn { background: var(--primary); color: white; border: none; padding: 8px 18px; border-radius: 40px; font-size: 0.8rem; cursor: pointer; font-weight: 600; margin: 3px; }
         .track-order-btn { background: var(--info); }
         .button-group-inline { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
 
-        .reviews-carousel-modal {
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-            cursor: grab;
-            padding-bottom: 8px;
-            margin-bottom: 8px;
-        }
-
-        .reviews-carousel-modal::-webkit-scrollbar { height: 3px; }
-        .reviews-carousel-modal::-webkit-scrollbar-track { background: var(--border); border-radius: 10px; }
-        .reviews-carousel-modal::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
-
+        .reviews-carousel-modal { overflow-x: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; scrollbar-width: thin; cursor: grab; padding-bottom: 8px; margin-bottom: 8px; }
         .reviews-items-modal { display: inline-flex; gap: 12px; padding: 4px 0; }
-
-        .review-card {
-            background: var(--card-bg);
-            border-radius: var(--radius-sm);
-            padding: 14px;
-            min-width: 240px;
-            max-width: 260px;
-            border: 1px solid var(--border);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-        }
-
+        .review-card { background: var(--card-bg); border-radius: var(--radius-sm); padding: 14px; min-width: 240px; max-width: 260px; border: 1px solid var(--border); box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
         .review-rating { color: var(--review-star); font-size: 0.75rem; letter-spacing: 2px; margin-bottom: 6px; }
         .review-text { font-size: 0.75rem; line-height: 1.4; margin-bottom: 8px; color: var(--text); }
-        .review-author { font-size: 0.6rem; color: var(--text-light); font-weight: 500; font-family: 'Poppins', sans-serif; }
-
+        .review-author { font-size: 0.6rem; color: var(--text-light); font-weight: 500; }
         .rating-input { display: flex; gap: 4px; margin-bottom: 10px; justify-content: center; }
         .star-rating { font-size: 1.4rem; cursor: pointer; color: var(--border); }
         .star-rating.active { color: var(--review-star); }
-
-        .btn-review {
-            width: 100%;
-            padding: 10px;
-            background: var(--success);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 6px;
-            font-family: 'Poppins', sans-serif;
-        }
-
+        .btn-review { width: 100%; padding: 10px; background: var(--success); color: white; border: none; border-radius: 30px; font-size: 0.75rem; font-weight: bold; cursor: pointer; margin-top: 6px; }
         .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-        .section-header h3 { font-size: 0.85rem; font-weight: 600; font-family: 'Poppins', sans-serif; }
+        .section-header h3 { font-size: 0.85rem; font-weight: 600; }
         .section-header span { font-size: 0.6rem; color: var(--text-light); }
 
-        .admin-panel-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 5000;
-            justify-content: center;
-            align-items: center;
-        }
-
+        .admin-panel-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 5000; justify-content: center; align-items: center; }
         .admin-panel-modal.show { display: flex; }
-
-        .admin-panel-content {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            width: 90%;
-            max-width: 420px;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .admin-panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 20px;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            background: var(--card-bg);
-            z-index: 10;
-        }
-
-        .admin-panel-header h3 { font-size: 0.9rem; font-weight: 700; color: var(--primary); font-family: 'Poppins', sans-serif; }
+        .admin-panel-content { background: var(--card-bg); border-radius: var(--radius); width: 90%; max-width: 420px; max-height: 80vh; overflow-y: auto; }
+        .admin-panel-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--card-bg); z-index: 10; }
+        .admin-panel-header h3 { font-size: 0.9rem; font-weight: 700; color: var(--primary); }
         .admin-panel-header .close-panel { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-light); }
         .admin-panel-inner { padding: 16px; }
-
         .admin-stats-mini { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
-        .stat-mini { background: var(--bg); border-radius: 10px; padding: 8px; text-align: center; font-size: 0.55rem; color: var(--text-light); font-family: 'Poppins', sans-serif; }
+        .stat-mini { background: var(--bg); border-radius: 10px; padding: 8px; text-align: center; font-size: 0.55rem; color: var(--text-light); }
         .stat-mini .num { font-size: 0.9rem; font-weight: 700; color: var(--text); display: block; }
-
         .admin-tabs-mini { display: flex; gap: 4px; margin-bottom: 12px; flex-wrap: wrap; background: var(--bg); padding: 4px; border-radius: 30px; }
-        .tab-mini { padding: 6px 14px; border-radius: 30px; font-size: 0.6rem; font-weight: 600; cursor: pointer; background: transparent; border: none; color: var(--text-light); font-family: 'Poppins', sans-serif; }
+        .tab-mini { padding: 6px 14px; border-radius: 30px; font-size: 0.6rem; font-weight: 600; cursor: pointer; background: transparent; border: none; color: var(--text-light); }
         .tab-mini.active { background: var(--primary); color: white; }
-
-        .refresh-btn {
-            background: var(--info);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            padding: 8px 14px;
-            font-size: 0.65rem;
-            cursor: pointer;
-            margin-bottom: 12px;
-            width: 100%;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-        }
-
+        .refresh-btn { background: var(--info); color: white; border: none; border-radius: 30px; padding: 8px 14px; font-size: 0.65rem; cursor: pointer; margin-bottom: 12px; width: 100%; font-weight: 600; }
         .admin-content-mini { max-height: 40vh; overflow-y: auto; }
-
-        .order-mini, .deposit-mini, .user-mini, .review-mini {
-            background: var(--bg);
-            border-radius: 10px;
-            padding: 10px;
-            margin-bottom: 8px;
-            font-size: 0.6rem;
-            border: 1px solid var(--border);
-        }
-
+        .order-mini, .deposit-mini, .user-mini, .review-mini { background: var(--bg); border-radius: 10px; padding: 10px; margin-bottom: 8px; font-size: 0.6rem; border: 1px solid var(--border); }
         .order-mini .order-row, .deposit-mini .order-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px; margin: 4px 0; }
-        .order-status-select-mini { padding: 4px 8px; border-radius: 15px; font-size: 0.55rem; border: 1px solid var(--primary); background: var(--card-bg); font-family: 'Poppins', sans-serif; color: var(--text); }
-
+        .order-status-select-mini { padding: 4px 8px; border-radius: 15px; font-size: 0.55rem; border: 1px solid var(--primary); background: var(--card-bg); color: var(--text); }
         .deposit-actions { display: flex; gap: 4px; margin-top: 6px; }
-        .deposit-actions button { padding: 4px 12px; border-radius: 15px; font-size: 0.55rem; font-weight: 600; border: none; cursor: pointer; font-family: 'Poppins', sans-serif; }
+        .deposit-actions button { padding: 4px 12px; border-radius: 15px; font-size: 0.55rem; font-weight: 600; border: none; cursor: pointer; }
         .btn-approve-mini { background: var(--success); color: white; }
         .btn-reject-mini { background: var(--danger); color: white; }
-
         .user-mini { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px; }
         .review-mini { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px; }
-        .del-mini { background: var(--danger); color: white; border: none; border-radius: 15px; padding: 4px 12px; font-size: 0.5rem; cursor: pointer; font-family: 'Poppins', sans-serif; }
+        .del-mini { background: var(--danger); color: white; border: none; border-radius: 15px; padding: 4px 12px; font-size: 0.5rem; cursor: pointer; }
 
         .password-box { text-align: center; padding: 10px; }
-        .password-box input { padding: 10px; border-radius: 30px; border: 1px solid var(--border); width: 100%; text-align: center; margin-bottom: 10px; background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; }
-        .password-box button { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; width: 100%; font-weight: 600; font-family: 'Poppins', sans-serif; }
+        .password-box input { padding: 10px; border-radius: 30px; border: 1px solid var(--border); width: 100%; text-align: center; margin-bottom: 10px; background: var(--bg); color: var(--text); }
+        .password-box button { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; width: 100%; font-weight: 600; }
+        .admin-warning { background: #fff3cd; color: #856404; padding: 10px; border-radius: 10px; font-size: 0.65rem; text-align: center; }
 
-        .admin-warning { background: #fff3cd; color: #856404; padding: 10px; border-radius: 10px; font-size: 0.65rem; text-align: center; font-family: 'Poppins', sans-serif; }
-
-        .ads-modal-content { max-height: 70vh; }
-        .ads-scroll-container { display: flex; flex-direction: column; gap: 16px; padding: 10px 0; }
-
-        .ad-card {
-            background: var(--bg);
-            border-radius: var(--radius-sm);
-            padding: 14px;
-            border: 1px solid var(--border);
-            text-align: center;
-            min-height: 100px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        .ad-card .ad-icon { font-size: 1.5rem; }
-        .ad-card .ad-title { font-weight: 600; font-size: 0.75rem; color: var(--text); }
-        .ad-card .ad-desc { font-size: 0.6rem; color: var(--text-light); }
-        .ad-card .ad-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.6rem; font-weight: 600; cursor: pointer; border: none; background: var(--primary); color: white; font-family: 'Poppins', sans-serif; }
-
-        .site-footer { text-align: center; font-size: 0.55rem; color: var(--text-light); margin: 16px 0; padding: 10px; font-family: 'Poppins', sans-serif; }
+        .site-footer { text-align: center; font-size: 0.55rem; color: var(--text-light); margin: 16px 0; padding: 10px; }
 
         @media (max-width: 480px) {
             .main-content { padding: 0 12px 12px 12px; }
@@ -1343,33 +334,18 @@
         <div class="landing-container">
             <div class="logo-section">
                 <div class="logo-img-landing">
-                    <img src="https://i.postimg.cc/NjgFm0v4/Vibrant-Logo-with-African-Spirit-(1).png"
-                        alt="Get Fans Kenya" style="height: 120px; width: auto; max-width: 100%;">
+                    <img src="https://i.postimg.cc/NjgFm0v4/Vibrant-Logo-with-African-Spirit-(1).png" alt="Get Fans Kenya" style="height:120px;width:auto;max-width:100%;">
                 </div>
                 <h1>Get Fans Kenya</h1>
                 <p>Grow Your Social Media Presence Fast</p>
             </div>
             <div class="options-container">
-                <div class="options-title">
-                    <h2>Choose How to Get Started</h2>
-                    <p>Select an option below to continue</p>
-                </div>
+                <div class="options-title"><h2>Choose How to Get Started</h2><p>Select an option below to continue</p></div>
                 <div class="option-cards">
-                    <div class="option-card guest" id="guestBtn">
-                        <span class="option-icon">👤</span>
-                        <h3>Continue as Guest</h3>
-                        <p>No account needed. Order instantly.</p>
-                    </div>
-                    <div class="option-card account" id="signupBtn2">
-                        <span class="option-icon">🎁</span>
-                        <h3>Create Free Account</h3>
-                        <p>Get 100 Free Followers + Wallet + Order History</p>
-                        <span class="free-badge">+100 FREE FOLLOWERS</span>
-                    </div>
+                    <div class="option-card guest" id="guestBtn"><span class="option-icon">👤</span><h3>Continue as Guest</h3><p>No account needed. Order instantly.</p></div>
+                    <div class="option-card account" id="signupBtn2"><span class="option-icon">🎁</span><h3>Create Free Account</h3><p>Get 100 Free Followers + Wallet + Order History</p><span class="free-badge">+100 FREE FOLLOWERS</span></div>
                 </div>
-                <div class="login-link">
-                    Already have an account? <a href="#" id="loginLink">Login here</a>
-                </div>
+                <div class="login-link">Already have an account? <a href="#" id="loginLink">Login here</a></div>
             </div>
             <div class="trust-strip">
                 <span class="trust-item"><i class="fas fa-shield-alt"></i> Secure</span>
@@ -1388,40 +364,16 @@
                 <button class="auth-tab" data-tab="signup" id="authTabSignup">Sign Up</button>
             </div>
             <div class="auth-form active" id="loginForm">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email">
-                    <div class="error-message" id="loginEmailError">Please enter your email</div>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password">
-                    <div class="error-message" id="loginPasswordError">Please enter your password</div>
-                </div>
+                <div class="form-group"><label>Email</label><input type="email" id="loginEmail" placeholder="Enter your email"><div class="error-message" id="loginEmailError">Please enter your email</div></div>
+                <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="Enter your password"><div class="error-message" id="loginPasswordError">Please enter your password</div></div>
                 <button class="btn-next" id="loginBtn" style="width:100%;">Login</button>
                 <button class="btn-close-auth" id="closeAuthBtn">Cancel</button>
             </div>
             <div class="auth-form" id="signupForm">
-                <div class="form-group">
-                    <label>Full Name <span class="required">*</span></label>
-                    <input type="text" id="signupName" placeholder="Your full name">
-                    <div class="error-message" id="signupNameError">Please enter your full name</div>
-                </div>
-                <div class="form-group">
-                    <label>Email <span class="required">*</span></label>
-                    <input type="email" id="signupEmail" placeholder="Your email address">
-                    <div class="error-message" id="signupEmailError">Please enter a valid email</div>
-                </div>
-                <div class="form-group">
-                    <label>Password <span class="required">*</span></label>
-                    <input type="password" id="signupPassword" placeholder="Min 6 characters">
-                    <div class="error-message" id="signupPasswordError">Password must be at least 6 characters</div>
-                </div>
-                <div class="form-group">
-                    <label>Confirm Password <span class="required">*</span></label>
-                    <input type="password" id="signupConfirmPassword" placeholder="Confirm your password">
-                    <div class="error-message" id="signupConfirmError">Passwords do not match</div>
-                </div>
+                <div class="form-group"><label>Full Name <span class="required">*</span></label><input type="text" id="signupName" placeholder="Your full name"><div class="error-message" id="signupNameError">Please enter your full name</div></div>
+                <div class="form-group"><label>Email <span class="required">*</span></label><input type="email" id="signupEmail" placeholder="Your email address"><div class="error-message" id="signupEmailError">Please enter a valid email</div></div>
+                <div class="form-group"><label>Password <span class="required">*</span></label><input type="password" id="signupPassword" placeholder="Min 6 characters"><div class="error-message" id="signupPasswordError">Password must be at least 6 characters</div></div>
+                <div class="form-group"><label>Confirm Password <span class="required">*</span></label><input type="password" id="signupConfirmPassword" placeholder="Confirm your password"><div class="error-message" id="signupConfirmError">Passwords do not match</div></div>
                 <div class="benefits-list">
                     <div><i class="fas fa-gift"></i> <strong>100 Free Facebook Followers</strong></div>
                     <div><i class="fas fa-wallet"></i> <strong>Wallet with 5% deposit bonus</strong></div>
@@ -1449,14 +401,12 @@
                 </div>
             </div>
         </div>
-
         <div class="main-content">
             <div class="container">
                 <div class="sync-status-bar" id="syncStatusBar">
                     <span><span class="sync-dot synced" id="syncDot"></span> <span id="syncStatusText">Connected</span></span>
                     <span id="syncTimeText">Ready</span>
                 </div>
-
                 <div class="progress-container">
                     <div class="progress-steps">
                         <div class="step-indicator active" id="step1Indicator"><span class="step-num">1</span><div>Select</div></div>
@@ -1470,18 +420,8 @@
                     <div class="card">
                         <div class="card-title"><i class="fas fa-rocket"></i> Choose Your Package</div>
                         <div class="pkg-grid">
-                            <div class="pkg-card active" data-platform="facebook" id="fbPkg">
-                                <span class="pkg-check"><i class="fas fa-check"></i></span>
-                                <span class="pkg-icon"><i class="fab fa-facebook" style="color:#1877f2;"></i></span>
-                                <div class="pkg-name">Facebook</div>
-                                <div class="pkg-desc">Grow your page</div>
-                            </div>
-                            <div class="pkg-card instagram-card" data-platform="instagram" id="igPkg">
-                                <span class="pkg-check"><i class="fas fa-check"></i></span>
-                                <span class="pkg-icon"><i class="fab fa-instagram" style="color:#e4405f;"></i></span>
-                                <div class="pkg-name">Instagram</div>
-                                <div class="pkg-desc">Boost your profile</div>
-                            </div>
+                            <div class="pkg-card active" data-platform="facebook" id="fbPkg"><span class="pkg-check"><i class="fas fa-check"></i></span><span class="pkg-icon"><i class="fab fa-facebook" style="color:#1877f2;"></i></span><div class="pkg-name">Facebook</div><div class="pkg-desc">Grow your page</div></div>
+                            <div class="pkg-card instagram-card" data-platform="instagram" id="igPkg"><span class="pkg-check"><i class="fas fa-check"></i></span><span class="pkg-icon"><i class="fab fa-instagram" style="color:#e4405f;"></i></span><div class="pkg-name">Instagram</div><div class="pkg-desc">Boost your profile</div></div>
                         </div>
                         <div class="service-pills" id="serviceButtons">
                             <div class="service-pill active" data-service="followers">Followers</div>
@@ -1494,11 +434,7 @@
                             <input type="range" id="quantitySlider" min="100" max="1000000" step="100" value="10000">
                         </div>
                         <div class="price-box">
-                            <div>
-                                <span class="price-main"><span class="currency">KSh</span> <span id="finalPrice">3,399</span></span>
-                                <span class="price-original" id="originalPriceDisplay">KSh 4,600</span>
-                                <span class="price-save" id="savedBadge">Save 1,201</span>
-                            </div>
+                            <div><span class="price-main"><span class="currency">KSh</span> <span id="finalPrice">3,399</span></span><span class="price-original" id="originalPriceDisplay">KSh 4,600</span><span class="price-save" id="savedBadge">Save 1,201</span></div>
                             <div class="price-label">Best price in Kenya • No hidden fees</div>
                         </div>
                         <div class="delivery-time-note delivery-fast" id="deliveryTimeNote">⚡ <span id="deliveryEstimate">30 minutes</span> delivery</div>
@@ -1510,8 +446,7 @@
                         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                     </div>
                     <div class="home-bottom-image">
-                        <img src="https://drive.google.com/thumbnail?id=1wRe5NHR-_0f2fd81SgiIKZOReVjgAYU_&sz=w800" alt="Get Fans Kenya"
-                            onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=400&fit=crop'">
+                        <img src="https://drive.google.com/thumbnail?id=1wRe5NHR-_0f2fd81SgiIKZOReVjgAYU_&sz=w800" alt="Get Fans Kenya" onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=400&fit=crop'">
                     </div>
                 </div>
 
@@ -1531,12 +466,7 @@
                         <div class="card-title"><i class="fas fa-credit-card"></i> Complete Payment</div>
                         <div class="mpesa-container">
                             <div class="till-number">8941840</div>
-                            <div class="payment-steps">
-                                <div>1. M-Pesa > Lipa Na M-Pesa > Buy Goods</div>
-                                <div>2. Enter Till: <strong>8941840</strong></div>
-                                <div>3. Amount: <strong id="paymentAmountStep">KSh 3,399</strong></div>
-                                <div>4. Enter PIN and confirm</div>
-                            </div>
+                            <div class="payment-steps"><div>1. M-Pesa > Lipa Na M-Pesa > Buy Goods</div><div>2. Enter Till: <strong>8941840</strong></div><div>3. Amount: <strong id="paymentAmountStep">KSh 3,399</strong></div><div>4. Enter PIN and confirm</div></div>
                             <div class="mpesa-field"><label>Paste M-Pesa Confirmation</label><textarea id="mpesaConfirmation" rows="2" placeholder="Paste the M-Pesa message here"></textarea></div>
                         </div>
                         <div class="summary-card">
@@ -1563,83 +493,19 @@
     </div>
 
     <!-- SUCCESS MODAL -->
-    <div class="modal-overlay" id="successModal">
-        <div class="modal-container">
-            <div class="modal-header"><h3>🎉 Order Placed!</h3><button class="close-modal" id="closeSuccessModal">&times;</button></div>
-            <div class="modal-body" style="text-align:center;">
-                <div style="font-size:2.5rem;">✅</div>
-                <p style="margin:10px 0;font-weight:600;">Your Tracking ID</p>
-                <div class="tracking-code" id="successTrackingId">GFKXXXXXX</div>
-                <div class="button-group-inline">
-                    <button class="copy-btn" id="copyTrackingBtn"><i class="fas fa-copy"></i> Copy</button>
-                    <button class="track-order-btn" id="trackFromSuccessBtn"><i class="fas fa-search"></i> Track</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="modal-overlay" id="successModal"><div class="modal-container"><div class="modal-header"><h3>🎉 Order Placed!</h3><button class="close-modal" id="closeSuccessModal">&times;</button></div><div class="modal-body" style="text-align:center;"><div style="font-size:2.5rem;">✅</div><p style="margin:10px 0;font-weight:600;">Your Tracking ID</p><div class="tracking-code" id="successTrackingId">GFKXXXXXX</div><div class="button-group-inline"><button class="copy-btn" id="copyTrackingBtn"><i class="fas fa-copy"></i> Copy</button><button class="track-order-btn" id="trackFromSuccessBtn"><i class="fas fa-search"></i> Track</button></div></div></div></div>
 
     <!-- TRACK MODAL -->
-    <div class="modal-overlay" id="trackModal">
-        <div class="modal-container">
-            <div class="modal-header"><h3><i class="fas fa-search"></i> Track Order</h3><button class="close-modal" id="closeModalBtn">&times;</button></div>
-            <div class="modal-body">
-                <div class="tracking-input-group"><input type="text" id="trackingInput" placeholder="Enter Tracking ID"><button id="searchTrackBtn">Track</button></div>
-                <div id="trackingResult" class="tracking-result"></div>
-            </div>
-        </div>
-    </div>
+    <div class="modal-overlay" id="trackModal"><div class="modal-container"><div class="modal-header"><h3><i class="fas fa-search"></i> Track Order</h3><button class="close-modal" id="closeModalBtn">&times;</button></div><div class="modal-body"><div class="tracking-input-group"><input type="text" id="trackingInput" placeholder="Enter Tracking ID"><button id="searchTrackBtn">Track</button></div><div id="trackingResult" class="tracking-result"></div></div></div></div>
 
     <!-- REVIEWS MODAL -->
-    <div class="modal-overlay" id="reviewsModal">
-        <div class="modal-container">
-            <div class="modal-header"><h3>⭐ Customer Reviews</h3><button class="close-modal" id="closeReviewsModal">&times;</button></div>
-            <div class="modal-body">
-                <div class="section-header"><h3>What customers say</h3><span>← swipe →</span></div>
-                <div class="reviews-carousel-modal" id="reviewsCarouselModal"><div class="reviews-items-modal" id="reviewsItemsModal"></div></div>
-                <hr style="margin:16px 0;">
-                <div style="font-weight:600;margin-bottom:10px;font-size:0.75rem;">Leave a Review</div>
-                <div class="rating-input" id="ratingStars">
-                    <span class="star-rating" data-rating="1">★</span><span class="star-rating" data-rating="2">★</span>
-                    <span class="star-rating" data-rating="3">★</span><span class="star-rating" data-rating="4">★</span>
-                    <span class="star-rating" data-rating="5">★</span>
-                </div>
-                <input type="text" id="reviewerName" placeholder="Your name" style="margin-bottom:8px;font-size:0.75rem;">
-                <textarea id="reviewText" rows="2" placeholder="Share your experience" style="font-size:0.75rem;"></textarea>
-                <button class="btn-review" id="submitReview">Submit Review</button>
-            </div>
-        </div>
-    </div>
+    <div class="modal-overlay" id="reviewsModal"><div class="modal-container"><div class="modal-header"><h3>⭐ Customer Reviews</h3><button class="close-modal" id="closeReviewsModal">&times;</button></div><div class="modal-body"><div class="section-header"><h3>What customers say</h3><span>← swipe →</span></div><div class="reviews-carousel-modal" id="reviewsCarouselModal"><div class="reviews-items-modal" id="reviewsItemsModal"></div></div><hr style="margin:16px 0;"><div style="font-weight:600;margin-bottom:10px;font-size:0.75rem;">Leave a Review</div><div class="rating-input" id="ratingStars"><span class="star-rating" data-rating="1">★</span><span class="star-rating" data-rating="2">★</span><span class="star-rating" data-rating="3">★</span><span class="star-rating" data-rating="4">★</span><span class="star-rating" data-rating="5">★</span></div><input type="text" id="reviewerName" placeholder="Your name" style="margin-bottom:8px;font-size:0.75rem;"><textarea id="reviewText" rows="2" placeholder="Share your experience" style="font-size:0.75rem;"></textarea><button class="btn-review" id="submitReview">Submit Review</button></div></div></div>
 
     <!-- ADMIN PANEL MODAL -->
-    <div class="admin-panel-modal" id="adminPanelModal">
-        <div class="admin-panel-content">
-            <div class="admin-panel-header"><h3><i class="fas fa-shield-alt"></i> Admin Panel</h3><button class="close-panel" id="closeAdminPanel">&times;</button></div>
-            <div class="admin-panel-inner">
-                <div class="admin-stats-mini">
-                    <div class="stat-mini"><span class="num" id="statOrdersMini">0</span>Orders</div>
-                    <div class="stat-mini"><span class="num" id="statRevenueMini">KSh 0</span>Revenue</div>
-                    <div class="stat-mini"><span class="num" id="statPendingMini">0</span>Pending</div>
-                    <div class="stat-mini"><span class="num" id="statUsersMini">0</span>Users</div>
-                </div>
-                <div class="admin-tabs-mini">
-                    <button class="tab-mini active" data-tab="orders">Orders</button>
-                    <button class="tab-mini" data-tab="deposits">Deposits</button>
-                    <button class="tab-mini" data-tab="reviews">Reviews</button>
-                    <button class="tab-mini" data-tab="users">Users</button>
-                </div>
-                <button class="refresh-btn" id="refreshDataBtn"><i class="fas fa-sync-alt"></i> Refresh Data</button>
-                <div class="admin-content-mini" id="adminContentMini"></div>
-            </div>
-        </div>
-    </div>
+    <div class="admin-panel-modal" id="adminPanelModal"><div class="admin-panel-content"><div class="admin-panel-header"><h3><i class="fas fa-shield-alt"></i> Admin Panel</h3><button class="close-panel" id="closeAdminPanel">&times;</button></div><div class="admin-panel-inner"><div class="admin-stats-mini"><div class="stat-mini"><span class="num" id="statOrdersMini">0</span>Orders</div><div class="stat-mini"><span class="num" id="statRevenueMini">KSh 0</span>Revenue</div><div class="stat-mini"><span class="num" id="statPendingMini">0</span>Pending</div><div class="stat-mini"><span class="num" id="statUsersMini">0</span>Users</div></div><div class="admin-tabs-mini"><button class="tab-mini active" data-tab="orders">Orders</button><button class="tab-mini" data-tab="deposits">Deposits</button><button class="tab-mini" data-tab="reviews">Reviews</button><button class="tab-mini" data-tab="users">Users</button></div><button class="refresh-btn" id="refreshDataBtn"><i class="fas fa-sync-alt"></i> Refresh Data</button><div class="admin-content-mini" id="adminContentMini"></div></div></div></div>
 
     <!-- PASSWORD MODAL -->
-    <div class="modal-overlay" id="passwordModal">
-        <div class="modal-container" style="max-width:320px;">
-            <div class="modal-header"><h3><i class="fas fa-lock"></i> Admin Access</h3><button class="close-modal" id="closePasswordModal">&times;</button></div>
-            <div class="modal-body"><div class="password-box"><input type="password" id="adminPassword" placeholder="Enter password"><button id="submitPassword">Unlock</button></div></div>
-        </div>
-    </div>
+    <div class="modal-overlay" id="passwordModal"><div class="modal-container" style="max-width:320px;"><div class="modal-header"><h3><i class="fas fa-lock"></i> Admin Access</h3><button class="close-modal" id="closePasswordModal">&times;</button></div><div class="modal-body"><div class="password-box"><input type="password" id="adminPassword" placeholder="Enter password"><button id="submitPassword">Unlock</button></div></div></div></div>
 
     <!-- WHATSAPP FLOAT -->
     <a href="https://wa.me/254750600715?text=Hi" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
@@ -1647,6 +513,8 @@
     <script>
         const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbz_SyGDjZDgL9jW__jyKBuNROkMii4HAhqdS5ajosZ7q18DQWZV4Es5u8DWrh5EHdlklQ/exec";
         const ADMIN_PASSWORD = "GetFans2024";
+        const TELEGRAM_BOT_TOKEN = "8825700469:AAEpywAnsc6jEXUmCyvWN4niPbWTSg1xn68";
+        const TELEGRAM_CHAT_ID = "5740390611";
 
         let orders = [], reviews = [], deposits = [], usersData = [];
         let currentPlatform = "facebook", currentService = "followers", currentQuantity = 10000, currentStep = 1;
@@ -1654,9 +522,22 @@
         let autoScrollInterval = null, syncInterval = null;
         let currentTrackingId = 'GFK' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substring(2,4).toUpperCase();
 
+        // ===== TELEGRAM NOTIFICATION - ONLY FOR IMPORTANT EVENTS =====
+        function sendTelegram(message) {
+            try {
+                fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message })
+                }).catch(() => {});
+                console.log('📨 Telegram sent');
+            } catch(e) {}
+        }
+
         function toast(message, isError = false) {
             const t = document.createElement('div');
-            t.style.cssText = `position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:${isError?'#e74c3c':'#2ecc71'};color:white;padding:10px 20px;border-radius:30px;z-index:3000;font-size:0.7rem;font-family:'Poppins',sans-serif;max-width:90%;text-align:center;`;
+            t.style.cssText = `position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:${isError?'#e74c3c':'#2ecc71'};color:white;padding:10px 20px;border-radius:30px;z-index:3000;font-size:0.7rem;max-width:90%;text-align:center;`;
             t.innerHTML = message; document.body.appendChild(t); setTimeout(() => t.remove(), 3000);
         }
 
@@ -1673,6 +554,7 @@
             localStorage.removeItem('gfk_user_name');
             showMainSite();
             toast('👤 Guest Mode');
+            sendTelegram('👤 Guest user started browsing Get Fans Kenya');
         };
 
         document.getElementById('signupBtn2').onclick = () => {
@@ -1719,6 +601,7 @@
             if (!document.getElementById('mainSite').classList.contains('active')) showMainSite();
             updateAccountNav();
             toast('Welcome! 🎉');
+            sendTelegram('🔑 Login: ' + email);
         };
 
         document.getElementById('signupBtn').onclick = () => {
@@ -1740,6 +623,7 @@
             if (!document.getElementById('mainSite').classList.contains('active')) showMainSite();
             updateAccountNav();
             toast('Account created! 🎉');
+            sendTelegram('🎉 NEW SIGNUP: ' + name + ' (' + email + ')');
         };
 
         function updateAccountNav() {
@@ -1777,6 +661,7 @@
             try {
                 const response = await fetch(GOOGLE_SHEET_API_URL + '?action=all&t=' + Date.now());
                 const data = await response.json();
+                console.log('✅ Cloud sync OK - Orders:', data.orders?.length || 0, 'Reviews:', data.reviews?.length || 0);
                 if (data.orders) { orders = data.orders; localStorage.setItem('getfanskenya_orders', JSON.stringify(orders)); }
                 if (data.reviews) { reviews = data.reviews; localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews)); renderReviews(); }
                 if (data.deposits) { deposits = data.deposits; localStorage.setItem('getfanskenya_deposits', JSON.stringify(deposits)); }
@@ -1784,7 +669,7 @@
                 updateSyncStatus('synced', 'Connected');
                 return true;
             } catch (e) {
-                console.log('Sync: using local data');
+                console.log('⚠️ Offline - using local data');
                 updateSyncStatus('error');
                 loadFromLocalStorage();
                 return false;
@@ -1822,6 +707,7 @@
                 document.getElementById('adminPanelModal').classList.add('show');
                 updateAdminPanel();
                 toast('Welcome Admin!');
+                sendTelegram('🔐 Admin logged in to Get Fans Kenya panel');
             } else toast('Wrong password', true);
         };
         document.getElementById('closePasswordModal').onclick = () => document.getElementById('passwordModal').classList.remove('show');
@@ -1840,8 +726,7 @@
             document.getElementById('statRevenueMini').textContent = 'KSh ' + orders.reduce((s,o) => s + (parseFloat(o.price)||parseFloat(o['Price (KSh)'])||0), 0).toLocaleString();
             document.getElementById('statPendingMini').textContent = orders.filter(o => (o.status||o.Status||'Pending')==='Pending').length;
             document.getElementById('statUsersMini').textContent = usersData.length || 0;
-            const active = document.querySelector('.tab-mini.active');
-            switchAdminTabMini(active ? active.dataset.tab : 'orders');
+            switchAdminTabMini(document.querySelector('.tab-mini.active')?.dataset.tab || 'orders');
         }
 
         function switchAdminTabMini(tab) {
@@ -1857,6 +742,7 @@
             const o = orders.find(o => (o.trackingId||o['Tracking ID'])===tid);
             if (o) { o.status = status; o.Status = status; localStorage.setItem('getfanskenya_orders', JSON.stringify(orders)); }
             toast('Updated!'); updateAdminPanel();
+            sendTelegram('🔄 Order ' + tid + ' → ' + status);
         }
 
         async function approveDeposit(code) {
@@ -1864,6 +750,7 @@
             const d = deposits.find(d => (d.depositCode||d['Deposit Code'])===code);
             if (d) { d.Status = 'Approved'; d.status = 'Approved'; localStorage.setItem('getfanskenya_deposits', JSON.stringify(deposits)); }
             toast('Approved!'); updateAdminPanel();
+            sendTelegram('✅ Deposit Approved: ' + code);
         }
 
         async function rejectDeposit(code) {
@@ -1871,6 +758,7 @@
             const d = deposits.find(d => (d.depositCode||d['Deposit Code'])===code);
             if (d) { d.Status = 'Rejected'; d.status = 'Rejected'; localStorage.setItem('getfanskenya_deposits', JSON.stringify(deposits)); }
             toast('Rejected'); updateAdminPanel();
+            sendTelegram('❌ Deposit Rejected: ' + code);
         }
 
         function deleteReview(i) { reviews.splice(i,1); localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews)); updateAdminPanel(); renderReviews(); }
@@ -1939,8 +827,7 @@
             if (orig && orig > price) { os.style.display = 'inline'; os.textContent = 'KSh ' + orig.toLocaleString(); sb.style.display = 'inline-block'; sb.textContent = 'Save ' + getOfferSavings(currentPlatform, currentService, currentQuantity).toLocaleString(); }
             else { os.style.display = 'none'; sb.style.display = 'none'; }
             document.getElementById('paymentAmountStep').textContent = 'KSh ' + price.toLocaleString();
-            const dtn = document.getElementById('deliveryTimeNote');
-            dtn.className = 'delivery-time-note ' + getDeliveryClass(currentQuantity);
+            document.getElementById('deliveryTimeNote').className = 'delivery-time-note ' + getDeliveryClass(currentQuantity);
             document.getElementById('deliveryEstimate').textContent = getDeliveryTime(currentQuantity);
             document.getElementById('postLinkGroup').style.display = (currentService==="likes"||currentService==="comments") ? 'block' : 'none';
             document.getElementById('postLinkLabel').innerHTML = platformSettings[currentPlatform].postLabel + ' <span class="required">*</span>';
@@ -2017,7 +904,7 @@
         function downloadReceipt(tid) {
             const o = orders.find(o => (o.trackingId||o['Tracking ID'])===tid);
             if (!o) return toast('Not found', true);
-            const h = `<html><head><style>body{font-family:Arial;padding:20px;max-width:500px;margin:0 auto}h1{color:#1877f2}.box{border:2px solid #1877f2;border-radius:12px;padding:16px}.row{display:flex;justify-content:space-between;margin:8px 0;font-size:0.8rem}.total{font-weight:bold;border-top:1px solid #ccc;padding-top:8px}</style></head><body><h1>Get Fans Kenya Receipt</h1><div class="box"><div class="row"><span>ID:</span><strong>${tid}</strong></div><div class="row"><span>Service:</span><strong>${o.service||o.Service||''}</strong></div><div class="row"><span>Qty:</span><strong>${(parseInt(o.quantity)||0).toLocaleString()}</strong></div><div class="row total"><span>Total:</span><strong>KSh ${(parseFloat(o.price)||0).toLocaleString()}</strong></div></div></body></html>`;
+            const h = `<html><head><style>body{font-family:Arial;padding:20px;max-width:500px}h1{color:#1877f2}.box{border:2px solid #1877f2;border-radius:12px;padding:16px}.row{display:flex;justify-content:space-between;margin:8px 0;font-size:.8rem}.total{font-weight:bold;border-top:1px solid #ccc;padding-top:8px}</style></head><body><h1>Get Fans Kenya Receipt</h1><div class="box"><div class="row"><span>ID:</span><strong>${tid}</strong></div><div class="row"><span>Service:</span><strong>${o.service||o.Service||''}</strong></div><div class="row"><span>Qty:</span><strong>${(parseInt(o.quantity)||0).toLocaleString()}</strong></div><div class="row total"><span>Total:</span><strong>KSh ${(parseFloat(o.price)||0).toLocaleString()}</strong></div></div></body></html>`;
             const b = new Blob([h],{type:'text/html'});
             const u = URL.createObjectURL(b);
             const a = document.createElement('a'); a.href = u; a.download = 'Receipt_'+tid+'.html'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(u);
@@ -2083,6 +970,7 @@
             selectedRating = 0;
             document.querySelectorAll('#ratingStars .star-rating').forEach(s => s.classList.remove('active'));
             toast('Thank you!');
+            sendTelegram('⭐ New Review: ' + name + ' (' + selectedRating + '/5)');
         };
 
         document.getElementById('submitOrder').onclick = async function() {
@@ -2099,10 +987,12 @@
 
             const price = calculatePrice(currentPlatform, currentService, currentQuantity);
             const tid = currentTrackingId;
+            const fullService = platformSettings[currentPlatform].name + ' ' + serviceNames[currentService];
+
             const orderData = {
                 trackingId: tid,
                 platform: platformSettings[currentPlatform].name,
-                service: platformSettings[currentPlatform].name + ' ' + serviceNames[currentService],
+                service: fullService,
                 quantity: currentQuantity,
                 price: price,
                 deliveryTime: getDeliveryTime(currentQuantity),
@@ -2137,6 +1027,9 @@
             updateServiceButtons(); updateUI(); showStep(1);
             this.innerHTML = 'Place Order <i class="fas fa-check"></i>'; this.disabled = false;
             toast('Order placed!');
+
+            // TELEGRAM NOTIFICATION FOR NEW ORDER
+            sendTelegram('🛒 NEW ORDER\n👤 ' + name + '\n📱 ' + phone + '\n📊 ' + fullService + '\n🔢 ' + currentQuantity.toLocaleString() + '\n💰 KSh ' + price.toLocaleString() + '\n📝 ' + tid);
         };
 
         document.getElementById('themeToggle').onclick = () => {
@@ -2168,7 +1061,8 @@
             if (!reviews.length) loadDefaultReviews();
             updateServiceButtons(); updateUI(); updateProgress(); updateAccountNav();
             document.getElementById('trackingId').textContent = currentTrackingId;
-            console.log('✅ Get Fans Kenya Ready - Landing Page Showing');
+            console.log('✅ Get Fans Kenya Ready');
+            console.log('📨 Telegram: ENABLED for orders, signups, reviews, admin');
         }
 
         initialize();
