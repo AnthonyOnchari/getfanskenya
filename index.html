@@ -42,7 +42,7 @@
             --delivery-slow: #e74c3c;
             --header-bg-start: #1877f2;
             --header-bg-end: #0d65d9;
-            --bottom-nav-height: 65px;
+            --bottom-nav-height: 70px;
             --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             --radius: 24px;
             --radius-sm: 16px;
@@ -65,7 +65,72 @@
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
-            padding-bottom: var(--bottom-nav-height);
+            padding-bottom: calc(var(--bottom-nav-height) + 20px);
+        }
+
+        /* ===== BOTTOM NAVIGATION BAR ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: var(--bottom-nav-height);
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+            padding: 0 10px;
+        }
+
+        .bottom-nav .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            min-width: 60px;
+            position: relative;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .bottom-nav .nav-item.active {
+            color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .bottom-nav .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .bottom-nav .nav-item span {
+            font-size: 0.6rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .bottom-nav .nav-item .nav-badge {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
         }
 
         /* ===== LANDING PAGE - ALWAYS SHOWING ===== */
@@ -120,15 +185,17 @@
         .logo-img-landing {
             display: inline-block;
             background: white;
-            padding: 8px 20px;
+            padding: 15px 25px;
             border-radius: 20px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         .logo-img-landing img {
-            height: 200px;
+            height: 150px;
             width: auto;
             display: block;
+            max-width: 100%;
+            object-fit: contain;
         }
 
         .logo-section h1 {
@@ -589,33 +656,6 @@
             gap: 6px;
             align-items: center;
             flex-shrink: 0;
-        }
-
-        .track-btn,
-        .admin-small-btn {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 30px;
-            padding: 5px 10px;
-            font-size: 0.6rem;
-            cursor: pointer;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-            white-space: nowrap;
-            transition: all 0.2s ease;
-        }
-
-        .track-btn:hover,
-        .admin-small-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(0.98);
-        }
-
-        .track-btn:active,
-        .admin-small-btn:active {
-            transform: scale(0.95);
         }
 
         .theme-toggle {
@@ -1208,7 +1248,7 @@
             text-decoration: none;
             font-weight: bold;
             font-size: 0.7rem;
-            z-index: 1000;
+            z-index: 999;
             font-family: 'Poppins', sans-serif;
             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
         }
@@ -1633,86 +1673,87 @@
             margin-top: 10px;
         }
 
-        /* ===== ADMIN STRIP ===== */
-        .admin-strip {
+        /* ===== ADMIN PANEL (FIXED SIDEBAR) ===== */
+        .admin-panel {
             display: none;
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+            top: 0;
+            right: 0;
+            width: 350px;
+            max-width: 90vw;
+            height: 100vh;
             background: var(--card-bg);
-            border-top: 3px solid var(--primary);
+            border-left: 3px solid var(--primary);
             z-index: 5000;
-            max-height: 60vh;
+            box-shadow: -8px 0 30px rgba(0, 0, 0, 0.15);
+            animation: slideRight 0.3s ease;
             overflow-y: auto;
-            animation: slideUp 0.3s ease;
-            padding: 12px 16px;
-            padding-bottom: 70px;
-            border-radius: 20px 20px 0 0;
-            box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.15);
+            padding: 0 0 80px 0;
         }
 
-        @keyframes slideUp {
-            from {
-                transform: translateY(100%);
-            }
-            to {
-                transform: translateY(0);
-            }
-        }
-
-        .admin-strip.show {
+        .admin-panel.show {
             display: block;
         }
 
-        .admin-strip-header {
+        @keyframes slideRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .admin-panel-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-bottom: 10px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border);
-            margin-bottom: 10px;
+            position: sticky;
+            top: 0;
+            background: var(--card-bg);
+            z-index: 10;
         }
 
-        .admin-strip-header h3 {
-            font-size: 0.85rem;
+        .admin-panel-header h3 {
+            font-size: 0.9rem;
             font-weight: 700;
             color: var(--primary);
+            font-family: 'Poppins', sans-serif;
         }
 
-        .admin-strip-header .close-strip {
+        .admin-panel-header .close-panel {
             background: none;
             border: none;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             cursor: pointer;
             color: var(--text-light);
-            padding: 4px 10px;
-            border-radius: 30px;
-            transition: background 0.2s;
         }
 
-        .admin-strip-header .close-strip:hover {
-            background: var(--bg);
+        .admin-panel-content {
+            padding: 16px;
         }
 
         .admin-stats-mini {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 6px;
-            margin-bottom: 10px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
         .stat-mini {
             background: var(--bg);
             border-radius: 10px;
-            padding: 6px 4px;
+            padding: 8px;
             text-align: center;
-            font-size: 0.5rem;
+            font-size: 0.55rem;
             color: var(--text-light);
+            font-family: 'Poppins', sans-serif;
         }
 
         .stat-mini .num {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 700;
             color: var(--text);
             display: block;
@@ -1721,7 +1762,7 @@
         .admin-tabs-mini {
             display: flex;
             gap: 4px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             flex-wrap: wrap;
             background: var(--bg);
             padding: 4px;
@@ -1729,9 +1770,9 @@
         }
 
         .tab-mini {
-            padding: 4px 12px;
+            padding: 6px 14px;
             border-radius: 30px;
-            font-size: 0.55rem;
+            font-size: 0.6rem;
             font-weight: 600;
             cursor: pointer;
             background: transparent;
@@ -1747,8 +1788,22 @@
             color: white;
         }
 
+        .refresh-btn {
+            background: var(--info);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 14px;
+            font-size: 0.65rem;
+            cursor: pointer;
+            margin-bottom: 12px;
+            width: 100%;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+        }
+
         .admin-content-mini {
-            max-height: 35vh;
+            max-height: calc(100vh - 300px);
             overflow-y: auto;
         }
 
@@ -1758,8 +1813,8 @@
         .review-mini {
             background: var(--bg);
             border-radius: 10px;
-            padding: 8px 10px;
-            margin-bottom: 6px;
+            padding: 10px;
+            margin-bottom: 8px;
             font-size: 0.6rem;
             border: 1px solid var(--border);
         }
@@ -1771,30 +1826,33 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 4px;
+            margin: 4px 0;
         }
 
         .order-status-select-mini {
-            padding: 2px 6px;
+            padding: 4px 8px;
             border-radius: 15px;
             font-size: 0.55rem;
             border: 1px solid var(--primary);
             background: var(--card-bg);
             font-family: 'Poppins', sans-serif;
+            color: var(--text);
         }
 
         .deposit-actions {
             display: flex;
             gap: 4px;
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         .deposit-actions button {
-            padding: 2px 10px;
+            padding: 4px 12px;
             border-radius: 15px;
-            font-size: 0.5rem;
+            font-size: 0.55rem;
             font-weight: 600;
             border: none;
             cursor: pointer;
+            font-family: 'Poppins', sans-serif;
         }
 
         .btn-approve-mini {
@@ -1828,22 +1886,9 @@
             color: white;
             border: none;
             border-radius: 15px;
-            padding: 2px 10px;
+            padding: 4px 12px;
             font-size: 0.5rem;
             cursor: pointer;
-        }
-
-        .refresh-btn {
-            background: var(--info);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            padding: 6px 12px;
-            font-size: 0.6rem;
-            cursor: pointer;
-            margin-bottom: 10px;
-            width: 100%;
-            font-weight: 600;
             font-family: 'Poppins', sans-serif;
         }
 
@@ -1859,6 +1904,9 @@
             width: 100%;
             text-align: center;
             margin-bottom: 10px;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
         }
 
         .password-box button {
@@ -1876,10 +1924,25 @@
         .admin-warning {
             background: #fff3cd;
             color: #856404;
-            padding: 8px;
+            padding: 10px;
             border-radius: 10px;
             font-size: 0.65rem;
             text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .admin-login-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            padding: 5px 10px;
+            font-size: 0.6rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s ease;
         }
 
         /* ===== RESPONSIVE ===== */
@@ -1908,8 +1971,7 @@
                 font-size: 0.7rem;
             }
 
-            .track-btn,
-            .admin-small-btn {
+            .admin-login-btn {
                 padding: 4px 8px;
                 font-size: 0.5rem;
             }
@@ -1949,24 +2011,8 @@
                 font-size: 1.4rem;
             }
 
-            .admin-stats-mini {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .admin-tabs-mini .tab-mini {
-                font-size: 0.45rem;
-                padding: 3px 8px;
-            }
-
-            .order-mini,
-            .deposit-mini,
-            .user-mini,
-            .review-mini {
-                font-size: 0.5rem;
-            }
-
             .logo-img-landing img {
-                height: 65px;
+                height: 100px;
             }
 
             .logo-section h1 {
@@ -1994,6 +2040,24 @@
             .qty-section input {
                 width: 60px;
                 font-size: 0.75rem;
+            }
+
+            .bottom-nav .nav-item {
+                padding: 4px 8px;
+                min-width: 50px;
+            }
+
+            .bottom-nav .nav-item i {
+                font-size: 1rem;
+            }
+
+            .bottom-nav .nav-item span {
+                font-size: 0.5rem;
+            }
+
+            .admin-panel {
+                width: 100%;
+                max-width: 100vw;
             }
         }
 
@@ -2026,13 +2090,13 @@
 
 <body>
 
-    <!-- ========== LANDING PAGE - ALWAYS SHOWING UNTIL CLICKED ========== -->
+    <!-- ========== LANDING PAGE ========== -->
     <div class="landing-page" id="landingPage">
         <div class="landing-container">
             <div class="logo-section">
                 <div class="logo-img-landing">
                     <img src="https://i.postimg.cc/NjgFm0v4/Vibrant-Logo-with-African-Spirit-(1).png"
-                        alt="Get Fans Kenya">
+                        alt="Get Fans Kenya" style="height: 120px; width: auto; max-width: 100%;">
                 </div>
                 <h1>Get Fans Kenya</h1>
                 <p>Grow Your Social Media Presence Fast</p>
@@ -2136,8 +2200,7 @@
                         <h1>Get Fans Kenya</h1>
                     </div>
                     <div class="header-buttons">
-                        <button class="track-btn" id="trackOrderBtn">Track</button>
-                        <button class="admin-small-btn" id="adminSmallBtn">Admin</button>
+                        <button class="admin-login-btn" id="adminLoginBtn">🔐 Admin</button>
                         <div class="theme-toggle" id="themeToggle">🌓</div>
                     </div>
                 </div>
@@ -2181,7 +2244,6 @@
                             <i class="fas fa-rocket"></i> Choose Your Package
                         </div>
 
-                        <!-- Platform Selection -->
                         <div class="pkg-grid">
                             <div class="pkg-card active" data-platform="facebook" id="fbPkg">
                                 <span class="pkg-check"><i class="fas fa-check"></i></span>
@@ -2197,14 +2259,12 @@
                             </div>
                         </div>
 
-                        <!-- Service Pills -->
                         <div class="service-pills" id="serviceButtons">
                             <div class="service-pill active" data-service="followers">Followers</div>
                             <div class="service-pill" data-service="likes">Likes</div>
                             <div class="service-pill" data-service="comments">Comments</div>
                         </div>
 
-                        <!-- Quantity -->
                         <div class="qty-section">
                             <label>Qty</label>
                             <div class="qty-controls">
@@ -2215,7 +2275,6 @@
                             <input type="range" id="quantitySlider" min="100" max="1000000" step="100" value="10000">
                         </div>
 
-                        <!-- Price Display -->
                         <div class="price-box">
                             <div>
                                 <span class="price-main">
@@ -2227,7 +2286,6 @@
                             <div class="price-label">Best price in Kenya • No hidden fees</div>
                         </div>
 
-                        <!-- Delivery -->
                         <div class="delivery-time-note delivery-fast" id="deliveryTimeNote">
                             ⚡ <span id="deliveryEstimate">30 minutes</span> delivery
                         </div>
@@ -2304,7 +2362,7 @@
                     </div>
                 </div>
 
-                <!-- AD UNIT - BEFORE REVIEWS -->
+                <!-- AD UNIT -->
                 <div class="ad-unit">
                     <div class="ad-label">— Sponsored —</div>
                     <ins class="adsbygoogle" style="display:block; min-height:90px;"
@@ -2341,6 +2399,26 @@
                     Get Fans Kenya • Till 8941840
                 </footer>
             </div>
+        </div>
+    </div>
+
+    <!-- ========== BOTTOM NAVIGATION ========== -->
+    <div class="bottom-nav" id="bottomNav">
+        <div class="nav-item active" data-tab="home">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" data-tab="track">
+            <i class="fas fa-search"></i>
+            <span>Track</span>
+        </div>
+        <div class="nav-item" data-tab="reviews">
+            <i class="fas fa-star"></i>
+            <span>Reviews</span>
+        </div>
+        <div class="nav-item" data-tab="account" id="accountNav">
+            <i class="fas fa-user"></i>
+            <span id="accountNavLabel">Account</span>
         </div>
     </div>
 
@@ -2384,26 +2462,28 @@
         </div>
     </div>
 
-    <!-- ADMIN STRIP -->
-    <div class="admin-strip" id="adminStrip">
-        <div class="admin-strip-header">
+    <!-- ADMIN PANEL (SIDEBAR) -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-panel-header">
             <h3><i class="fas fa-shield-alt"></i> Admin Panel</h3>
-            <button class="close-strip" id="closeAdminStrip">&times;</button>
+            <button class="close-panel" id="closeAdminPanel">&times;</button>
         </div>
-        <div class="admin-stats-mini" id="adminStatsMini">
-            <div class="stat-mini"><span class="num" id="statOrdersMini">0</span>Orders</div>
-            <div class="stat-mini"><span class="num" id="statRevenueMini">KSh 0</span>Revenue</div>
-            <div class="stat-mini"><span class="num" id="statPendingMini">0</span>Pending</div>
-            <div class="stat-mini"><span class="num" id="statUsersMini">0</span>Users</div>
+        <div class="admin-panel-content">
+            <div class="admin-stats-mini" id="adminStatsMini">
+                <div class="stat-mini"><span class="num" id="statOrdersMini">0</span>Orders</div>
+                <div class="stat-mini"><span class="num" id="statRevenueMini">KSh 0</span>Revenue</div>
+                <div class="stat-mini"><span class="num" id="statPendingMini">0</span>Pending</div>
+                <div class="stat-mini"><span class="num" id="statUsersMini">0</span>Users</div>
+            </div>
+            <div class="admin-tabs-mini">
+                <button class="tab-mini active" data-tab="orders" id="tabOrders"><i class="fas fa-shopping-cart"></i> Orders</button>
+                <button class="tab-mini" data-tab="deposits" id="tabDeposits"><i class="fas fa-money-bill"></i> Deposits</button>
+                <button class="tab-mini" data-tab="reviews" id="tabReviews"><i class="fas fa-star"></i> Reviews</button>
+                <button class="tab-mini" data-tab="users" id="tabUsers"><i class="fas fa-users"></i> Users</button>
+            </div>
+            <button class="refresh-btn" id="refreshDataBtn"><i class="fas fa-sync-alt"></i> Refresh Data</button>
+            <div class="admin-content-mini" id="adminContentMini"></div>
         </div>
-        <div class="admin-tabs-mini">
-            <button class="tab-mini active" data-tab="orders" id="tabOrders"><i class="fas fa-shopping-cart"></i> Orders</button>
-            <button class="tab-mini" data-tab="deposits" id="tabDeposits"><i class="fas fa-money-bill"></i> Deposits</button>
-            <button class="tab-mini" data-tab="reviews" id="tabReviews"><i class="fas fa-star"></i> Reviews</button>
-            <button class="tab-mini" data-tab="users" id="tabUsers"><i class="fas fa-users"></i> Users</button>
-        </div>
-        <button class="refresh-btn" id="refreshDataBtn"><i class="fas fa-sync-alt"></i> Refresh Data</button>
-        <div class="admin-content-mini" id="adminContentMini"></div>
     </div>
 
     <!-- PASSWORD MODAL -->
@@ -2462,29 +2542,26 @@
                         text: message
                     })
                 }).catch(() => {});
-                console.log('📨 Telegram sent:', message.substring(0, 30));
-            } catch (e) {
-                console.log('Telegram error:', e);
-            }
+            } catch (e) {}
         }
 
         // ===== TOAST =====
         function toast(message, isError = false) {
             const toastEl = document.createElement('div');
             toastEl.style.cssText =
-                `position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:${isError ? '#e74c3c' : '#2ecc71'}; color:white; padding:10px 20px; border-radius:30px; z-index:3000; font-size:0.7rem; font-family:'Poppins',sans-serif; max-width:90%; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.2);`;
+                `position:fixed; bottom:85px; left:50%; transform:translateX(-50%); background:${isError ? '#e74c3c' : '#2ecc71'}; color:white; padding:10px 20px; border-radius:30px; z-index:3000; font-size:0.7rem; font-family:'Poppins',sans-serif; max-width:90%; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.2);`;
             toastEl.innerHTML = message;
             document.body.appendChild(toastEl);
             setTimeout(() => toastEl.remove(), 3000);
         }
 
-        // ===== LANDING PAGE FUNCTIONS - BUTTONS WORKING =====
+        // ===== LANDING PAGE FUNCTIONS =====
         function showMainSite() {
             document.getElementById('landingPage').classList.add('hide-landing');
             document.getElementById('mainSite').classList.add('active');
+            updateAccountNav();
         }
 
-        // Guest button
         document.getElementById('guestBtn').addEventListener('click', function() {
             localStorage.setItem('gfk_user_type', 'guest');
             localStorage.removeItem('gfk_user_email');
@@ -2494,14 +2571,12 @@
             sendTelegramNotification('👤 Guest user started browsing');
         });
 
-        // Signup button on landing page
         document.getElementById('signupBtn2').addEventListener('click', function() {
             document.getElementById('authModal').classList.add('show');
             switchAuthTab('signup');
             document.getElementById('guestNotice').style.display = 'block';
         });
 
-        // Login link on landing page
         document.getElementById('loginLink').addEventListener('click', function(e) {
             e.preventDefault();
             document.getElementById('authModal').classList.add('show');
@@ -2521,14 +2596,14 @@
 
         function switchAuthTab(tab) {
             document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'none';
             if (tab === 'login') {
                 document.getElementById('authTabLogin').classList.add('active');
                 document.getElementById('loginForm').style.display = 'block';
-                document.getElementById('signupForm').style.display = 'none';
             } else {
                 document.getElementById('authTabSignup').classList.add('active');
                 document.getElementById('signupForm').style.display = 'block';
-                document.getElementById('loginForm').style.display = 'none';
             }
             document.querySelectorAll('.error-message').forEach(e => e.classList.remove('show'));
         }
@@ -2547,7 +2622,10 @@
             localStorage.setItem('gfk_user_name', email.split('@')[0]);
 
             closeAuthModal();
-            showMainSite();
+            if (!document.getElementById('mainSite').classList.contains('active')) {
+                showMainSite();
+            }
+            updateAccountNav();
             toast('Welcome back! 🎉');
             sendTelegramNotification('🔑 User logged in: ' + email);
         });
@@ -2582,21 +2660,55 @@
             });
 
             closeAuthModal();
-            showMainSite();
+            if (!document.getElementById('mainSite').classList.contains('active')) {
+                showMainSite();
+            }
+            updateAccountNav();
             toast('Account created! 🎉 You got 100 free followers!');
             sendTelegramNotification('🎉 New User Signup: ' + name + ' (' + email + ')');
         });
 
-        // ===== CHECK SESSION =====
-        function checkSession() {
+        // ===== UPDATE ACCOUNT NAV =====
+        function updateAccountNav() {
             const userType = localStorage.getItem('gfk_user_type');
-            // LANDING PAGE STAYS VISIBLE - NO AUTO HIDE
-            // Only show main site if user explicitly clicked a button
-            if (userType === 'member' || userType === 'guest') {
-                // User already has session, but keep landing visible
-                // They will click to enter
+            const accountNav = document.getElementById('accountNav');
+            const accountLabel = document.getElementById('accountNavLabel');
+
+            if (userType === 'member') {
+                accountLabel.textContent = 'Account';
+            } else {
+                accountLabel.textContent = 'Login';
             }
         }
+
+        // ===== BOTTOM NAVIGATION =====
+        document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const tab = this.dataset.tab;
+
+                document.querySelectorAll('.bottom-nav .nav-item').forEach(n => n.classList.remove(
+                    'active'));
+                this.classList.add('active');
+
+                if (tab === 'home') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else if (tab === 'track') {
+                    document.getElementById('trackModal').classList.add('show');
+                    document.getElementById('trackingResult').classList.remove('show');
+                } else if (tab === 'reviews') {
+                    document.getElementById('reviewsCarousel').scrollIntoView({ behavior: 'smooth' });
+                } else if (tab === 'account') {
+                    const userType = localStorage.getItem('gfk_user_type');
+                    if (userType === 'member') {
+                        toast('👤 Account: ' + (localStorage.getItem('gfk_user_email') || 'Member'));
+                    } else {
+                        document.getElementById('authModal').classList.add('show');
+                        document.getElementById('guestNotice').style.display = 'block';
+                        switchAuthTab('login');
+                    }
+                }
+            });
+        });
 
         // ===== SYNC FUNCTIONS =====
         function updateSyncStatus(status, message) {
@@ -2643,17 +2755,16 @@
                     localStorage.setItem('getfanskenya_users', JSON.stringify(usersData));
                 }
 
-                if (document.getElementById('adminStrip').classList.contains('show')) {
-                    updateAdminStrip();
+                if (document.getElementById('adminPanel').classList.contains('show')) {
+                    updateAdminPanel();
                 }
 
                 updateSyncStatus('synced', 'Data synced with cloud');
                 return true;
             } catch (e) {
                 console.error('Sync error:', e);
-                updateSyncStatus('error', 'Sync failed - using local data');
+                updateSyncStatus('error', 'Using local data');
 
-                // Load from local storage
                 const localOrders = localStorage.getItem('getfanskenya_orders');
                 if (localOrders) { try { orders = JSON.parse(localOrders); } catch (e) {} }
                 const localDeposits = localStorage.getItem('getfanskenya_deposits');
@@ -2664,8 +2775,8 @@
                 const localUsers = localStorage.getItem('getfanskenya_users');
                 if (localUsers) { try { usersData = JSON.parse(localUsers); } catch (e) {} }
 
-                if (document.getElementById('adminStrip').classList.contains('show')) {
-                    updateAdminStrip();
+                if (document.getElementById('adminPanel').classList.contains('show')) {
+                    updateAdminPanel();
                 }
 
                 return false;
@@ -2679,13 +2790,18 @@
             }, 30000);
         }
 
-        // ===== ADMIN STRIP =====
-        document.getElementById('adminSmallBtn').addEventListener('click', function() {
-            openAdminStrip();
+        // ===== ADMIN PANEL (SIDEBAR) =====
+        document.getElementById('adminLoginBtn').addEventListener('click', function() {
+            if (isAdminLoggedIn) {
+                document.getElementById('adminPanel').classList.add('show');
+                updateAdminPanel();
+            } else {
+                document.getElementById('passwordModal').classList.add('show');
+            }
         });
 
-        document.getElementById('closeAdminStrip').addEventListener('click', function() {
-            document.getElementById('adminStrip').classList.remove('show');
+        document.getElementById('closeAdminPanel').addEventListener('click', function() {
+            document.getElementById('adminPanel').classList.remove('show');
         });
 
         document.getElementById('tabOrders').addEventListener('click', function() { switchAdminTabMini('orders'); });
@@ -2699,22 +2815,13 @@
             toast('Data synced!');
         });
 
-        function openAdminStrip() {
-            if (isAdminLoggedIn) {
-                document.getElementById('adminStrip').classList.add('show');
-                updateAdminStrip();
-            } else {
-                document.getElementById('passwordModal').classList.add('show');
-            }
-        }
-
         document.getElementById('submitPassword').addEventListener('click', function() {
             const pwd = document.getElementById('adminPassword').value;
             if (pwd === ADMIN_PASSWORD) {
                 isAdminLoggedIn = true;
                 document.getElementById('passwordModal').classList.remove('show');
-                document.getElementById('adminStrip').classList.add('show');
-                updateAdminStrip();
+                document.getElementById('adminPanel').classList.add('show');
+                updateAdminPanel();
                 toast('Welcome Admin!');
                 sendTelegramNotification('🔐 Admin logged in');
             } else {
@@ -2726,7 +2833,7 @@
             document.getElementById('passwordModal').classList.remove('show');
         });
 
-        function updateAdminStrip() {
+        function updateAdminPanel() {
             const totalOrders = orders.length;
             const totalRevenue = orders.reduce((sum, o) => sum + (o.price || o['Price (KSh)'] || 0), 0);
             const pendingOrders = orders.filter(o => (o.status || o.Status || 'Pending') === 'Pending').length;
@@ -2753,8 +2860,7 @@
 
             if (tab === 'orders') {
                 if (orders.length === 0) {
-                    container.innerHTML =
-                        '<div class="admin-warning">📭 No orders yet</div>';
+                    container.innerHTML = '<div class="admin-warning">📭 No orders yet</div>';
                     return;
                 }
                 container.innerHTML = orders.map(o => `
@@ -2779,8 +2885,7 @@
                     `).join('');
             } else if (tab === 'deposits') {
                 if (deposits.length === 0) {
-                    container.innerHTML =
-                        '<div class="admin-warning">💰 No deposits yet</div>';
+                    container.innerHTML = '<div class="admin-warning">💰 No deposits yet</div>';
                     return;
                 }
                 container.innerHTML = deposits.map(d => `
@@ -2805,8 +2910,7 @@
                     `).join('');
             } else if (tab === 'reviews') {
                 if (reviews.length === 0) {
-                    container.innerHTML =
-                        '<div class="admin-warning">⭐ No reviews yet</div>';
+                    container.innerHTML = '<div class="admin-warning">⭐ No reviews yet</div>';
                     return;
                 }
                 container.innerHTML = reviews.map((r, i) => `
@@ -2820,8 +2924,7 @@
                     `).join('');
             } else if (tab === 'users') {
                 if (usersData.length === 0) {
-                    container.innerHTML =
-                        '<div class="admin-warning">👥 No users found</div>';
+                    container.innerHTML = '<div class="admin-warning">👥 No users found</div>';
                     return;
                 }
                 container.innerHTML = usersData.map(u => `
@@ -2851,7 +2954,7 @@
                 }
 
                 toast('Order status updated!');
-                updateAdminStrip();
+                updateAdminPanel();
                 sendTelegramNotification('🔄 Order ' + trackingId + ' → ' + newStatus);
             } catch (error) {
                 toast('Error updating status', true);
@@ -2873,7 +2976,7 @@
                 }
 
                 toast('Deposit approved! Wallet credited.');
-                updateAdminStrip();
+                updateAdminPanel();
                 sendTelegramNotification('✅ Deposit Approved: ' + depositCode);
                 await fetchAllFromCloud();
             } catch (error) {
@@ -2896,7 +2999,7 @@
                 }
 
                 toast('Deposit rejected.');
-                updateAdminStrip();
+                updateAdminPanel();
                 sendTelegramNotification('❌ Deposit Rejected: ' + depositCode);
             } catch (error) {
                 toast('Error rejecting deposit', true);
@@ -2907,7 +3010,7 @@
             if (confirm('Delete this review?')) {
                 reviews.splice(index, 1);
                 localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
-                updateAdminStrip();
+                updateAdminPanel();
                 renderReviews();
                 toast('Review deleted');
             }
@@ -3083,8 +3186,10 @@
             document.getElementById('step1Indicator').classList.remove('active', 'completed');
             document.getElementById('step2Indicator').classList.remove('active', 'completed');
             document.getElementById('step3Indicator').classList.remove('active', 'completed');
-            if (currentStep >= 1) document.getElementById('step1Indicator').classList.add(currentStep > 1 ? 'completed' : 'active');
-            if (currentStep >= 2) document.getElementById('step2Indicator').classList.add(currentStep > 2 ? 'completed' : 'active');
+            if (currentStep >= 1) document.getElementById('step1Indicator').classList.add(currentStep > 1 ? 'completed' :
+                'active');
+            if (currentStep >= 2) document.getElementById('step2Indicator').classList.add(currentStep > 2 ? 'completed' :
+                'active');
             if (currentStep >= 3) document.getElementById('step3Indicator').classList.add('active');
         }
 
@@ -3171,7 +3276,7 @@
 
             if (!order) {
                 resultDiv.innerHTML =
-                    `<div style="background:#e74c3c;color:white;padding:12px;border-radius:12px;text-align:center;">Order not found.</div>`;
+                    `<div style="background:#e74c3c;color:white;padding:12px;border-radius:12px;text-align:center;">Order not found. Check your Tracking ID and try again.</div>`;
                 resultDiv.classList.add('show');
                 return;
             }
@@ -3187,7 +3292,8 @@
                 if (i < currentIdx) { stepClass = 'completed';
                     icon = '✓'; } else if (i === currentIdx) { stepClass = 'active';
                     icon = '●'; }
-                timelineHtml += `<div class="status-step ${stepClass}"><div class="status-icon">${icon}</div><div class="status-label">${steps[i]}</div></div>`;
+                timelineHtml +=
+                    `<div class="status-step ${stepClass}"><div class="status-icon">${icon}</div><div class="status-label">${steps[i]}</div></div>`;
             }
 
             resultDiv.innerHTML = `
@@ -3201,6 +3307,51 @@
                         ${currentStatus === 'Delivered' ? `<button class="download-receipt-btn" onclick="downloadReceipt('${order.trackingId || order['Tracking ID']}')">📥 Download Receipt</button>` : ''}
                     </div>`;
             resultDiv.classList.add('show');
+        }
+
+        function downloadReceipt(trackingId) {
+            const order = orders.find(o => (o.trackingId || o['Tracking ID']) === trackingId);
+            if (!order) {
+                toast('Order not found', true);
+                return;
+            }
+
+            const receiptHTML = `
+                <html>
+                <head>
+                    <style>
+                        body { font-family: 'Poppins', Arial, sans-serif; padding: 20px; max-width: 500px; margin: 0 auto; }
+                        h1 { color: #1877f2; font-size: 1.2rem; }
+                        .receipt-box { border: 2px solid #1877f2; border-radius: 12px; padding: 16px; margin-top: 12px; }
+                        .row { display: flex; justify-content: space-between; margin: 8px 0; font-size: 0.8rem; }
+                        .total { font-weight: bold; font-size: 1rem; border-top: 1px solid #ccc; padding-top: 8px; }
+                    </style>
+                </head>
+                <body>
+                    <h1>Get Fans Kenya - Receipt</h1>
+                    <div class="receipt-box">
+                        <div class="row"><span>Tracking ID:</span><strong>${trackingId}</strong></div>
+                        <div class="row"><span>Service:</span><strong>${order.service || order.Service || ''}</strong></div>
+                        <div class="row"><span>Quantity:</span><strong>${(order.quantity || order.Quantity || 0).toLocaleString()}</strong></div>
+                        <div class="row"><span>Date:</span><strong>${order.timestamp || new Date().toLocaleString()}</strong></div>
+                        <div class="row total"><span>Total:</span><strong>KSh ${(order.price || order['Price (KSh)'] || 0).toLocaleString()}</strong></div>
+                    </div>
+                    <p style="text-align:center; font-size:0.7rem; margin-top:12px;">Thank you for choosing Get Fans Kenya!</p>
+                </body>
+                </html>
+            `;
+
+            const blob = new Blob([receiptHTML], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `Receipt_${trackingId}.html`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            toast('Receipt downloaded! 📥');
         }
 
         async function trackOrder(trackingId) {
@@ -3228,11 +3379,6 @@
             }
         }
 
-        document.getElementById('trackOrderBtn').addEventListener('click', function() {
-            document.getElementById('trackModal').classList.add('show');
-            document.getElementById('trackingResult').classList.remove('show');
-        });
-
         document.getElementById('searchTrackBtn').addEventListener('click', function() {
             const id = document.getElementById('trackingInput').value.trim().toUpperCase();
             if (id) {
@@ -3254,8 +3400,11 @@
 
         document.getElementById('copyTrackingBtn').addEventListener('click', function() {
             const id = document.getElementById('successTrackingId').textContent;
-            navigator.clipboard.writeText(id);
-            toast('Tracking ID copied!');
+            navigator.clipboard.writeText(id).then(() => {
+                toast('Tracking ID copied!');
+            }).catch(() => {
+                toast('Failed to copy', true);
+            });
         });
 
         document.getElementById('trackFromSuccessBtn').addEventListener('click', function() {
@@ -3271,7 +3420,8 @@
             const container = document.getElementById('reviewsItems');
             if (!container) return;
             if (reviews.length === 0) {
-                container.innerHTML = '<div style="padding:20px;text-align:center;">No reviews yet</div>';
+                container.innerHTML =
+                    '<div style="padding:20px;text-align:center;color:var(--text-light);">No reviews yet - be the first!</div>';
                 return;
             }
 
@@ -3515,10 +3665,6 @@
 
         // ===== INITIALIZE =====
         async function initialize() {
-            // LANDING PAGE STAYS VISIBLE - NO AUTO HIDE
-            // Check session but don't auto-hide landing
-            const userType = localStorage.getItem('gfk_user_type');
-
             // Load from localStorage
             const localOrders = localStorage.getItem('getfanskenya_orders');
             if (localOrders) { try { orders = JSON.parse(localOrders); } catch (e) {} }
@@ -3536,6 +3682,7 @@
             updateServiceButtons();
             updateUI();
             updateProgress();
+            updateAccountNav();
 
             // Start auto sync
             startAutoSync();
@@ -3555,6 +3702,8 @@
             console.log('🔄 Auto-sync: 30 SECONDS');
             console.log('📡 Tracking: 2 SECONDS');
             console.log('📱 Landing page: ALWAYS VISIBLE UNTIL CLICKED');
+            console.log('📲 Bottom Nav: HOME | TRACK | REVIEWS | ACCOUNT');
+            console.log('🔐 Admin Panel: SIDEBAR (right side)');
         }
 
         // Run initialize
