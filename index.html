@@ -29,9 +29,9 @@
         body {
             font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text);
             min-height: 100vh; padding-bottom: calc(var(--bottom-nav-height) + 15px);
+            overflow-x: hidden;
         }
 
-        /* LANDING */
         .landing-page {
             background: linear-gradient(135deg, #1877f2 0%, #0d65d9 50%, #001f3f 100%);
             min-height: 100vh; display: flex; align-items: center; justify-content: center;
@@ -76,7 +76,6 @@
         .trust-item { color: rgba(255,255,255,0.8); font-size: 0.55rem; display: flex; align-items: center; gap: 4px; }
         .trust-item i { color: #2ecc71; }
 
-        /* AUTH MODAL */
         .auth-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; }
         .auth-modal.show { display: flex; }
         .auth-modal-content { background: white; border-radius: 20px; padding: 20px; width: 90%; max-width: 400px; max-height: 85vh; overflow-y: auto; animation: modalSlideIn 0.3s ease; }
@@ -94,7 +93,6 @@
         .error-message { color: #e74c3c; font-size: 0.6rem; margin-top: 4px; display: none; }
         .error-message.show { display: block; }
 
-        /* MAIN SITE */
         .main-site { display: none; }
         .main-site.active { display: block; }
         .sticky-header { position: sticky; top: 0; z-index: 100; background: linear-gradient(135deg, var(--header-bg-start), var(--header-bg-end)); padding: 10px 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
@@ -108,23 +106,20 @@
         .theme-toggle { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 25px; padding: 3px 8px; cursor: pointer; font-size: 0.7rem; color: white; }
         .main-content { padding: 12px; }
 
-        /* USER BAR */
-        .user-info-bar { background: var(--card-bg); border-radius: 12px; padding: 8px 12px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border); flex-wrap: wrap; gap: 6px; }
-        .user-greeting { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 0.7rem; }
-        .user-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.85rem; overflow: hidden; }
-        .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .wallet-mini { display: flex; align-items: center; gap: 6px; background: var(--bg); padding: 4px 10px; border-radius: 20px; }
-        .wallet-balance { font-weight: 700; font-size: 0.7rem; color: var(--success); }
-        .wallet-deposit-btn { background: var(--success); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        .logout-btn { background: var(--danger); color: white; border: none; border-radius: 25px; padding: 4px 10px; cursor: pointer; font-size: 0.55rem; font-weight: 600; }
-        .free-credit-btn { background: linear-gradient(135deg, #2ecc71, #27ae60); color: white; border: none; border-radius: 25px; padding: 5px 10px; cursor: pointer; font-size: 0.55rem; font-weight: 600; animation: pulse 2s infinite; }
+        .user-info-bar { background: var(--card-bg); border-radius: 12px; padding: 10px 14px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--border); flex-wrap: wrap; gap: 8px; }
+        .user-greeting { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 0.75rem; }
+        .user-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.9rem; overflow: hidden; flex-shrink: 0; }
+        .user-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .wallet-mini { display: flex; align-items: center; gap: 6px; background: var(--bg); padding: 5px 10px; border-radius: 20px; }
+        .wallet-balance { font-weight: 700; font-size: 0.75rem; color: var(--success); }
+        .wallet-deposit-btn { background: var(--success); color: white; border: none; border-radius: 50%; width: 26px; height: 26px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .logout-btn { background: var(--danger); color: white; border: none; border-radius: 25px; padding: 5px 12px; cursor: pointer; font-size: 0.6rem; font-weight: 600; }
+        .free-credit-btn { background: linear-gradient(135deg, #2ecc71, #27ae60); color: white; border: none; border-radius: 25px; padding: 5px 10px; cursor: pointer; font-size: 0.6rem; font-weight: 600; animation: pulse 2s infinite; }
 
-        /* CARDS */
-        .card { background: var(--card-bg); border-radius: var(--radius); padding: 16px; margin-bottom: 14px; border: 1px solid var(--border); box-shadow: var(--shadow); }
-        .card-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; color: var(--text); display: flex; align-items: center; gap: 8px; }
+        .card { background: var(--card-bg); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+        .card-title { font-size: 1rem; font-weight: 700; margin-bottom: 14px; color: var(--text); display: flex; align-items: center; gap: 8px; }
         .card-title i { color: var(--primary); }
 
-        /* PACKAGES */
         .pkg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
         .pkg-card { background: var(--bg); border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 12px 8px; text-align: center; cursor: pointer; transition: all 0.2s; position: relative; }
         .pkg-card:hover { transform: translateY(-2px); }
@@ -200,7 +195,7 @@
 
         .whatsapp-float { position: fixed; bottom: 75px; right: 16px; background: var(--whatsapp); color: white; border-radius: 40px; padding: 6px 12px; display: flex; align-items: center; gap: 5px; text-decoration: none; font-weight: bold; font-size: 0.65rem; z-index: 999; box-shadow: 0 4px 15px rgba(37,211,102,0.3); }
 
-        .profile-pic-preview { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin: 0 auto 10px; display: block; border: 2px solid var(--primary); }
+        .profile-pic-preview { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block; border: 3px solid var(--primary); background: var(--bg); }
 
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: var(--bottom-nav-height); background: var(--card-bg); border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-around; z-index: 500; padding: 0 8px; box-shadow: 0 -4px 15px rgba(0,0,0,0.05); }
         .bottom-nav-item { display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; padding: 5px 8px; border-radius: 10px; transition: all 0.2s; font-size: 0.55rem; font-weight: 600; color: var(--text-light); border: none; background: none; min-width: 50px; }
@@ -288,6 +283,12 @@
         .ad-card .ad-btn { padding: 5px 14px; border-radius: 18px; font-size: 0.55rem; font-weight: 600; cursor: pointer; border: none; background: var(--primary); color: white; }
 
         .site-footer { text-align: center; font-size: 0.5rem; color: var(--text-light); margin: 14px 0; padding: 8px; }
+
+        /* PC responsiveness - same as phone */
+        @media (min-width: 768px) {
+            .container { max-width: 550px; }
+            .modal-container { max-width: 500px; }
+        }
 
         @media (max-width: 480px) {
             .main-content { padding: 10px; }
@@ -408,7 +409,7 @@
     </div>
 </div>
 
-<!-- STEP 2 -->
+<!-- STEP 2 PAGE -->
 <div style="display:none;" id="step2page">
     <div class="main-content"><div class="container">
         <div class="card">
@@ -421,7 +422,7 @@
     </div></div>
 </div>
 
-<!-- STEP 3 -->
+<!-- STEP 3 PAGE -->
 <div style="display:none;" id="step3page">
     <div class="main-content"><div class="container">
         <div class="card">
@@ -455,59 +456,41 @@
     <button class="bottom-nav-item" onclick="openAccountModal()"><i class="fas fa-user"></i><span>Account</span></button>
 </nav>
 
-<!-- SUCCESS MODAL -->
+<!-- ALL MODALS -->
 <div class="modal-overlay" id="orderSuccessModal"><div class="modal-container"><div class="modal-header"><h3>🎉 Order Submitted!</h3><button class="close-modal" onclick="closeModal('orderSuccessModal')">&times;</button></div><div class="modal-body tracking-popup"><div style="font-size:2.5rem;">✅</div><p>Your order is pending approval</p><div class="tracking-code-large" id="successTrackingCode">GFKXXXXXX</div><div class="tracking-popup-buttons"><button class="track-now-btn" onclick="trackFromSuccess()">Track</button><button class="copy-id-btn" onclick="copySuccessId()">Copy ID</button></div></div></div></div>
 
-<!-- TRACK MODAL -->
 <div class="modal-overlay" id="trackModal"><div class="modal-container"><div class="modal-header"><h3>🔍 Track Order</h3><button class="close-modal" onclick="closeModal('trackModal')">&times;</button></div><div class="modal-body"><div class="tracking-input-group"><input type="text" id="trackingInput" placeholder="Enter Tracking ID"><button onclick="trackOrder()">Track</button></div><div id="trackingResult" class="tracking-result"></div></div></div></div>
 
-<!-- WALLET MODAL -->
-<div class="modal-overlay" id="walletModal"><div class="modal-container"><div class="modal-header"><h3>💰 My Wallet</h3><button class="close-modal" onclick="closeModal('walletModal')">&times;</button></div><div class="modal-body"><div style="text-align:center;font-size:1.5rem;font-weight:800;color:var(--success);" id="walletModalBalance">KSh 0</div><button class="btn-next" style="background:var(--success);margin:12px 0;" onclick="document.getElementById('depositSection').style.display='block'">+ Deposit (5% Bonus)</button><div id="depositSection" style="display:none;"><div class="card"><h4>Deposit via M-Pesa</h4><div class="form-group"><label>Amount (KSh)</label><input type="number" id="depositAmount" placeholder="Min 50"></div><p style="font-size:0.6rem;color:var(--success);">🎁 5% Bonus on all deposits!</p><div class="form-group"><label>M-Pesa Phone</label><input type="tel" id="depositPhone" placeholder="0712345678"></div><div class="form-group"><label>Paste M-Pesa Message</label><textarea id="depositMpesaMsg" rows="2" placeholder="Paste M-Pesa confirmation..."></textarea></div><button class="btn-submit" onclick="submitDeposit()">Submit Deposit</button></div></div><h4>Transactions</h4><div id="transactionHistory"></div></div></div></div>
+<div class="modal-overlay" id="walletModal"><div class="modal-container"><div class="modal-header"><h3>💰 My Wallet</h3><button class="close-modal" onclick="closeModal('walletModal')">&times;</button></div><div class="modal-body"><div style="text-align:center;font-size:1.8rem;font-weight:800;color:var(--success);" id="walletModalBalance">KSh 0</div><div style="text-align:center;font-size:0.65rem;color:var(--text-light);margin-bottom:12px;">Available Balance</div><button class="btn-next" style="background:var(--success);margin:12px 0;" onclick="document.getElementById('depositSection').style.display='block'">+ Deposit Funds (5% Bonus!)</button><div id="depositSection" style="display:none;"><div class="card"><h4 style="margin-bottom:10px;">Deposit via M-Pesa</h4><div class="form-group"><label>Amount (KSh)</label><input type="number" id="depositAmount" placeholder="Min 50" min="50"></div><p style="font-size:0.6rem;color:var(--success);margin-bottom:8px;">🎁 5% Bonus on all deposits!</p><div class="form-group"><label>M-Pesa Phone Number</label><input type="tel" id="depositPhone" placeholder="0712345678"></div><div class="form-group"><label>Paste M-Pesa Message</label><textarea id="depositMpesaMsg" rows="2" placeholder="Paste the full M-Pesa confirmation message..."></textarea></div><button class="btn-submit" onclick="submitDeposit()">Submit Deposit for Approval</button></div></div><h4 style="margin-top:10px;">Transaction History</h4><div id="transactionHistory"></div></div></div></div>
 
-<!-- ACCOUNT MODAL WITH FULL PROFILE EDITING + SEND MESSAGE TO ADMIN -->
 <div class="modal-overlay" id="accountModal"><div class="modal-container"><div class="modal-header"><h3>👤 My Account</h3><button class="close-modal" onclick="closeModal('accountModal')">&times;</button></div><div class="modal-body" style="text-align:center;">
-    <!-- Profile Pic Preview -->
-    <img id="accountProfilePic" class="profile-pic-preview" style="display:none;">
+    <img id="accountProfilePic" class="profile-pic-preview" style="display:none;" alt="Profile Picture">
     <div class="user-avatar" id="accountAvatar" style="width:60px;height:60px;font-size:1.5rem;margin:0 auto 10px;">G</div>
-    <h4 id="accountName">Guest</h4>
-    <p id="accountEmail" style="font-size:0.65rem;color:var(--text-light);"></p>
-    
-    <!-- EDIT PROFILE SECTION -->
+    <h4 id="accountName" style="margin-bottom:4px;">Guest</h4>
+    <p id="accountEmail" style="font-size:0.65rem;color:var(--text-light);margin-bottom:12px;"></p>
     <div id="accountEditSection" style="display:none;">
         <div class="form-group"><label>Edit Name</label><input type="text" id="editAccountName" placeholder="Your name"></div>
-        <div class="form-group"><label>Profile Picture URL</label><input type="text" id="editProfilePic" placeholder="https://example.com/photo.jpg"></div>
+        <div class="form-group"><label>Profile Picture URL</label><input type="text" id="editProfilePic" placeholder="https://example.com/photo.jpg"><p style="font-size:0.5rem;color:var(--text-light);">Paste an image URL to set your profile picture</p></div>
         <button class="btn-next" onclick="saveAccountEdits()" style="margin-bottom:10px;">💾 Save Changes</button>
     </div>
-    
-    <div class="summary-card">
-        <div class="info-row"><span>Wallet:</span><strong id="accountBalance">KSh 0</strong></div>
-        <div class="info-row"><span>Orders:</span><strong id="accountTotalOrders">0</strong></div>
-    </div>
-    
-    <!-- SEND MESSAGE TO ADMIN -->
+    <div class="summary-card"><div class="info-row"><span>Wallet Balance:</span><strong id="accountBalance">KSh 0</strong></div><div class="info-row"><span>Total Orders:</span><strong id="accountTotalOrders">0</strong></div></div>
     <div class="form-group"><label>💬 Message for Admin</label><textarea id="adminMessage" rows="2" placeholder="Type your message here..."></textarea></div>
     <button class="btn-next" onclick="sendAdminMessage()" style="background:var(--info);margin-bottom:8px;">📩 Send Message to Admin</button>
-    
     <button class="btn-submit" onclick="handleLogout()" style="margin-top:5px;">Logout</button>
     <div id="accountGuestSection"><p style="font-size:0.7rem;margin-top:10px;">Login to see your account details</p><button class="btn-next" onclick="closeModal('accountModal');showAuthModal('login');">Login / Sign Up</button></div>
 </div></div></div>
 
-<!-- REVIEWS MODAL -->
 <div class="modal-overlay" id="reviewsModal"><div class="modal-container"><div class="modal-header"><h3>⭐ Customer Reviews</h3><button class="close-modal" onclick="closeModal('reviewsModal')">&times;</button></div><div class="modal-body"><div class="reviews-carousel-modal" id="reviewsModalList"></div><hr><h4 style="font-size:0.75rem;">Leave a Review</h4><div class="rating-input" id="ratingStarsModal"><span class="star-rating" data-rating="1" onclick="setModalRating(1)">★</span><span class="star-rating" data-rating="2" onclick="setModalRating(2)">★</span><span class="star-rating" data-rating="3" onclick="setModalRating(3)">★</span><span class="star-rating" data-rating="4" onclick="setModalRating(4)">★</span><span class="star-rating" data-rating="5" onclick="setModalRating(5)">★</span></div><input type="text" id="reviewerNameModal" placeholder="Your name" style="margin-bottom:6px;"><textarea id="reviewTextModal" rows="2" placeholder="Share your experience"></textarea><button class="btn-review" onclick="submitModalReview()">Submit Review</button></div></div></div>
 
-<!-- ADS MODAL -->
 <div class="modal-overlay" id="adsModal"><div class="modal-container"><div class="modal-header"><h3>📢 Special Offers</h3><button class="close-modal" onclick="closeModal('adsModal')">&times;</button></div><div class="modal-body"><div class="ads-scroll-container"><div class="ad-card"><div class="ad-icon">🚀</div><div class="ad-title">10K Facebook Followers</div><div class="ad-desc">Only KSh 3,399</div><button class="ad-btn" onclick="closeModal('adsModal');showStep('step1')">Order Now</button></div><div class="ad-card"><div class="ad-icon">📸</div><div class="ad-title">Instagram Growth</div><div class="ad-desc">10K Followers KSh 5,000</div><button class="ad-btn" onclick="closeModal('adsModal')">Get Started</button></div></div></div></div></div>
 
-<!-- ADMIN MODAL -->
-<div class="modal-overlay" id="adminModal"><div class="modal-container" style="max-width:600px;"><div class="modal-header"><h3>Admin Panel</h3><button class="close-modal" onclick="closeModal('adminModal')">&times;</button></div><div class="modal-body"><div class="admin-stats" id="adminStats"></div><div class="admin-tabs"><button class="admin-tab active" onclick="switchAdminTab('orders')">Orders</button><button class="admin-tab" onclick="switchAdminTab('deposits')">Deposits</button><button class="admin-tab" onclick="switchAdminTab('reviews')">Reviews</button><button class="admin-tab" onclick="switchAdminTab('users')">Users</button></div><button class="refresh-btn" onclick="syncAllData()"><i class="fas fa-sync-alt"></i> Sync All Data from Cloud</button><div id="adminOrdersSection" class="admin-section active"><div id="ordersList"></div></div><div id="adminDepositsSection" class="admin-section"><div id="depositsList"></div></div><div id="adminReviewsSection" class="admin-section"><div id="adminReviewsList"></div></div><div id="adminUsersSection" class="admin-section"><div id="usersList"></div></div></div></div></div>
+<div class="modal-overlay" id="adminModal"><div class="modal-container" style="max-width:600px;"><div class="modal-header"><h3>Admin Panel</h3><button class="close-modal" onclick="closeModal('adminModal')">&times;</button></div><div class="modal-body"><div class="admin-stats" id="adminStats"></div><div class="admin-tabs"><button class="admin-tab active" onclick="switchAdminTab('orders')">Orders</button><button class="admin-tab" onclick="switchAdminTab('deposits')">Deposits</button><button class="admin-tab" onclick="switchAdminTab('reviews')">Reviews</button><button class="admin-tab" onclick="switchAdminTab('users')">Users</button></div><button class="refresh-btn" onclick="silentSync()"><i class="fas fa-sync-alt"></i> Refresh Data</button><div id="adminOrdersSection" class="admin-section active"><div id="ordersList"></div></div><div id="adminDepositsSection" class="admin-section"><div id="depositsList"></div></div><div id="adminReviewsSection" class="admin-section"><div id="adminReviewsList"></div></div><div id="adminUsersSection" class="admin-section"><div id="usersList"></div></div></div></div></div>
 
-<!-- PASSWORD MODAL -->
 <div class="modal-overlay" id="passwordModal"><div class="modal-container" style="max-width:300px;"><div class="modal-header"><h3>Admin Access</h3><button class="close-modal" onclick="closeModal('passwordModal')">&times;</button></div><div class="modal-body"><div class="password-box"><input type="password" id="adminPassword" placeholder="Password"><button onclick="checkAdminPassword()">Unlock</button></div></div></div></div>
 
 <a href="https://wa.me/254750600715" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
 
 <script>
-// ========== CONFIGURATION ==========
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbz_SyGDjZDgL9jW__jyKBuNROkMii4HAhqdS5ajosZ7q18DQWZV4Es5u8DWrh5EHdlklQ/exec";
 const ADMIN_PASS = "GetFans2024";
 const TG_TOKEN = "8825700469:AAEpywAnsc6jEXUmCyvWN4niPbWTSg1xn68";
@@ -523,22 +506,15 @@ function openModal(id){document.getElementById(id).classList.add('show');}
 function toggleTheme(){document.body.classList.toggle('dark');localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light');}
 function tg(m){fetch('https://api.telegram.org/bot'+TG_TOKEN+'/sendMessage?chat_id='+TG_CHAT+'&text='+encodeURIComponent(m)).catch(()=>{});}
 function getUsers(){try{return JSON.parse(localStorage.getItem('gfk_users')||'[]')}catch(e){return[]}}
-function saveUsers(u){localStorage.setItem('gfk_users',JSON.stringify(u));syncUsersToCloud(u);}
+function saveUsers(u){localStorage.setItem('gfk_users',JSON.stringify(u));}
 function genId(){return'GFK'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).substring(2,4).toUpperCase();}
 let trackingId=genId();
 
-// ========== CLOUD SYNC - WORKS FROM ANY DEVICE ==========
-async function syncUsersToCloud(users){
-    try{await fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'syncUsers',users:users})});}catch(e){}
-}
-
-async function syncAllData(){
-    toast('Syncing from cloud...');
+// ========== SILENT SYNC - NO POPUP MESSAGES ==========
+async function silentSync(){
     try{
         const r=await fetch(SHEET_URL+'?action=all&t='+Date.now());
         const d=await r.json();
-        console.log('✅ Cloud sync successful - Orders:',d.orders?.length||0,'Reviews:',d.reviews?.length||0);
-        
         if(d.orders&&Array.isArray(d.orders)){orders=d.orders;localStorage.setItem('gfk_orders',JSON.stringify(orders));}
         if(d.reviews&&Array.isArray(d.reviews)){reviews=d.reviews;localStorage.setItem('gfk_reviews',JSON.stringify(reviews));renderReviews();}
         if(d.deposits&&Array.isArray(d.deposits)){deposits=d.deposits;localStorage.setItem('gfk_deposits',JSON.stringify(deposits));}
@@ -548,13 +524,8 @@ async function syncAllData(){
             saveUsers(existing);
         }
         if(document.getElementById('adminModal').classList.contains('show'))renderAdmin();
-        toast('Synced successfully!');
-    }catch(e){
-        console.log('⚠️ Using local data - offline mode');
-        loadLocalData();
-        if(document.getElementById('adminModal').classList.contains('show'))renderAdmin();
-        toast('Using local data - connect to internet for sync');
-    }
+        console.log('✅ Sync OK');
+    }catch(e){console.log('📡 Offline - using local data');}
 }
 
 function loadLocalData(){
@@ -567,8 +538,8 @@ async function saveToSheets(d){
     try{await fetch(SHEET_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});return true;}catch(e){return false;}
 }
 
-// Auto sync every 30 seconds
-setInterval(()=>{if(document.getElementById('mainSite').style.display==='block')syncAllData();},30000);
+// Auto sync every 30 seconds silently
+setInterval(()=>{if(document.getElementById('mainSite').style.display==='block')silentSync();},30000);
 
 // ========== PRICE CALC ==========
 function calcPrice(p,s,q){
@@ -585,8 +556,7 @@ function continueAsGuest(){
     localStorage.setItem('gfk_user_type','guest');localStorage.removeItem('gfk_current_user');currentUser=null;
     document.getElementById('landingPage').classList.add('hide-landing');document.getElementById('mainSite').style.display='block';
     document.getElementById('bottomNav').style.display='flex';document.getElementById('userInfoBar').style.display='none';
-    updatePaymentDisplay();tg('👤 Guest browsing');toast('Guest Mode');
-    syncAllData();
+    updatePaymentDisplay();silentSync();
 }
 function showAuthModal(tab){openModal('authModal');switchAuthTab(tab||'signup');}
 function closeAuthModal(){closeModal('authModal');}
@@ -608,8 +578,11 @@ function updateUserBar(){
     document.getElementById('userInfoBar').style.display='flex';
     document.getElementById('userNameDisplay').textContent=currentUser.name;
     const av=document.getElementById('userAvatar');
-    if(currentUser.profilePic){av.innerHTML='<img src="'+currentUser.profilePic+'" style="width:100%;height:100%;object-fit:cover;">';}
-    else{av.innerHTML=currentUser.name.charAt(0).toUpperCase();}
+    if(currentUser.profilePic){
+        av.innerHTML='<img src="'+currentUser.profilePic+'" alt="Profile" onerror="this.parentElement.innerHTML=\''+currentUser.name.charAt(0).toUpperCase()+'\'">';
+    }else{
+        av.innerHTML=currentUser.name.charAt(0).toUpperCase();
+    }
     document.getElementById('claimFreeFollowersBtn').style.display=currentUser.freeFollowersClaimed?'none':'inline-block';
     document.getElementById('walletBalanceDisplay').textContent='KSh '+(currentUser.walletBalance||0).toLocaleString();
 }
@@ -620,14 +593,14 @@ document.getElementById('loginBtn').onclick=()=>{
     const pwd=document.getElementById('loginPassword').value;
     if(!email){document.getElementById('loginEmailError').classList.add('show');return;}
     if(!pwd){document.getElementById('loginPasswordError').classList.add('show');return;}
-    syncAllData().then(()=>{
+    silentSync().then(()=>{
         const users=getUsers();const user=users.find(u=>u.email===email);
         if(!user){document.getElementById('loginGeneralError').textContent='Email not found';document.getElementById('loginGeneralError').classList.add('show');return;}
         if(user.password!==pwd){document.getElementById('loginGeneralError').textContent='Wrong password';document.getElementById('loginGeneralError').classList.add('show');return;}
         currentUser=user;localStorage.setItem('gfk_current_user',JSON.stringify(user));localStorage.setItem('gfk_user_type','member');
         closeAuthModal();document.getElementById('landingPage').classList.add('hide-landing');
         document.getElementById('mainSite').style.display='block';document.getElementById('bottomNav').style.display='flex';
-        updateUserBar();updatePaymentDisplay();tg('🔑 Login: '+user.name);toast('Welcome, '+user.name+'!');
+        updateUserBar();updatePaymentDisplay();
     });
 };
 
@@ -648,15 +621,14 @@ document.getElementById('signupBtn').onclick=()=>{
     document.getElementById('mainSite').style.display='block';document.getElementById('bottomNav').style.display='flex';
     updateUserBar();updatePaymentDisplay();
     saveToSheets({type:"newUser",name,email,password:pwd,createdAt:new Date().toLocaleString()});
-    tg('🎉 Signup: '+name+' ('+email+')');toast('Account created!');
+    toast('Account created!');
 };
 
 function handleLogout(){
-    if(currentUser)tg('🚪 Logout: '+currentUser.name);
     currentUser=null;localStorage.removeItem('gfk_current_user');localStorage.setItem('gfk_user_type','');
     document.getElementById('mainSite').style.display='none';document.getElementById('bottomNav').style.display='none';
     document.getElementById('landingPage').classList.remove('hide-landing');
-    document.getElementById('userInfoBar').style.display='none';toast('Logged out');
+    document.getElementById('userInfoBar').style.display='none';
 }
 
 function claimFreeFollowers(){
@@ -666,7 +638,7 @@ function claimFreeFollowers(){
     currentUser.freeFollowersClaimed=true;const users=getUsers();const i=users.findIndex(u=>u.email===currentUser.email);
     if(i!==-1){users[i].freeFollowersClaimed=true;saveUsers(users);}
     localStorage.setItem('gfk_current_user',JSON.stringify(currentUser));updateUserBar();
-    tg('🎁 Free followers: '+currentUser.name);toast('100 Free Followers!');
+    toast('100 Free Followers Added!');
 }
 
 // ========== UI ==========
@@ -732,8 +704,8 @@ function submitMpesaOrder(){
     const orderData={trackingId:tid,platform:currentPlatform==='facebook'?'Facebook':'Instagram',service:(currentPlatform==='facebook'?'Facebook':'Instagram')+' '+(currentService==='followers'?'Followers':currentService==='likes'?'Likes':'Comments'),quantity:currentQuantity,price,deliveryTime:delTime(currentQuantity),customerName:name,profile,phone,transactionId:'MPESA-MANUAL',mpesaConfirmation:mpesa.substring(0,500),status:'Pending',timestamp:new Date().toLocaleString()};
     orders.unshift(orderData);localStorage.setItem('gfk_orders',JSON.stringify(orders));saveToSheets(orderData);
     document.getElementById('successTrackingCode').textContent=tid;lastTrackingId=tid;openModal('orderSuccessModal');
-    tg('🛒 NEW ORDER\n👤 '+name+'\n📱 '+phone+'\n💰 KSh '+price+'\n📝 '+tid+'\n💬 '+mpesa.substring(0,100));
-    resetForm();toast('Order submitted! Awaiting approval.');
+    tg('🛒 ORDER\n👤 '+name+'\n💰 KSh '+price+'\n📝 '+tid);
+    resetForm();toast('Order submitted!');
 }
 
 function payWithWallet(){
@@ -751,7 +723,8 @@ function payWithWallet(){
     const orderData={trackingId:tid,platform:currentPlatform==='facebook'?'Facebook':'Instagram',service:(currentPlatform==='facebook'?'Facebook':'Instagram')+' '+(currentService==='followers'?'Followers':currentService==='likes'?'Likes':'Comments'),quantity:currentQuantity,price,deliveryTime:delTime(currentQuantity),customerName:name,profile:document.getElementById('profileUrl').value.trim(),phone:document.getElementById('customerPhone').value.trim(),transactionId:"WALLET",status:"Pending",timestamp:new Date().toLocaleString()};
     orders.unshift(orderData);localStorage.setItem('gfk_orders',JSON.stringify(orders));saveToSheets(orderData);
     document.getElementById('successTrackingCode').textContent=tid;lastTrackingId=tid;openModal('orderSuccessModal');
-    tg('🛒 Wallet Order\n👤 '+name+'\n💰 KSh '+price);resetForm();
+    tg('🛒 Wallet Order\n👤 '+name+'\n💰 KSh '+price);
+    resetForm();
 }
 
 function resetForm(){
@@ -774,17 +747,17 @@ function submitDeposit(){
     const code='DEP-'+Date.now().toString(36).toUpperCase();
     const depData={type:"deposit",depositCode:code,amount:total,originalAmount:amount,mpesaConfirmation:mpesa,userEmail:currentUser.email,userName:currentUser.name,phone,status:'Pending',timestamp:new Date().toLocaleString()};
     deposits.unshift(depData);localStorage.setItem('gfk_deposits',JSON.stringify(deposits));saveToSheets(depData);
-    tg('💰 Deposit Request\n👤 '+currentUser.name+'\n💵 KSh '+amount+'\n📝 '+code+'\n💬 '+mpesa.substring(0,100));
+    tg('💰 Deposit\n👤 '+currentUser.name+'\n💵 KSh '+amount+'\n📝 '+code);
     document.getElementById('depositAmount').value='';document.getElementById('depositPhone').value='';
     document.getElementById('depositMpesaMsg').value='';document.getElementById('depositSection').style.display='none';
-    toast('Deposit submitted! Awaiting approval.');
+    toast('Deposit submitted!');
 }
 
 // ========== TRACKING ==========
 function trackOrder(){
     const id=document.getElementById('trackingInput').value.trim().toUpperCase();
     if(!id){toast('Enter ID',true);return;}
-    syncAllData().then(()=>{
+    silentSync().then(()=>{
         const o=orders.find(o=>o.trackingId===id);
         const r=document.getElementById('trackingResult');
         if(!o){r.innerHTML='<div style="background:#e74c3c;color:white;padding:10px;border-radius:10px;">Not found</div>';r.classList.add('show');return;}
@@ -809,10 +782,10 @@ function openWalletModal(){if(!currentUser){toast('Login required',true);return;
 function renderTxns(){
     const c=document.getElementById('transactionHistory');if(!c)return;
     const t=currentUser?(currentUser.transactions||[]):[];
-    c.innerHTML=t.length?t.slice(0,20).map(t=>'<div class="tx-item '+(t.type==='deposit'?'tx-type-deposit':'tx-type-purchase')+'"><div><span>'+(t.type==='deposit'?'💰 Deposit':'🛒 Purchase')+'</span><span class="'+(t.amount>0?'tx-amount-positive':'tx-amount-negative')+'">'+(t.amount>0?'+':'')+'KSh '+Math.abs(t.amount).toLocaleString()+'</span></div><div><span>'+t.date+'</span><span>Bal: KSh '+t.balanceAfter.toLocaleString()+'</span></div></div>').join(''):'<p style="font-size:0.65rem;">No transactions</p>';
+    c.innerHTML=t.length?t.slice(0,20).map(t=>'<div class="tx-item '+(t.type==='deposit'?'tx-type-deposit':'tx-type-purchase')+'"><div><span>'+(t.type==='deposit'?'💰 Deposit':'🛒 Purchase')+'</span><span class="'+(t.amount>0?'tx-amount-positive':'tx-amount-negative')+'">'+(t.amount>0?'+':'')+'KSh '+Math.abs(t.amount).toLocaleString()+'</span></div><div><span>'+t.date+'</span><span>Bal: KSh '+t.balanceAfter.toLocaleString()+'</span></div></div>').join(''):'<p style="font-size:0.65rem;">No transactions yet</p>';
 }
 
-// ========== ACCOUNT WITH FULL PROFILE EDITING ==========
+// ========== ACCOUNT WITH PROFILE EDITING ==========
 function openAccountModal(){
     openModal('accountModal');
     if(currentUser){
@@ -843,7 +816,6 @@ function openAccountModal(){
     }
 }
 
-// SAVE PROFILE EDITS
 function saveAccountEdits(){
     if(!currentUser)return;
     const newName=document.getElementById('editAccountName').value.trim();
@@ -855,10 +827,9 @@ function saveAccountEdits(){
     localStorage.setItem('gfk_current_user',JSON.stringify(currentUser));
     updateUserBar();openAccountModal();
     saveToSheets({action:'updateProfile',email:currentUser.email,name:currentUser.name,profilePic:currentUser.profilePic});
-    tg('✏️ Profile Updated: '+currentUser.name);toast('Profile saved! Changes sync across all devices.');
+    toast('Profile saved!');
 }
 
-// SEND MESSAGE TO ADMIN
 function sendAdminMessage(){
     const msg=document.getElementById('adminMessage').value.trim();
     if(!msg){toast('Type a message first',true);return;}
@@ -879,7 +850,7 @@ function submitModalReview(){
     localStorage.setItem('gfk_reviews',JSON.stringify(reviews));saveToSheets({type:'review',name:n,rating:selectedModalRating,review:r,timestamp:new Date().toLocaleString()});
     renderReviews();document.getElementById('reviewerNameModal').value='';document.getElementById('reviewTextModal').value='';
     selectedModalRating=0;document.querySelectorAll('#ratingStarsModal .star-rating').forEach(s=>s.classList.remove('active'));
-    toast('Review posted!');tg('⭐ Review: '+n+' ('+selectedModalRating+'/5)');
+    toast('Review posted!');
 }
 function renderReviews(){
     const c=document.getElementById('reviewsModalList');if(!c)return;
@@ -887,8 +858,8 @@ function renderReviews(){
 }
 
 // ========== ADMIN ==========
-function openAdmin(){isAdminLoggedIn?(openModal('adminModal'),syncAllData().then(()=>renderAdmin())):openModal('passwordModal');}
-function checkAdminPassword(){if(document.getElementById('adminPassword').value===ADMIN_PASS){isAdminLoggedIn=true;closeModal('passwordModal');openModal('adminModal');syncAllData().then(()=>renderAdmin());toast('Welcome Admin');}else toast('Wrong password',true);}
+function openAdmin(){isAdminLoggedIn?(openModal('adminModal'),silentSync().then(()=>renderAdmin())):openModal('passwordModal');}
+function checkAdminPassword(){if(document.getElementById('adminPassword').value===ADMIN_PASS){isAdminLoggedIn=true;closeModal('passwordModal');openModal('adminModal');silentSync().then(()=>renderAdmin());}else toast('Wrong password',true);}
 function switchAdminTab(t){
     document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
     event.target.classList.add('active');
@@ -905,15 +876,15 @@ function renderAdmin(){
     document.getElementById('usersList').innerHTML=getUsers().length?getUsers().map(u=>'<div class="admin-user-row"><div><strong>'+u.name+'</strong><br>'+u.email+'</div><div>💰 KSh '+(u.walletBalance||0).toLocaleString()+'<br>🔐 '+u.password+'</div></div>').join(''):'<div class="admin-warning">No users</div>';
 }
 function updateOrderStatus(tid,ns){
-    const i=orders.findIndex(o=>o.trackingId===tid);if(i!==-1){orders[i].status=ns;localStorage.setItem('gfk_orders',JSON.stringify(orders));saveToSheets({action:"updateStatus",trackingId:tid,newStatus:ns});renderAdmin();tg('🔄 Order '+tid+' → '+ns);toast('Updated!');}
+    const i=orders.findIndex(o=>o.trackingId===tid);if(i!==-1){orders[i].status=ns;localStorage.setItem('gfk_orders',JSON.stringify(orders));saveToSheets({action:"updateStatus",trackingId:tid,newStatus:ns});renderAdmin();}
 }
 function approveDeposit(code){
     const i=deposits.findIndex(d=>d.depositCode===code);if(i!==-1){deposits[i].status='Approved';localStorage.setItem('gfk_deposits',JSON.stringify(deposits));saveToSheets({action:"approveDeposit",depositCode:code});
     const u=getUsers();const ui=u.findIndex(u=>u.email===deposits[i].userEmail);
     if(ui!==-1){u[ui].walletBalance=(u[ui].walletBalance||0)+(deposits[i].amount||0);if(!u[ui].transactions)u[ui].transactions=[];u[ui].transactions.unshift({type:'deposit',amount:deposits[i].amount,balanceAfter:u[ui].walletBalance,date:new Date().toLocaleString()});saveUsers(u);if(currentUser&&currentUser.email===u[ui].email){currentUser=u[ui];localStorage.setItem('gfk_current_user',JSON.stringify(currentUser));updateUserBar();}}
-    renderAdmin();tg('✅ Deposit Approved: '+code);toast('Approved & wallet credited!');}
+    renderAdmin();}
 }
-function deleteReview(i){reviews.splice(i,1);localStorage.setItem('gfk_reviews',JSON.stringify(reviews));renderAdmin();renderReviews();toast('Deleted');}
+function deleteReview(i){reviews.splice(i,1);localStorage.setItem('gfk_reviews',JSON.stringify(reviews));renderAdmin();renderReviews();}
 
 // ========== INIT ==========
 function init(){
@@ -922,18 +893,16 @@ function init(){
     if(localStorage.getItem('theme')==='dark')document.body.classList.add('dark');
     const su=localStorage.getItem('gfk_current_user');
     if(su&&localStorage.getItem('gfk_user_type')==='member'){
-        try{currentUser=JSON.parse(su);document.getElementById('landingPage').classList.add('hide-landing');document.getElementById('mainSite').style.display='block';document.getElementById('bottomNav').style.display='flex';updateUserBar();updatePaymentDisplay();syncAllData();}catch(e){localStorage.removeItem('gfk_current_user');}
+        try{currentUser=JSON.parse(su);document.getElementById('landingPage').classList.add('hide-landing');document.getElementById('mainSite').style.display='block';document.getElementById('bottomNav').style.display='flex';updateUserBar();updatePaymentDisplay();silentSync();}catch(e){localStorage.removeItem('gfk_current_user');}
     }
     updateServiceButtons();updateUI();renderReviews();document.getElementById('trackingId').textContent=trackingId;
 }
 init();
 
-// Quantity input handlers
 document.getElementById('quantityNumber').onchange=function(){let v=parseInt(this.value);if(v>=100&&v<=1000000){currentQuantity=v;document.getElementById('quantitySlider').value=v;updateUI();}};
 document.getElementById('quantityNumber').onblur=function(){let v=parseInt(this.value);if(isNaN(v))v=100;v=Math.min(1000000,Math.max(100,v));currentQuantity=v;this.value=v;document.getElementById('quantitySlider').value=v;updateUI();};
 document.getElementById('walletDepositBtn').onclick=()=>{openWalletModal();setTimeout(()=>document.getElementById('depositSection').style.display='block',200);};
 
-// Push AdSense
 setTimeout(()=>{try{(adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){}},1000);
 </script>
 </body>
