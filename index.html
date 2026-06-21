@@ -869,7 +869,7 @@ function createParticles() {
 createParticles();
 
 // ===== CONFIGURATION =====
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbwnxHFCt5kaJU03e_9qwfY4uDx6OlZv3Z7DeetJAYFIG5SMMrLq_BNuuAA6yoRN3tAR1g/exec";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbwEwTGkOZeDcwCCpjDXwKL2YWQTb5k11s5LiPsitUrCe4ADPy8iTxOmEIv1jTPFqX5MuQ/exec";
 const ADMIN_PASS = "GetFans2024";
 const TG_TOKEN = "8825700469:AAEpywAnsc6jEXUmCyvWN4niPbWTSg1xn68";
 const TG_CHAT = "5740390611";
@@ -890,9 +890,25 @@ let trackingId=genId();
 
 // ===== CHAT FUNCTIONS =====
 
+// Debug function
+function debugChatState() {
+    console.log('=== CHAT DEBUG ===');
+    console.log('Current user:', currentUser);
+    console.log('Current user email:', currentUser ? currentUser.email : 'null');
+    console.log('Chat modal exists:', !!document.getElementById('chatModal'));
+    console.log('Chat container exists:', !!document.getElementById('chatMessages'));
+    console.log('Chat input exists:', !!document.getElementById('chatInput'));
+    console.log('SHEET_URL:', SHEET_URL);
+}
+
 // Send chat message
 async function sendChatMessage() {
     var input = document.getElementById('chatInput');
+    if (!input) {
+        toast('Chat input not found', true);
+        return;
+    }
+    
     var message = input.value.trim();
     
     if (!message) {
@@ -902,8 +918,14 @@ async function sendChatMessage() {
     
     if (!currentUser) {
         toast('Please login to send messages', true);
+        showAuthModal('login');
         return;
     }
+    
+    // Disable input while sending
+    input.disabled = true;
+    var sendBtn = document.querySelector('.chat-input-group button');
+    if (sendBtn) sendBtn.disabled = true;
     
     try {
         var response = await fetch(SHEET_URL, {
@@ -918,67 +940,118 @@ async function sendChatMessage() {
             })
         });
         
-        input.value = '';
-        toast('✅ Message sent to admin!');
-        loadChatHistory();
+        if (!response.ok) {
+            throw new Error('HTTP error: ' + response.status);
+        }
+        
+        var result = await response.json();
+        console.log('Chat response:', result);
+        
+        if (result.success) {
+            input.value = '';
+            toast('✅ Message sent to admin!');
+            setTimeout(function() {
+                loadChatHistory();
+            }, 500);
+        } else {
+            toast('❌ ' + (result.error || 'Failed to send message'), true);
+        }
     } catch(err) {
         console.error('Chat error:', err);
-        toast('❌ Failed to send message', true);
+        toast('❌ Failed to send message: ' + err.message, true);
+    } finally {
+        input.disabled = false;
+        if (sendBtn) sendBtn.disabled = false;
+        input.focus();
     }
 }
 
 // Load chat history
 async function loadChatHistory() {
-    if (!currentUser) return;
+    if (!currentUser) {
+        console.log('No user logged in, cannot load chat');
+        return;
+    }
+    
+    var container = document.getElementById('chatMessages');
+    if (!container) {
+        console.error('Chat container not found!');
+        return;
+    }
     
     try {
         var response = await fetch(SHEET_URL + '?action=chatHistory&email=' + encodeURIComponent(currentUser.email) + '&t=' + Date.now());
-        var data = await response.json();
         
-        var container = document.getElementById('chatMessages');
+        if (!response.ok) {
+            throw new Error('HTTP error: ' + response.status);
+        }
+        
+        var data = await response.json();
+        console.log('Chat history loaded, count:', data ? data.length : 0);
         
         if (!data || data.length === 0) {
             container.innerHTML = '<div class="chat-empty"><i class="fas fa-comment-dots"></i>No messages yet<br><span style="font-size:0.55rem;">Send a message to admin</span></div>';
             return;
         }
         
-        container.innerHTML = data.map(function(msg) {
+        var html = '';
+        data.forEach(function(msg) {
             var isUser = msg.direction === 'outgoing';
-            var sender = isUser ? currentUser.name : 'Admin';
+            var sender = isUser ? (currentUser ? currentUser.name : 'You') : 'Admin';
             var align = isUser ? 'user' : 'admin';
             var time = msg.timestamp || '';
+            var messageText = msg.message || '';
             
-            return '<div class="chat-message ' + align + '">' +
+            html += '<div class="chat-message ' + align + '">' +
                 '<div class="sender">' + sender + '</div>' +
-                '<div class="bubble">' + msg.message + '</div>' +
+                '<div class="bubble">' + messageText + '</div>' +
                 '<div class="time">' + time + '</div>' +
                 '</div>';
-        }).join('');
+        });
         
-        // Scroll to bottom
+        container.innerHTML = html;
         container.scrollTop = container.scrollHeight;
         
     } catch(err) {
         console.error('Load chat error:', err);
+        container.innerHTML = '<div class="chat-empty"><i class="fas fa-exclamation-triangle"></i>Failed to load messages<br><span style="font-size:0.55rem;">' + err.message + '</span></div>';
     }
 }
 
 // Open chat modal
 function openChatModal() {
+    console.log('Opening chat modal...');
+    console.log('Current user:', currentUser);
+    
     if (!currentUser) {
         toast('Please login to chat with admin', true);
+        showAuthModal('login');
         return;
     }
+    
+    var chatModal = document.getElementById('chatModal');
+    if (!chatModal) {
+        console.error('Chat modal not found!');
+        toast('Chat system error - please refresh', true);
+        return;
+    }
+    
     openModal('chatModal');
-    loadChatHistory();
+    setTimeout(function() {
+        loadChatHistory();
+    }, 300);
 }
 
 // Check for new messages (polling)
 setInterval(function() {
-    if (document.getElementById('chatModal').classList.contains('show')) {
+    var chatModal = document.getElementById('chatModal');
+    if (chatModal && chatModal.classList.contains('show')) {
         loadChatHistory();
     }
 }, 10000);
+
+// Add to window for debugging
+window.debugChatState = debugChatState;
 
 // ===== SYNC FUNCTIONS =====
 async function silentSync(){
