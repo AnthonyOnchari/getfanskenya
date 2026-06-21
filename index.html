@@ -922,6 +922,9 @@ async function sendChatMessage() {
         return;
     }
     
+    // Show sending status
+    toast('📤 Sending message...');
+    
     // Disable input while sending
     input.disabled = true;
     var sendBtn = document.querySelector('.chat-input-group button');
@@ -930,7 +933,9 @@ async function sendChatMessage() {
     try {
         var response = await fetch(SHEET_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
                 action: 'chatMessage',
                 userEmail: currentUser.email,
@@ -939,6 +944,8 @@ async function sendChatMessage() {
                 timestamp: new Date().toLocaleString()
             })
         });
+        
+        console.log('Response status:', response.status);
         
         if (!response.ok) {
             throw new Error('HTTP error: ' + response.status);
@@ -958,7 +965,7 @@ async function sendChatMessage() {
         }
     } catch(err) {
         console.error('Chat error:', err);
-        toast('❌ Failed to send message: ' + err.message, true);
+        toast('❌ Failed to send: ' + err.message, true);
     } finally {
         input.disabled = false;
         if (sendBtn) sendBtn.disabled = false;
