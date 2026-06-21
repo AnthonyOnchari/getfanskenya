@@ -419,6 +419,106 @@
         .close-modal { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-light); }
         .modal-body { padding: 16px; }
 
+        /* Chat Styles */
+        .chat-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 4px;
+        }
+        .chat-container::-webkit-scrollbar { width: 4px; }
+        .chat-container::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+        .chat-empty {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.7rem;
+            padding: 30px 10px;
+        }
+        .chat-empty i { font-size: 2rem; display: block; margin-bottom: 10px; color: var(--primary); opacity: 0.3; }
+        .chat-message {
+            margin-bottom: 4px;
+            max-width: 85%;
+        }
+        .chat-message.user {
+            align-self: flex-end;
+        }
+        .chat-message.admin {
+            align-self: flex-start;
+        }
+        .chat-message .sender {
+            font-size: 0.5rem;
+            color: var(--text-light);
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+        .chat-message .bubble {
+            padding: 8px 14px;
+            border-radius: 16px;
+            font-size: 0.7rem;
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+        .chat-message.user .bubble {
+            background: var(--primary);
+            color: white;
+            border-radius: 16px 16px 4px 16px;
+        }
+        .chat-message.admin .bubble {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 16px 16px 16px 4px;
+        }
+        .chat-message .time {
+            font-size: 0.45rem;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+        .chat-message.user .time { text-align: right; }
+        .chat-input-group {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+        }
+        .chat-input-group input {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 25px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            font-size: 0.75rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        .chat-input-group input:focus { outline: none; border-color: var(--primary); }
+        .chat-input-group button {
+            padding: 10px 18px;
+            border-radius: 50%;
+            border: none;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .chat-input-group button:hover { background: var(--primary-dark); }
+        .chat-notice {
+            font-size: 0.5rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-top: 4px;
+        }
+
         .tracking-input-group { display: flex; gap: 8px; margin-bottom: 16px; }
         .tracking-input-group input { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font-family: monospace; font-size: 0.8rem; }
         .tracking-input-group button { padding: 10px 16px; background: var(--primary); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 0.75rem; }
@@ -673,6 +773,7 @@
     <button class="bottom-nav-item" onclick="openWalletModal()"><i class="fas fa-wallet"></i><span>Wallet</span></button>
     <button class="bottom-nav-item" onclick="openModal('trackModal')"><i class="fas fa-search"></i><span>Track</span></button>
     <button class="bottom-nav-item" onclick="openModal('reviewsModal')"><i class="fas fa-star"></i><span>Reviews</span></button>
+    <button class="bottom-nav-item" onclick="openChatModal()"><i class="fas fa-comment-dots"></i><span>Chat</span></button>
     <button class="bottom-nav-item" onclick="openAccountModal()"><i class="fas fa-user"></i><span>Account</span></button>
 </nav>
 
@@ -685,6 +786,33 @@
 <div class="modal-overlay" id="adsModal"><div class="modal-container"><div class="modal-header"><h3>📢 Special Offers</h3><button class="close-modal" onclick="closeModal('adsModal')">&times;</button></div><div class="modal-body"><div class="ads-scroll-container"><div class="ad-card"><div class="ad-icon">🚀</div><div class="ad-title">10K Facebook Followers</div><div class="ad-desc">Only KSh 3,399</div><button class="ad-btn" onclick="closeModal('adsModal');showStep('step1')">Order Now</button></div><div class="ad-card"><div class="ad-icon">📸</div><div class="ad-title">Instagram Growth</div><div class="ad-desc">10K Followers KSh 5,000</div><button class="ad-btn" onclick="closeModal('adsModal')">Get Started</button></div></div></div></div></div>
 <div class="modal-overlay" id="adminModal"><div class="modal-container" style="max-width:600px;"><div class="modal-header"><h3>🔐 Admin Panel</h3><button class="close-modal" onclick="closeModal('adminModal')">&times;</button></div><div class="modal-body"><div class="admin-stats" id="adminStats"></div><div class="admin-tabs"><button class="admin-tab active" onclick="switchAdminTab('orders')">📋 Orders</button><button class="admin-tab" onclick="switchAdminTab('deposits')">💰 Deposits</button><button class="admin-tab" onclick="switchAdminTab('reviews')">⭐ Reviews</button><button class="admin-tab" onclick="switchAdminTab('users')">👤 Users</button></div><button class="refresh-btn" onclick="silentSync()"><i class="fas fa-sync-alt"></i> Refresh Data</button><button class="force-sync-btn" onclick="forceSyncFromSheets()"><i class="fas fa-download"></i> Force Sync from Sheets</button><div id="adminOrdersSection" class="admin-section active"><div id="ordersList"></div></div><div id="adminDepositsSection" class="admin-section"><div id="depositsList"></div></div><div id="adminReviewsSection" class="admin-section"><div id="adminReviewsList"></div></div><div id="adminUsersSection" class="admin-section"><div id="usersList"></div></div></div></div></div>
 <div class="modal-overlay" id="passwordModal"><div class="modal-container" style="max-width:300px;"><div class="modal-header"><h3>Admin Access</h3><button class="close-modal" onclick="closeModal('passwordModal')">&times;</button></div><div class="modal-body"><div class="password-box"><input type="password" id="adminPassword" placeholder="Password"><button onclick="checkAdminPassword()">Unlock</button></div></div></div></div>
+
+<!-- CHAT MODAL -->
+<div class="modal-overlay" id="chatModal">
+    <div class="modal-container" style="max-width:500px;">
+        <div class="modal-header">
+            <h3>💬 Messages</h3>
+            <button class="close-modal" onclick="closeModal('chatModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="chatMessages" class="chat-container">
+                <div class="chat-empty">
+                    <i class="fas fa-comment-dots"></i>
+                    No messages yet<br>
+                    <span style="font-size:0.55rem;">Send a message to admin</span>
+                </div>
+            </div>
+            <div class="chat-input-group">
+                <input type="text" id="chatInput" placeholder="Type your message..." 
+                       onkeydown="if(event.key==='Enter') sendChatMessage()">
+                <button onclick="sendChatMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            <div class="chat-notice">Admin will respond via Telegram</div>
+        </div>
+    </div>
+</div>
 
 <a href="https://wa.me/254750600715" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
 
@@ -741,7 +869,7 @@ function createParticles() {
 createParticles();
 
 // ===== CONFIGURATION =====
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbwh-EqROjrCdM3bNYu0-bWW52wEFZd4rxzdqxiiub9QGYCWIuWlLN1m6t5PN6YOIbKnig/exec";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbyA9sK4tzeVANFxWFFHLKmITeYKBsEZBD7_2Rmta715E-HqhuOtygRn7m5TPrJNEv6suQ/exec";
 const ADMIN_PASS = "GetFans2024";
 const TG_TOKEN = "8825700469:AAEpywAnsc6jEXUmCyvWN4niPbWTSg1xn68";
 const TG_CHAT = "5740390611";
@@ -759,6 +887,98 @@ function getUsers(){try{return JSON.parse(localStorage.getItem('gfk_users')||'[]
 function saveUsers(u){localStorage.setItem('gfk_users',JSON.stringify(u));}
 function genId(){return'GFK'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).substring(2,4).toUpperCase();}
 let trackingId=genId();
+
+// ===== CHAT FUNCTIONS =====
+
+// Send chat message
+async function sendChatMessage() {
+    var input = document.getElementById('chatInput');
+    var message = input.value.trim();
+    
+    if (!message) {
+        toast('Please type a message', true);
+        return;
+    }
+    
+    if (!currentUser) {
+        toast('Please login to send messages', true);
+        return;
+    }
+    
+    try {
+        var response = await fetch(SHEET_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                action: 'chatMessage',
+                userEmail: currentUser.email,
+                userName: currentUser.name,
+                message: message,
+                timestamp: new Date().toLocaleString()
+            })
+        });
+        
+        input.value = '';
+        toast('✅ Message sent to admin!');
+        loadChatHistory();
+    } catch(err) {
+        console.error('Chat error:', err);
+        toast('❌ Failed to send message', true);
+    }
+}
+
+// Load chat history
+async function loadChatHistory() {
+    if (!currentUser) return;
+    
+    try {
+        var response = await fetch(SHEET_URL + '?action=chatHistory&email=' + encodeURIComponent(currentUser.email) + '&t=' + Date.now());
+        var data = await response.json();
+        
+        var container = document.getElementById('chatMessages');
+        
+        if (!data || data.length === 0) {
+            container.innerHTML = '<div class="chat-empty"><i class="fas fa-comment-dots"></i>No messages yet<br><span style="font-size:0.55rem;">Send a message to admin</span></div>';
+            return;
+        }
+        
+        container.innerHTML = data.map(function(msg) {
+            var isUser = msg.direction === 'outgoing';
+            var sender = isUser ? currentUser.name : 'Admin';
+            var align = isUser ? 'user' : 'admin';
+            var time = msg.timestamp || '';
+            
+            return '<div class="chat-message ' + align + '">' +
+                '<div class="sender">' + sender + '</div>' +
+                '<div class="bubble">' + msg.message + '</div>' +
+                '<div class="time">' + time + '</div>' +
+                '</div>';
+        }).join('');
+        
+        // Scroll to bottom
+        container.scrollTop = container.scrollHeight;
+        
+    } catch(err) {
+        console.error('Load chat error:', err);
+    }
+}
+
+// Open chat modal
+function openChatModal() {
+    if (!currentUser) {
+        toast('Please login to chat with admin', true);
+        return;
+    }
+    openModal('chatModal');
+    loadChatHistory();
+}
+
+// Check for new messages (polling)
+setInterval(function() {
+    if (document.getElementById('chatModal').classList.contains('show')) {
+        loadChatHistory();
+    }
+}, 10000);
 
 // ===== SYNC FUNCTIONS =====
 async function silentSync(){
@@ -879,29 +1099,39 @@ function switchAdminTab(t){document.querySelectorAll('.admin-tab').forEach(t=>t.
 // ===== RENDER ADMIN UI =====
 function renderAdminUI() {
     // Stats
+    var totalRevenue = 0;
+    orders.forEach(function(o) {
+        var price = parseFloat(o.price) || parseFloat(o['Price (KSh)']) || parseFloat(o['Price']) || 0;
+        totalRevenue += price;
+    });
+    
+    var pendingCount = orders.filter(function(o) {
+        var status = o.status || o.Status || '';
+        return status === 'Pending';
+    }).length;
+    
     document.getElementById('adminStats').innerHTML = 
         '<div class="admin-stat-card"><div class="stat-number">' + orders.length + 
         '</div><div class="stat-label">Orders</div></div>' +
-        '<div class="admin-stat-card"><div class="stat-number">KSh ' + 
-        orders.reduce((s, o) => s + (parseFloat(o.Price) || parseFloat(o.price) || 0), 0).toLocaleString() + 
+        '<div class="admin-stat-card"><div class="stat-number">KSh ' + totalRevenue.toLocaleString() + 
         '</div><div class="stat-label">Revenue</div></div>' +
-        '<div class="admin-stat-card"><div class="stat-number">' + 
-        orders.filter(o => (o.Status || o.status) === 'Pending').length + 
+        '<div class="admin-stat-card"><div class="stat-number">' + pendingCount + 
         '</div><div class="stat-label">Pending</div></div>' +
         '<div class="admin-stat-card"><div class="stat-number">' + getUsers().length + 
         '</div><div class="stat-label">Users</div></div>';
     
     // Orders
     document.getElementById('ordersList').innerHTML = orders.length ? 
-        orders.map(o => {
-            const status = o.Status || o.status || 'Pending';
-            const customer = o.CustomerName || o.customerName || 'N/A';
-            const service = o.Service || o.service || 'N/A';
-            const price = o.Price || o.price || 0;
-            const trackingId = o.TrackingID || o.trackingId || 'N/A';
+        orders.map(function(o) {
+            var trackingId = o.trackingId || o['Tracking ID'] || o['TrackingID'] || 'N/A';
+            var customer = o.customerName || o['Customer Name'] || o['CustomerName'] || 'N/A';
+            var service = o.service || o['Service'] || 'N/A';
+            var price = parseFloat(o.price) || parseFloat(o['Price (KSh)']) || parseFloat(o['Price']) || 0;
+            var status = o.status || o['Status'] || 'Pending';
+            
             return '<div class="admin-order-row">' +
                 '<div><strong>' + trackingId + '</strong></div>' +
-                '<div>👤 ' + customer + ' • ' + service + ' • KSh ' + price + '</div>' +
+                '<div>👤 ' + customer + ' • ' + service + ' • KSh ' + price.toLocaleString() + '</div>' +
                 '<select class="order-status-select" onchange="updateOrderStatus(\'' + trackingId + '\',this.value)">' +
                 '<option value="Pending" ' + (status === 'Pending' ? 'selected' : '') + '>Pending</option>' +
                 '<option value="Processing" ' + (status === 'Processing' ? 'selected' : '') + '>Processing</option>' +
@@ -914,14 +1144,15 @@ function renderAdminUI() {
     
     // Deposits
     document.getElementById('depositsList').innerHTML = deposits.length ? 
-        deposits.map(d => {
-            const status = d.Status || d.status || 'Pending';
-            const code = d.DepositCode || d.depositCode || 'N/A';
-            const user = d.UserName || d.userName || 'N/A';
-            const amount = d.TotalAmount || d.totalAmount || d.Amount || d.amount || 0;
+        deposits.map(function(d) {
+            var code = d.depositCode || d['Deposit Code'] || 'N/A';
+            var user = d.userName || d['User Name'] || 'N/A';
+            var amount = parseFloat(d.amount) || parseFloat(d['Total Amount']) || parseFloat(d['Amount']) || 0;
+            var status = d.status || d['Status'] || 'Pending';
+            
             return '<div class="admin-deposit-row">' +
                 '<div><strong>' + code + '</strong></div>' +
-                '<div>👤 ' + user + ' • KSh ' + amount + 
+                '<div>👤 ' + user + ' • KSh ' + amount.toLocaleString() + 
                 ' <span class="status-badge status-' + status.toLowerCase() + '">' + status + '</span></div>' +
                 (status === 'Pending' ? 
                     '<button class="btn-next" style="padding:4px 8px;font-size:0.5rem;" onclick="approveDeposit(\'' + code + '\')">Approve</button>' : 
@@ -932,10 +1163,10 @@ function renderAdminUI() {
     
     // Reviews
     document.getElementById('adminReviewsList').innerHTML = reviews.length ? 
-        reviews.map((r, i) => {
-            const rating = r.Rating || r.rating || 0;
-            const name = r.Name || r.name || 'Anonymous';
-            const review = r.Review || r.review || '';
+        reviews.map(function(r, i) {
+            var rating = parseInt(r.rating) || parseInt(r['Rating']) || 0;
+            var name = r.name || r['Name'] || 'Anonymous';
+            var review = r.review || r['Review'] || '';
             return '<div class="admin-order-row">' +
                 '<div>' + name + ' (' + '★'.repeat(rating) + '☆'.repeat(5-rating) + ')</div>' +
                 '<div>' + review.substring(0, 50) + (review.length > 50 ? '...' : '') + '</div>' +
@@ -944,16 +1175,24 @@ function renderAdminUI() {
         }).join('') : 
         '<div class="admin-warning">No reviews</div>';
     
-    // Users
-    const users = getUsers();
+    // USERS - SHOWS PASSWORDS
+    var users = getUsers();
     document.getElementById('usersList').innerHTML = users.length ? 
-        users.map(u => 
-            '<div class="admin-user-row">' +
-            '<div><strong>' + (u.name || 'N/A') + '</strong><br>' + (u.email || 'No email') + '</div>' +
-            '<div>💰 KSh ' + (u.walletBalance || 0).toLocaleString() + '<br>🔐 ' + (u.password || 'No password') + '</div>' +
-            '</div>'
-        ).join('') : 
-        '<div class="admin-warning">No users</div>';
+        users.map(function(u) {
+            var passwordDisplay = u.password || u['Password'] || 'No password set';
+            
+            return '<div class="admin-user-row">' +
+                '<div>' +
+                '<strong>' + (u.name || u['Name'] || 'N/A') + '</strong><br>' + 
+                '<span style="font-size:0.5rem;color:var(--text-light);">' + (u.email || u['Email'] || 'No email') + '</span>' +
+                '</div>' +
+                '<div style="text-align:right;">' +
+                '💰 KSh ' + (u.walletBalance || u['Wallet Balance'] || 0).toLocaleString() + 
+                '<br>🔐 <span style="background:#f0f0f0;padding:2px 8px;border-radius:4px;font-family:monospace;font-size:0.6rem;display:inline-block;border:1px solid #ddd;">' + passwordDisplay + '</span>' +
+                '</div>' +
+                '</div>';
+        }).join('') : 
+        '<div class="admin-warning">No users found</div>';
 }
 
 // ===== ADMIN ACTIONS =====
