@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -30,7 +31,6 @@
             --primary-dark: #0d65d9;
             --primary-light: #e8f0fe;
             --instagram: #e4405f;
-            --instagram-dark: #c13584;
             --success: #2ecc71;
             --warning: #f39c12;
             --danger: #e74c3c;
@@ -68,7 +68,7 @@
             padding-bottom: var(--bottom-nav-height);
         }
 
-        /* ===== LANDING PAGE - FIXED ===== */
+        /* ===== LANDING PAGE ===== */
         .landing-page {
             background: linear-gradient(135deg, #1877f2 0%, #0d65d9 50%, #001f3f 100%);
             min-height: 100vh;
@@ -82,7 +82,7 @@
             width: 100%;
             z-index: 9999;
             overflow-y: auto;
-            transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
             opacity: 1;
             visibility: visible;
         }
@@ -519,6 +519,10 @@
         /* ===== MAIN SITE ===== */
         .main-site {
             display: none;
+        }
+
+        .main-site.active {
+            display: block;
             animation: siteFadeIn 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
@@ -531,10 +535,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        .main-site.active {
-            display: block;
         }
 
         /* ===== STICKY HEADER ===== */
@@ -2026,7 +2026,7 @@
 
 <body>
 
-    <!-- ========== LANDING PAGE ========== -->
+    <!-- ========== LANDING PAGE - BUTTONS WORKING ========== -->
     <div class="landing-page" id="landingPage">
         <div class="landing-container">
             <div class="logo-section">
@@ -2043,19 +2043,21 @@
                     <p>Select an option below to continue</p>
                 </div>
                 <div class="option-cards">
-                    <div class="option-card guest" onclick="continueAsGuest()"><span class="option-icon">👤</span>
+                    <div class="option-card guest" id="guestBtn">
+                        <span class="option-icon">👤</span>
                         <h3>Continue as Guest</h3>
                         <p>No account needed. Order instantly.</p>
                     </div>
-                    <div class="option-card account" onclick="showAuthModal('signup')"><span
-                            class="option-icon">🎁</span>
+                    <div class="option-card account" id="signupBtn2">
+                        <span class="option-icon">🎁</span>
                         <h3>Create Free Account</h3>
-                        <p>Get 100 Free Followers + Wallet + Order History</p><span class="free-badge">+100 FREE
-                            FOLLOWERS</span>
+                        <p>Get 100 Free Followers + Wallet + Order History</p>
+                        <span class="free-badge">+100 FREE FOLLOWERS</span>
                     </div>
                 </div>
-                <div class="login-link">Already have an account? <a href="#"
-                        onclick="showAuthModal('login'); return false;">Login here</a></div>
+                <div class="login-link">
+                    Already have an account? <a href="#" id="loginLink">Login here</a>
+                </div>
             </div>
             <div class="trust-strip">
                 <span class="trust-item"><i class="fas fa-shield-alt"></i> Secure</span>
@@ -2071,39 +2073,43 @@
             <div class="guest-notice" id="guestNotice" style="display:none;">💡 Login or create an account to save
                 progress, get a wallet & 100 free followers!</div>
             <div class="auth-tabs">
-                <button class="auth-tab active" data-tab="login" onclick="switchAuthTab('login')">Login</button>
-                <button class="auth-tab" data-tab="signup" onclick="switchAuthTab('signup')">Sign Up</button>
+                <button class="auth-tab active" data-tab="login" id="authTabLogin">Login</button>
+                <button class="auth-tab" data-tab="signup" id="authTabSignup">Sign Up</button>
             </div>
             <div class="auth-form active" id="loginForm">
-                <div class="form-group"><label>Email</label><input type="email" id="loginEmail"
-                        placeholder="Enter your email">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email">
                     <div class="error-message" id="loginEmailError">Please enter your email</div>
                 </div>
-                <div class="form-group"><label>Password</label><input type="password" id="loginPassword"
-                        placeholder="Enter your password">
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password">
                     <div class="error-message" id="loginPasswordError">Please enter your password</div>
                 </div>
                 <div class="error-message" id="loginGeneralError" style="text-align:center;"></div>
-                <div style="text-align:right;margin-bottom:8px;"><a href="#" onclick="forgotPassword()"
-                        style="font-size:0.65rem;color:var(--primary);">Forgot Password?</a></div>
                 <button class="btn-next" id="loginBtn" style="width:100%;">Login</button>
-                <button class="btn-close-auth" onclick="closeAuthModal()">Cancel</button>
+                <button class="btn-close-auth" id="closeAuthBtn">Cancel</button>
             </div>
             <div class="auth-form" id="signupForm">
-                <div class="form-group"><label>Full Name <span class="required">*</span></label><input type="text"
-                        id="signupName" placeholder="Your full name">
+                <div class="form-group">
+                    <label>Full Name <span class="required">*</span></label>
+                    <input type="text" id="signupName" placeholder="Your full name">
                     <div class="error-message" id="signupNameError">Please enter your full name</div>
                 </div>
-                <div class="form-group"><label>Email <span class="required">*</span></label><input type="email"
-                        id="signupEmail" placeholder="Your email address">
+                <div class="form-group">
+                    <label>Email <span class="required">*</span></label>
+                    <input type="email" id="signupEmail" placeholder="Your email address">
                     <div class="error-message" id="signupEmailError">Please enter a valid email</div>
                 </div>
-                <div class="form-group"><label>Password <span class="required">*</span></label><input type="password"
-                        id="signupPassword" placeholder="Min 6 characters">
+                <div class="form-group">
+                    <label>Password <span class="required">*</span></label>
+                    <input type="password" id="signupPassword" placeholder="Min 6 characters">
                     <div class="error-message" id="signupPasswordError">Password must be at least 6 characters</div>
                 </div>
-                <div class="form-group"><label>Confirm Password <span class="required">*</span></label><input
-                        type="password" id="signupConfirmPassword" placeholder="Confirm your password">
+                <div class="form-group">
+                    <label>Confirm Password <span class="required">*</span></label>
+                    <input type="password" id="signupConfirmPassword" placeholder="Confirm your password">
                     <div class="error-message" id="signupConfirmError">Passwords do not match</div>
                 </div>
                 <div class="error-message" id="signupGeneralError" style="text-align:center;"></div>
@@ -2114,7 +2120,7 @@
                 </div>
                 <button class="btn-next" id="signupBtn" style="width:100%;">Create Account & Claim 100 Free Followers
                     🎁</button>
-                <button class="btn-close-auth" onclick="closeAuthModal()">Cancel</button>
+                <button class="btn-close-auth" id="closeAuthBtn2">Cancel</button>
             </div>
         </div>
     </div>
@@ -2147,8 +2153,6 @@
                     <span id="syncTimeText">Last sync: Just now</span>
                 </div>
 
-                <!-- NO TRUST BADGES - REMOVED -->
-
                 <!-- PROGRESS -->
                 <div class="progress-container">
                     <div class="progress-steps">
@@ -2179,13 +2183,13 @@
 
                         <!-- Platform Selection -->
                         <div class="pkg-grid">
-                            <div class="pkg-card active" data-platform="facebook" onclick="selectPlatform('facebook')">
+                            <div class="pkg-card active" data-platform="facebook" id="fbPkg">
                                 <span class="pkg-check"><i class="fas fa-check"></i></span>
                                 <span class="pkg-icon"><i class="fab fa-facebook" style="color:#1877f2;"></i></span>
                                 <div class="pkg-name">Facebook</div>
                                 <div class="pkg-desc">Grow your page</div>
                             </div>
-                            <div class="pkg-card instagram-card" data-platform="instagram" onclick="selectPlatform('instagram')">
+                            <div class="pkg-card instagram-card" data-platform="instagram" id="igPkg">
                                 <span class="pkg-check"><i class="fas fa-check"></i></span>
                                 <span class="pkg-icon"><i class="fab fa-instagram" style="color:#e4405f;"></i></span>
                                 <div class="pkg-name">Instagram</div>
@@ -2204,9 +2208,9 @@
                         <div class="qty-section">
                             <label>Qty</label>
                             <div class="qty-controls">
-                                <button onclick="adjustQuantity(-100)">−</button>
+                                <button id="qtyMinus">−</button>
                                 <input type="text" id="quantityNumber" value="10000">
-                                <button onclick="adjustQuantity(100)">+</button>
+                                <button id="qtyPlus">+</button>
                             </div>
                             <input type="range" id="quantitySlider" min="100" max="1000000" step="100" value="10000">
                         </div>
@@ -2300,7 +2304,7 @@
                     </div>
                 </div>
 
-                <!-- AD UNIT - NOW BEFORE REVIEWS -->
+                <!-- AD UNIT - BEFORE REVIEWS -->
                 <div class="ad-unit">
                     <div class="ad-label">— Sponsored —</div>
                     <ins class="adsbygoogle" style="display:block; min-height:90px;"
@@ -2384,7 +2388,7 @@
     <div class="admin-strip" id="adminStrip">
         <div class="admin-strip-header">
             <h3><i class="fas fa-shield-alt"></i> Admin Panel</h3>
-            <button class="close-strip" onclick="closeAdminStrip()">&times;</button>
+            <button class="close-strip" id="closeAdminStrip">&times;</button>
         </div>
         <div class="admin-stats-mini" id="adminStatsMini">
             <div class="stat-mini"><span class="num" id="statOrdersMini">0</span>Orders</div>
@@ -2393,12 +2397,12 @@
             <div class="stat-mini"><span class="num" id="statUsersMini">0</span>Users</div>
         </div>
         <div class="admin-tabs-mini">
-            <button class="tab-mini active" data-tab="orders" onclick="switchAdminTabMini('orders')"><i class="fas fa-shopping-cart"></i> Orders</button>
-            <button class="tab-mini" data-tab="deposits" onclick="switchAdminTabMini('deposits')"><i class="fas fa-money-bill"></i> Deposits</button>
-            <button class="tab-mini" data-tab="reviews" onclick="switchAdminTabMini('reviews')"><i class="fas fa-star"></i> Reviews</button>
-            <button class="tab-mini" data-tab="users" onclick="switchAdminTabMini('users')"><i class="fas fa-users"></i> Users</button>
+            <button class="tab-mini active" data-tab="orders" id="tabOrders"><i class="fas fa-shopping-cart"></i> Orders</button>
+            <button class="tab-mini" data-tab="deposits" id="tabDeposits"><i class="fas fa-money-bill"></i> Deposits</button>
+            <button class="tab-mini" data-tab="reviews" id="tabReviews"><i class="fas fa-star"></i> Reviews</button>
+            <button class="tab-mini" data-tab="users" id="tabUsers"><i class="fas fa-users"></i> Users</button>
         </div>
-        <button class="refresh-btn" onclick="syncAllData()"><i class="fas fa-sync-alt"></i> Refresh Data</button>
+        <button class="refresh-btn" id="refreshDataBtn"><i class="fas fa-sync-alt"></i> Refresh Data</button>
         <div class="admin-content-mini" id="adminContentMini"></div>
     </div>
 
@@ -2458,7 +2462,10 @@
                         text: message
                     })
                 }).catch(() => {});
-            } catch (e) {}
+                console.log('📨 Telegram sent:', message.substring(0, 30));
+            } catch (e) {
+                console.log('Telegram error:', e);
+            }
         }
 
         // ===== TOAST =====
@@ -2471,62 +2478,63 @@
             setTimeout(() => toastEl.remove(), 3000);
         }
 
-        // ===== LANDING PAGE - FIXED =====
-        function checkSession() {
-            const userType = localStorage.getItem('gfk_user_type');
-            const landingPage = document.getElementById('landingPage');
-            const mainSite = document.getElementById('mainSite');
-
-            // LANDING PAGE ALWAYS VISIBLE FIRST
-            landingPage.classList.remove('hide-landing');
-            landingPage.style.opacity = '1';
-            landingPage.style.visibility = 'visible';
-            mainSite.classList.remove('active');
-
-            // If user has session, show main site after delay
-            if (userType === 'member' || userType === 'guest') {
-                setTimeout(() => {
-                    landingPage.classList.add('hide-landing');
-                    mainSite.classList.add('active');
-                }, 800);
-                return true;
-            }
-            return false;
+        // ===== LANDING PAGE FUNCTIONS - FIXED =====
+        function showMainSite() {
+            document.getElementById('landingPage').classList.add('hide-landing');
+            document.getElementById('mainSite').classList.add('active');
         }
 
-        window.continueAsGuest = function () {
+        // Guest button
+        document.getElementById('guestBtn').addEventListener('click', function() {
             localStorage.setItem('gfk_user_type', 'guest');
             localStorage.removeItem('gfk_user_email');
             localStorage.removeItem('gfk_user_name');
-            document.getElementById('landingPage').classList.add('hide-landing');
-            document.getElementById('mainSite').classList.add('active');
+            showMainSite();
             toast('👤 Guest Mode - Order anytime!');
             sendTelegramNotification('👤 Guest user started browsing');
-        };
+        });
 
-        window.showAuthModal = function (tab) {
+        // Signup button on landing page
+        document.getElementById('signupBtn2').addEventListener('click', function() {
             document.getElementById('authModal').classList.add('show');
-            switchAuthTab(tab || 'signup');
+            switchAuthTab('signup');
             document.getElementById('guestNotice').style.display = 'block';
-        };
+        });
 
-        window.closeAuthModal = function () {
+        // Login link on landing page
+        document.getElementById('loginLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('authModal').classList.add('show');
+            switchAuthTab('login');
+            document.getElementById('guestNotice').style.display = 'block';
+        });
+
+        // ===== AUTH MODAL FUNCTIONS =====
+        document.getElementById('authTabLogin').addEventListener('click', function() { switchAuthTab('login'); });
+        document.getElementById('authTabSignup').addEventListener('click', function() { switchAuthTab('signup'); });
+        document.getElementById('closeAuthBtn').addEventListener('click', function() { closeAuthModal(); });
+        document.getElementById('closeAuthBtn2').addEventListener('click', function() { closeAuthModal(); });
+
+        function closeAuthModal() {
             document.getElementById('authModal').classList.remove('show');
-        };
+        }
 
-        window.switchAuthTab = function (tab) {
+        function switchAuthTab(tab) {
             document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-            document.querySelector(`.auth-tab[data-tab="${tab}"]`).classList.add('active');
-            document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
-            document.getElementById('signupForm').style.display = tab === 'signup' ? 'block' : 'none';
+            if (tab === 'login') {
+                document.getElementById('authTabLogin').classList.add('active');
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('signupForm').style.display = 'none';
+            } else {
+                document.getElementById('authTabSignup').classList.add('active');
+                document.getElementById('signupForm').style.display = 'block';
+                document.getElementById('loginForm').style.display = 'none';
+            }
             document.querySelectorAll('.error-message').forEach(e => e.classList.remove('show'));
-        };
+        }
 
-        window.forgotPassword = function () {
-            toast('Contact admin on WhatsApp for password reset', true);
-        };
-
-        window.handleLogin = function () {
+        // ===== LOGIN =====
+        document.getElementById('loginBtn').addEventListener('click', function() {
             document.querySelectorAll('#loginForm .error-message').forEach(e => e.classList.remove('show'));
             const email = document.getElementById('loginEmail').value.trim();
             const pwd = document.getElementById('loginPassword').value;
@@ -2539,13 +2547,13 @@
             localStorage.setItem('gfk_user_name', email.split('@')[0]);
 
             closeAuthModal();
-            document.getElementById('landingPage').classList.add('hide-landing');
-            document.getElementById('mainSite').classList.add('active');
+            showMainSite();
             toast('Welcome back! 🎉');
             sendTelegramNotification('🔑 User logged in: ' + email);
-        };
+        });
 
-        window.handleSignup = function () {
+        // ===== SIGNUP =====
+        document.getElementById('signupBtn').addEventListener('click', function() {
             document.querySelectorAll('#signupForm .error-message').forEach(e => e.classList.remove('show'));
             const name = document.getElementById('signupName').value.trim();
             const email = document.getElementById('signupEmail').value.trim();
@@ -2574,11 +2582,20 @@
             });
 
             closeAuthModal();
-            document.getElementById('landingPage').classList.add('hide-landing');
-            document.getElementById('mainSite').classList.add('active');
+            showMainSite();
             toast('Account created! 🎉 You got 100 free followers!');
             sendTelegramNotification('🎉 New User Signup: ' + name + ' (' + email + ')');
-        };
+        });
+
+        // ===== CHECK SESSION ON LOAD =====
+        function checkSession() {
+            const userType = localStorage.getItem('gfk_user_type');
+            if (userType === 'member' || userType === 'guest') {
+                showMainSite();
+                return true;
+            }
+            return false;
+        }
 
         // ===== SYNC FUNCTIONS =====
         function updateSyncStatus(status, message) {
@@ -2661,6 +2678,25 @@
         }
 
         // ===== ADMIN STRIP =====
+        document.getElementById('adminSmallBtn').addEventListener('click', function() {
+            openAdminStrip();
+        });
+
+        document.getElementById('closeAdminStrip').addEventListener('click', function() {
+            document.getElementById('adminStrip').classList.remove('show');
+        });
+
+        document.getElementById('tabOrders').addEventListener('click', function() { switchAdminTabMini('orders'); });
+        document.getElementById('tabDeposits').addEventListener('click', function() { switchAdminTabMini('deposits'); });
+        document.getElementById('tabReviews').addEventListener('click', function() { switchAdminTabMini('reviews'); });
+        document.getElementById('tabUsers').addEventListener('click', function() { switchAdminTabMini('users'); });
+
+        document.getElementById('refreshDataBtn').addEventListener('click', async function() {
+            toast('Syncing data...');
+            await fetchAllFromCloud();
+            toast('Data synced!');
+        });
+
         function openAdminStrip() {
             if (isAdminLoggedIn) {
                 document.getElementById('adminStrip').classList.add('show');
@@ -2670,9 +2706,23 @@
             }
         }
 
-        function closeAdminStrip() {
-            document.getElementById('adminStrip').classList.remove('show');
-        }
+        document.getElementById('submitPassword').addEventListener('click', function() {
+            const pwd = document.getElementById('adminPassword').value;
+            if (pwd === ADMIN_PASSWORD) {
+                isAdminLoggedIn = true;
+                document.getElementById('passwordModal').classList.remove('show');
+                document.getElementById('adminStrip').classList.add('show');
+                updateAdminStrip();
+                toast('Welcome Admin!');
+                sendTelegramNotification('🔐 Admin logged in');
+            } else {
+                toast('Wrong password', true);
+            }
+        });
+
+        document.getElementById('closePasswordModal').addEventListener('click', function() {
+            document.getElementById('passwordModal').classList.remove('show');
+        });
 
         function updateAdminStrip() {
             const totalOrders = orders.length;
@@ -2861,12 +2911,6 @@
             }
         }
 
-        async function syncAllData() {
-            toast('Syncing data...');
-            await fetchAllFromCloud();
-            toast('Data synced!');
-        }
-
         // ===== PRICE CALCULATION =====
         const platformSettings = {
             facebook: {
@@ -2961,6 +3005,9 @@
             updateUI();
         }
 
+        document.getElementById('fbPkg').addEventListener('click', function() { selectPlatform('facebook'); });
+        document.getElementById('igPkg').addEventListener('click', function() { selectPlatform('instagram'); });
+
         function updateServiceButtons() {
             const container = document.getElementById('serviceButtons');
             const services = serviceOptions[currentPlatform] || [];
@@ -2968,7 +3015,7 @@
                 `<div class="service-pill ${s === currentService ? 'active' : ''} ${currentPlatform === 'instagram' ? 'instagram-pill' : ''}" data-service="${s}">${serviceNames[s]}</div>`
             ).join('');
             document.querySelectorAll('.service-pill').forEach(btn => {
-                btn.addEventListener('click', function () {
+                btn.addEventListener('click', function() {
                     document.querySelectorAll('.service-pill').forEach(b => b.classList.remove('active'));
                     this.classList.add('active');
                     currentService = this.dataset.service;
@@ -2976,6 +3023,9 @@
                 });
             });
         }
+
+        document.getElementById('qtyMinus').addEventListener('click', function() { adjustQuantity(-100); });
+        document.getElementById('qtyPlus').addEventListener('click', function() { adjustQuantity(100); });
 
         function adjustQuantity(amount) {
             let val = currentQuantity + amount;
@@ -3053,11 +3103,24 @@
             }
         }
 
+        document.getElementById('nextToStep2').addEventListener('click', function() { showStep(2); });
+        document.getElementById('backToStep1').addEventListener('click', function() { showStep(1); });
+        document.getElementById('nextToStep3').addEventListener('click', function() {
+            const profile = document.getElementById('profileUrl').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            if (profile && phone) {
+                showStep(3);
+            } else {
+                toast('Fill profile URL and phone number', true);
+            }
+        });
+        document.getElementById('backToStep2').addEventListener('click', function() { showStep(2); });
+
         // ===== QUANTITY CONTROLS =====
         const quantityInput = document.getElementById('quantityNumber');
         const quantitySlider = document.getElementById('quantitySlider');
 
-        quantityInput.addEventListener('input', function () {
+        quantityInput.addEventListener('input', function() {
             let val = parseInt(this.value);
             if (!isNaN(val) && val >= 100 && val <= 1000000) {
                 currentQuantity = val;
@@ -3066,7 +3129,7 @@
             }
         });
 
-        quantityInput.addEventListener('blur', function () {
+        quantityInput.addEventListener('blur', function() {
             let val = parseInt(this.value);
             if (isNaN(val)) val = 100;
             val = Math.min(1000000, Math.max(100, val));
@@ -3076,7 +3139,7 @@
             updateUI();
         });
 
-        quantitySlider.addEventListener('input', function () {
+        quantitySlider.addEventListener('input', function() {
             currentQuantity = parseInt(quantitySlider.value);
             quantityInput.value = currentQuantity;
             updateUI();
@@ -3163,6 +3226,44 @@
             }
         }
 
+        document.getElementById('trackOrderBtn').addEventListener('click', function() {
+            document.getElementById('trackModal').classList.add('show');
+            document.getElementById('trackingResult').classList.remove('show');
+        });
+
+        document.getElementById('searchTrackBtn').addEventListener('click', function() {
+            const id = document.getElementById('trackingInput').value.trim().toUpperCase();
+            if (id) {
+                trackOrder(id);
+            } else {
+                toast('Enter Tracking ID', true);
+            }
+        });
+
+        document.getElementById('closeModalBtn').addEventListener('click', function() {
+            document.getElementById('trackModal').classList.remove('show');
+            if (autoRefreshInterval) clearInterval(autoRefreshInterval);
+        });
+
+        // ===== SUCCESS MODAL =====
+        document.getElementById('closeSuccessModal').addEventListener('click', function() {
+            document.getElementById('successModal').classList.remove('show');
+        });
+
+        document.getElementById('copyTrackingBtn').addEventListener('click', function() {
+            const id = document.getElementById('successTrackingId').textContent;
+            navigator.clipboard.writeText(id);
+            toast('Tracking ID copied!');
+        });
+
+        document.getElementById('trackFromSuccessBtn').addEventListener('click', function() {
+            const id = document.getElementById('successTrackingId').textContent;
+            document.getElementById('successModal').classList.remove('show');
+            document.getElementById('trackingInput').value = id;
+            document.getElementById('trackModal').classList.add('show');
+            setTimeout(() => trackOrder(id), 500);
+        });
+
         // ===== REVIEWS =====
         function renderReviews() {
             const container = document.getElementById('reviewsItems');
@@ -3233,30 +3334,54 @@
             }, 4000);
         }
 
-        // ===== HELPERS =====
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
+        // ===== REVIEW SUBMIT =====
+        let selectedRating = 0;
+        document.querySelectorAll('#ratingStars .star-rating').forEach(star => {
+            star.addEventListener('click', function() {
+                selectedRating = parseInt(this.dataset.rating);
+                document.querySelectorAll('#ratingStars .star-rating').forEach(s => parseInt(s.dataset
+                    .rating) <= selectedRating ? s.classList.add('active') : s.classList.remove(
+                    'active'));
+            });
+        });
 
-        function loadDefaultReviews() {
-            reviews = [
-                { name: 'John M.', rating: 5,
-                    review: 'Ordered 10,000 Facebook followers at 3399, delivered fast! My page is growing!' },
-                { name: 'Sarah W.', rating: 5,
-                    review: 'Got 10,000 Instagram followers for only 5000! Best deal in Kenya!' },
-                { name: 'David K.', rating: 5, review: 'Very reliable service! The Facebook likes came in 30 minutes!' },
-                { name: 'Grace N.', rating: 5, review: 'Saved big on Instagram followers! Professional and on time.' },
-                { name: 'Peter O.', rating: 4, review: 'Great service, affordable prices. Will order again.' },
-                { name: 'Mary A.', rating: 5, review: 'Best social media growth service in Kenya! 10/10!' }
-            ];
+        document.getElementById('submitReview').addEventListener('click', async function() {
+            const name = document.getElementById('reviewerName').value.trim();
+            const review = document.getElementById('reviewText').value.trim();
+
+            if (!name) { toast('Enter your name', true); return; }
+            if (!review) { toast('Write your review', true); return; }
+            if (selectedRating === 0) { toast('Select a rating', true); return; }
+
+            const btn = this;
+            btn.innerHTML = '<span class="loading-spinner"></span> Submitting...';
+            btn.disabled = true;
+
+            await saveToGoogleSheets({
+                type: 'review',
+                name: name,
+                rating: selectedRating,
+                review: review,
+                timestamp: new Date().toLocaleString('en-KE')
+            });
+
+            reviews.unshift({ name, rating: selectedRating, review });
             localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
-        }
+            renderReviews();
+
+            btn.innerHTML = 'Submit Review';
+            btn.disabled = false;
+            document.getElementById('reviewerName').value = '';
+            document.getElementById('reviewText').value = '';
+            selectedRating = 0;
+            document.querySelectorAll('#ratingStars .star-rating').forEach(s => s.classList.remove('active'));
+
+            toast('Thank you for your review!');
+            sendTelegramNotification('⭐ New Review from ' + name + ' (' + selectedRating + '/5)');
+        });
 
         // ===== SUBMIT ORDER =====
-        document.getElementById('submitOrder').addEventListener('click', async function () {
+        document.getElementById('submitOrder').addEventListener('click', async function() {
             const name = document.getElementById('customerName').value.trim();
             const profile = document.getElementById('profileUrl').value.trim();
             const phone = document.getElementById('customerPhone').value.trim();
@@ -3342,120 +3467,8 @@
             btn.disabled = false;
         });
 
-        // ===== COPY TRACKING =====
-        document.getElementById('copyTrackingBtn').addEventListener('click', function () {
-            const id = document.getElementById('successTrackingId').textContent;
-            navigator.clipboard.writeText(id);
-            toast('Tracking ID copied!');
-        });
-
-        document.getElementById('trackFromSuccessBtn').addEventListener('click', function () {
-            const id = document.getElementById('successTrackingId').textContent;
-            document.getElementById('successModal').classList.remove('show');
-            document.getElementById('trackingInput').value = id;
-            document.getElementById('trackModal').classList.add('show');
-            setTimeout(() => trackOrder(id), 500);
-        });
-
-        // ===== CLOSE MODALS =====
-        document.getElementById('closeSuccessModal').addEventListener('click', function () {
-            document.getElementById('successModal').classList.remove('show');
-        });
-
-        document.getElementById('closeModalBtn').addEventListener('click', function () {
-            document.getElementById('trackModal').classList.remove('show');
-            if (autoRefreshInterval) clearInterval(autoRefreshInterval);
-        });
-
-        document.getElementById('closePasswordModal').addEventListener('click', function () {
-            document.getElementById('passwordModal').classList.remove('show');
-        });
-
-        // ===== TRACK BUTTON =====
-        document.getElementById('trackOrderBtn').addEventListener('click', function () {
-            document.getElementById('trackModal').classList.add('show');
-            document.getElementById('trackingResult').classList.remove('show');
-        });
-
-        document.getElementById('searchTrackBtn').addEventListener('click', function () {
-            const id = document.getElementById('trackingInput').value.trim().toUpperCase();
-            if (id) {
-                trackOrder(id);
-            } else {
-                toast('Enter Tracking ID', true);
-            }
-        });
-
-        // ===== ADMIN BUTTON =====
-        document.getElementById('adminSmallBtn').addEventListener('click', function () {
-            openAdminStrip();
-        });
-
-        document.getElementById('submitPassword').addEventListener('click', function () {
-            const pwd = document.getElementById('adminPassword').value;
-            if (pwd === ADMIN_PASSWORD) {
-                isAdminLoggedIn = true;
-                document.getElementById('passwordModal').classList.remove('show');
-                openAdminStrip();
-                toast('Welcome Admin!');
-                sendTelegramNotification('🔐 Admin logged in');
-            } else {
-                toast('Wrong password', true);
-            }
-        });
-
-        // ===== REVIEW SUBMIT =====
-        let selectedRating = 0;
-        document.querySelectorAll('#ratingStars .star-rating').forEach(star => {
-            star.addEventListener('click', function () {
-                selectedRating = parseInt(this.dataset.rating);
-                document.querySelectorAll('#ratingStars .star-rating').forEach(s => parseInt(s.dataset
-                    .rating) <= selectedRating ? s.classList.add('active') : s.classList.remove(
-                    'active'));
-            });
-        });
-
-        document.getElementById('submitReview').addEventListener('click', async function () {
-            const name = document.getElementById('reviewerName').value.trim();
-            const review = document.getElementById('reviewText').value.trim();
-
-            if (!name) { toast('Enter your name', true); return; }
-            if (!review) { toast('Write your review', true); return; }
-            if (selectedRating === 0) { toast('Select a rating', true); return; }
-
-            const btn = this;
-            btn.innerHTML = '<span class="loading-spinner"></span> Submitting...';
-            btn.disabled = true;
-
-            await saveToGoogleSheets({
-                type: 'review',
-                name: name,
-                rating: selectedRating,
-                review: review,
-                timestamp: new Date().toLocaleString('en-KE')
-            });
-
-            reviews.unshift({ name, rating: selectedRating, review });
-            localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
-            renderReviews();
-
-            btn.innerHTML = 'Submit Review';
-            btn.disabled = false;
-            document.getElementById('reviewerName').value = '';
-            document.getElementById('reviewText').value = '';
-            selectedRating = 0;
-            document.querySelectorAll('#ratingStars .star-rating').forEach(s => s.classList.remove('active'));
-
-            toast('Thank you for your review!');
-            sendTelegramNotification('⭐ New Review from ' + name + ' (' + selectedRating + '/5)');
-        });
-
-        // ===== AUTH BUTTONS =====
-        document.getElementById('loginBtn').addEventListener('click', window.handleLogin);
-        document.getElementById('signupBtn').addEventListener('click', window.handleSignup);
-
         // ===== DARK MODE =====
-        document.getElementById('themeToggle').addEventListener('click', function () {
+        document.getElementById('themeToggle').addEventListener('click', function() {
             document.body.classList.toggle('dark');
             localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
         });
@@ -3464,23 +3477,31 @@
             document.body.classList.add('dark');
         }
 
-        // ===== STEP NAVIGATION =====
-        document.getElementById('nextToStep2').addEventListener('click', function () { showStep(2); });
-        document.getElementById('backToStep1').addEventListener('click', function () { showStep(1); });
-        document.getElementById('nextToStep3').addEventListener('click', function () {
-            const profile = document.getElementById('profileUrl').value.trim();
-            const phone = document.getElementById('customerPhone').value.trim();
-            if (profile && phone) {
-                showStep(3);
-            } else {
-                toast('Fill profile URL and phone number', true);
-            }
-        });
-        document.getElementById('backToStep2').addEventListener('click', function () { showStep(2); });
+        // ===== HELPERS =====
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function loadDefaultReviews() {
+            reviews = [
+                { name: 'John M.', rating: 5,
+                    review: 'Ordered 10,000 Facebook followers at 3399, delivered fast! My page is growing!' },
+                { name: 'Sarah W.', rating: 5,
+                    review: 'Got 10,000 Instagram followers for only 5000! Best deal in Kenya!' },
+                { name: 'David K.', rating: 5, review: 'Very reliable service! The Facebook likes came in 30 minutes!' },
+                { name: 'Grace N.', rating: 5, review: 'Saved big on Instagram followers! Professional and on time.' },
+                { name: 'Peter O.', rating: 4, review: 'Great service, affordable prices. Will order again.' },
+                { name: 'Mary A.', rating: 5, review: 'Best social media growth service in Kenya! 10/10!' }
+            ];
+            localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
+        }
 
         // ===== CLOSE MODALS ON CLICK OUTSIDE =====
         document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.addEventListener('click', function (e) {
+            modal.addEventListener('click', function(e) {
                 if (e.target === this) {
                     this.classList.remove('show');
                     if (this.id === 'trackModal' && autoRefreshInterval) {
@@ -3492,7 +3513,7 @@
 
         // ===== INITIALIZE =====
         async function initialize() {
-            // LANDING PAGE IS ALWAYS VISIBLE FIRST
+            // Check session first
             checkSession();
 
             // Load from localStorage
