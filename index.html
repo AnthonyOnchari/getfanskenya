@@ -68,7 +68,7 @@
             padding-bottom: var(--bottom-nav-height);
         }
 
-        /* ===== LANDING PAGE ===== */
+        /* ===== LANDING PAGE - ALWAYS SHOWING ===== */
         .landing-page {
             background: linear-gradient(135deg, #1877f2 0%, #0d65d9 50%, #001f3f 100%);
             min-height: 100vh;
@@ -82,7 +82,7 @@
             width: 100%;
             z-index: 9999;
             overflow-y: auto;
-            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
             opacity: 1;
             visibility: visible;
         }
@@ -2026,7 +2026,7 @@
 
 <body>
 
-    <!-- ========== LANDING PAGE - BUTTONS WORKING ========== -->
+    <!-- ========== LANDING PAGE - ALWAYS SHOWING UNTIL CLICKED ========== -->
     <div class="landing-page" id="landingPage">
         <div class="landing-container">
             <div class="logo-section">
@@ -2427,7 +2427,7 @@
 
     <script>
         // ========== CONFIGURATION ==========
-        const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbw7O2NLu4QK44TmtRRQSe8VKzM4dhg8NWB8XRMZesZDwFZ7oKjig0e8ecakyArQlBfwnQ/exec";
+        const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec";
         const ADMIN_PASSWORD = "GetFans2024";
         const TELEGRAM_BOT_TOKEN = "8825700469:AAEpywAnsc6jEXUmCyvWN4niPbWTSg1xn68";
         const TELEGRAM_CHAT_ID = "5740390611";
@@ -2478,7 +2478,7 @@
             setTimeout(() => toastEl.remove(), 3000);
         }
 
-        // ===== LANDING PAGE FUNCTIONS - FIXED =====
+        // ===== LANDING PAGE FUNCTIONS - BUTTONS WORKING =====
         function showMainSite() {
             document.getElementById('landingPage').classList.add('hide-landing');
             document.getElementById('mainSite').classList.add('active');
@@ -2587,14 +2587,15 @@
             sendTelegramNotification('🎉 New User Signup: ' + name + ' (' + email + ')');
         });
 
-        // ===== CHECK SESSION ON LOAD =====
+        // ===== CHECK SESSION =====
         function checkSession() {
             const userType = localStorage.getItem('gfk_user_type');
+            // LANDING PAGE STAYS VISIBLE - NO AUTO HIDE
+            // Only show main site if user explicitly clicked a button
             if (userType === 'member' || userType === 'guest') {
-                showMainSite();
-                return true;
+                // User already has session, but keep landing visible
+                // They will click to enter
             }
-            return false;
         }
 
         // ===== SYNC FUNCTIONS =====
@@ -2652,6 +2653,7 @@
                 console.error('Sync error:', e);
                 updateSyncStatus('error', 'Sync failed - using local data');
 
+                // Load from local storage
                 const localOrders = localStorage.getItem('getfanskenya_orders');
                 if (localOrders) { try { orders = JSON.parse(localOrders); } catch (e) {} }
                 const localDeposits = localStorage.getItem('getfanskenya_deposits');
@@ -3513,8 +3515,9 @@
 
         // ===== INITIALIZE =====
         async function initialize() {
-            // Check session first
-            checkSession();
+            // LANDING PAGE STAYS VISIBLE - NO AUTO HIDE
+            // Check session but don't auto-hide landing
+            const userType = localStorage.getItem('gfk_user_type');
 
             // Load from localStorage
             const localOrders = localStorage.getItem('getfanskenya_orders');
@@ -3551,6 +3554,7 @@
             console.log('🔔 Telegram: ENABLED');
             console.log('🔄 Auto-sync: 30 SECONDS');
             console.log('📡 Tracking: 2 SECONDS');
+            console.log('📱 Landing page: ALWAYS VISIBLE UNTIL CLICKED');
         }
 
         // Run initialize
