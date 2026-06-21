@@ -68,7 +68,6 @@
             padding-bottom: calc(var(--bottom-nav-height) + 20px);
         }
 
-        /* ===== BOTTOM NAVIGATION BAR ===== */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -108,7 +107,6 @@
         .bottom-nav .nav-item i {
             font-size: 1.2rem;
             margin-bottom: 4px;
-            transition: all 0.3s ease;
         }
 
         .bottom-nav .nav-item span {
@@ -117,7 +115,6 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        /* ===== LANDING PAGE ===== */
         .landing-page {
             background: linear-gradient(135deg, #1877f2 0%, #0d65d9 50%, #001f3f 100%);
             min-height: 100vh;
@@ -131,7 +128,6 @@
             width: 100%;
             z-index: 9999;
             overflow-y: auto;
-            transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
             opacity: 1;
             visibility: visible;
         }
@@ -151,14 +147,8 @@
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .logo-section {
@@ -348,7 +338,6 @@
             color: #2ecc71;
         }
 
-        /* ===== AUTH MODAL ===== */
         .auth-modal {
             display: none;
             position: fixed;
@@ -364,12 +353,6 @@
 
         .auth-modal.show {
             display: flex;
-            animation: modalFadeInBg 0.3s ease;
-        }
-
-        @keyframes modalFadeInBg {
-            from { background: rgba(0, 0, 0, 0); }
-            to { background: rgba(0, 0, 0, 0.8); }
         }
 
         .auth-modal-content {
@@ -378,20 +361,8 @@
             padding: 24px;
             width: 90%;
             max-width: 420px;
-            animation: modalSlideIn 0.3s ease;
             max-height: 90vh;
             overflow-y: auto;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
         }
 
         .auth-tabs {
@@ -408,7 +379,6 @@
             font-weight: 600;
             font-size: 0.8rem;
             border-radius: 20px;
-            transition: all 0.2s;
             font-family: 'Poppins', sans-serif;
             background: transparent;
             border: none;
@@ -422,17 +392,10 @@
 
         .auth-form {
             display: none;
-            transition: opacity 0.2s;
         }
 
         .auth-form.active {
             display: block;
-            animation: formFadeIn 0.2s ease;
-        }
-
-        @keyframes formFadeIn {
-            from { opacity: 0; transform: translateX(-10px); }
-            to { opacity: 1; transform: translateX(0); }
         }
 
         .benefits-list {
@@ -491,7 +454,6 @@
             display: block;
         }
 
-        /* ===== SYNC STATUS ===== */
         .sync-status-bar {
             background: var(--card-bg);
             border-radius: 12px;
@@ -515,35 +477,18 @@
             margin-right: 6px;
         }
 
-        .sync-status-bar .sync-dot.synced {
-            background: var(--success);
-        }
+        .sync-status-bar .sync-dot.synced { background: var(--success); }
+        .sync-status-bar .sync-dot.syncing { background: var(--warning); animation: pulse 1s infinite; }
+        .sync-status-bar .sync-dot.error { background: var(--danger); }
 
-        .sync-status-bar .sync-dot.syncing {
-            background: var(--warning);
-            animation: pulse 1s infinite;
-        }
-
-        .sync-status-bar .sync-dot.error {
-            background: var(--danger);
-        }
-
-        /* ===== MAIN SITE ===== */
         .main-site {
             display: none;
         }
 
         .main-site.active {
             display: block;
-            animation: siteFadeIn 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
         }
 
-        @keyframes siteFadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== STICKY HEADER ===== */
         .sticky-header {
             position: sticky;
             top: 0;
@@ -552,7 +497,6 @@
             padding: 10px 16px;
             margin-bottom: 16px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .container {
@@ -586,7 +530,6 @@
             font-size: 0.85rem;
             font-weight: 800;
             color: var(--primary);
-            letter-spacing: -0.3px;
             font-family: 'Poppins', sans-serif;
         }
 
@@ -599,7 +542,6 @@
 
         .admin-login-btn {
             background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 30px;
@@ -608,12 +550,10 @@
             cursor: pointer;
             font-weight: 600;
             font-family: 'Poppins', sans-serif;
-            transition: all 0.2s ease;
         }
 
         .theme-toggle {
             background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 30px;
             padding: 4px 10px;
@@ -626,7 +566,6 @@
             padding: 0 16px 16px 16px;
         }
 
-        /* ===== PROGRESS ===== */
         .progress-container {
             margin-bottom: 20px;
         }
@@ -643,7 +582,6 @@
             font-size: 0.6rem;
             color: var(--text-light);
             font-weight: 500;
-            position: relative;
         }
 
         .step-indicator.active {
@@ -668,15 +606,8 @@
             margin-bottom: 2px;
         }
 
-        .step-indicator.active .step-num {
-            background: var(--primary);
-            color: white;
-        }
-
-        .step-indicator.completed .step-num {
-            background: var(--success);
-            color: white;
-        }
+        .step-indicator.active .step-num { background: var(--primary); color: white; }
+        .step-indicator.completed .step-num { background: var(--success); color: white; }
 
         .progress-bar {
             height: 3px;
@@ -692,22 +623,14 @@
             transition: width 0.3s ease;
         }
 
-        /* ===== STEPS ===== */
         .step {
             display: none;
-            animation: fadeIn 0.3s ease;
         }
 
         .step.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== CARDS ===== */
         .card {
             background: var(--card-bg);
             border-radius: var(--radius);
@@ -727,11 +650,8 @@
             gap: 10px;
         }
 
-        .card-title i {
-            color: var(--primary);
-        }
+        .card-title i { color: var(--primary); }
 
-        /* ===== AD UNIT ===== */
         .ad-unit {
             background: var(--card-bg);
             border-radius: 16px;
@@ -744,8 +664,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: var(--text-light);
-            font-size: 0.7rem;
         }
 
         .ad-unit .ad-label {
@@ -755,7 +673,6 @@
             opacity: 0.6;
         }
 
-        /* ===== PACKAGE SELECTION ===== */
         .pkg-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -774,37 +691,13 @@
             position: relative;
         }
 
-        .pkg-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        }
+        .pkg-card:hover { transform: translateY(-2px); }
+        .pkg-card:active { transform: scale(0.97); }
+        .pkg-card.active { border-color: var(--primary); background: var(--primary-light); }
 
-        .pkg-card:active {
-            transform: scale(0.97);
-        }
-
-        .pkg-card.active {
-            border-color: var(--primary);
-            background: var(--primary-light);
-        }
-
-        .pkg-card .pkg-icon {
-            font-size: 1.6rem;
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        .pkg-card .pkg-name {
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--text);
-        }
-
-        .pkg-card .pkg-desc {
-            font-size: 0.55rem;
-            color: var(--text-light);
-            margin-top: 2px;
-        }
+        .pkg-card .pkg-icon { font-size: 1.6rem; margin-bottom: 4px; display: block; }
+        .pkg-card .pkg-name { font-size: 0.7rem; font-weight: 700; color: var(--text); }
+        .pkg-card .pkg-desc { font-size: 0.55rem; color: var(--text-light); margin-top: 2px; }
 
         .pkg-card .pkg-check {
             position: absolute;
@@ -821,22 +714,11 @@
             justify-content: center;
         }
 
-        .pkg-card.active .pkg-check {
-            display: flex;
-        }
+        .pkg-card.active .pkg-check { display: flex; }
 
-        .pkg-card.instagram-card.active {
-            border-color: var(--instagram);
-            background: #fef0f5;
-        }
-
-        .pkg-card.instagram-card.active .pkg-check {
-            background: var(--instagram);
-        }
-
-        body.dark .pkg-card.instagram-card.active {
-            background: #2a1a2a;
-        }
+        .pkg-card.instagram-card.active { border-color: var(--instagram); background: #fef0f5; }
+        .pkg-card.instagram-card.active .pkg-check { background: var(--instagram); }
+        body.dark .pkg-card.instagram-card.active { background: #2a1a2a; }
 
         .service-pills {
             display: flex;
@@ -856,19 +738,11 @@
             text-align: center;
             font-size: 0.7rem;
             font-family: 'Poppins', sans-serif;
-            transition: all 0.2s ease;
             min-width: 60px;
         }
 
-        .service-pill:active {
-            transform: scale(0.97);
-        }
-
-        .service-pill.active {
-            background: var(--primary);
-            color: white;
-            border-color: transparent;
-        }
+        .service-pill:active { transform: scale(0.97); }
+        .service-pill.active { background: var(--primary); color: white; border-color: transparent; }
 
         .service-pill.instagram-pill.active {
             background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
@@ -907,10 +781,7 @@
             width: 80px;
         }
 
-        .qty-section .qty-controls {
-            display: flex;
-            gap: 4px;
-        }
+        .qty-section .qty-controls { display: flex; gap: 4px; }
 
         .qty-section .qty-controls button {
             width: 30px;
@@ -922,16 +793,9 @@
             font-weight: 700;
             font-size: 0.8rem;
             color: var(--text);
-            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        .qty-section .qty-controls button:hover {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
         }
 
         input[type="range"] {
@@ -950,7 +814,6 @@
             background: var(--primary);
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(24, 119, 242, 0.3);
         }
 
         .price-box {
@@ -962,15 +825,8 @@
             border: 1px solid var(--border);
         }
 
-        .price-box .price-main {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--primary);
-        }
-
-        .price-box .price-main .currency {
-            font-size: 1rem;
-        }
+        .price-box .price-main { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+        .price-box .price-main .currency { font-size: 1rem; }
 
         .price-box .price-original {
             font-size: 0.8rem;
@@ -991,11 +847,7 @@
             margin-left: 8px;
         }
 
-        .price-box .price-label {
-            font-size: 0.6rem;
-            color: var(--text-light);
-            margin-top: 2px;
-        }
+        .price-box .price-label { font-size: 0.6rem; color: var(--text-light); margin-top: 2px; }
 
         .delivery-time-note {
             padding: 10px;
@@ -1004,7 +856,6 @@
             text-align: center;
             margin-bottom: 14px;
             font-weight: 600;
-            transition: all 0.3s ease;
         }
 
         .delivery-fast { background: var(--delivery-fast); color: white; }
@@ -1022,26 +873,13 @@
             background: var(--primary);
             color: white;
             font-family: 'Poppins', sans-serif;
-            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
         }
 
-        .btn-next:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(24, 119, 242, 0.3);
-        }
-
-        .btn-next:active {
-            transform: scale(0.97);
-        }
-
-        .form-group {
-            margin-bottom: 14px;
-        }
+        .form-group { margin-bottom: 14px; }
 
         label {
             display: block;
@@ -1052,12 +890,9 @@
             color: var(--text);
         }
 
-        label .required {
-            color: #e74c3c;
-        }
+        label .required { color: #e74c3c; }
 
-        input,
-        textarea {
+        input, textarea {
             width: 100%;
             padding: 12px 14px;
             border-radius: var(--radius-sm);
@@ -1066,14 +901,6 @@
             color: var(--text);
             font-size: 0.85rem;
             font-family: 'Poppins', sans-serif;
-            transition: all 0.2s;
-        }
-
-        input:focus,
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(24, 119, 242, 0.1);
         }
 
         .btn-back {
@@ -1086,19 +913,10 @@
             background: var(--bg);
             color: var(--text);
             font-family: 'Poppins', sans-serif;
-            transition: all 0.2s ease;
             flex: 1;
         }
 
-        .btn-back:hover {
-            background: var(--border);
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 6px;
-        }
+        .button-group { display: flex; gap: 10px; margin-top: 6px; }
 
         .mpesa-container {
             background: linear-gradient(135deg, var(--primary-dark), #001f3f);
@@ -1136,12 +954,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .mpesa-field textarea {
-            background: rgba(255, 255, 255, 0.95);
-            color: #333;
-            font-size: 0.8rem;
-            font-family: monospace;
-        }
+        .mpesa-field textarea { background: rgba(255, 255, 255, 0.95); color: #333; font-size: 0.8rem; font-family: monospace; }
 
         .btn-submit {
             padding: 14px;
@@ -1154,20 +967,9 @@
             color: white;
             width: 100%;
             font-family: 'Poppins', sans-serif;
-            transition: all 0.2s ease;
         }
 
-        .btn-submit:hover {
-            filter: brightness(1.05);
-            transform: translateY(-2px);
-        }
-
-        .summary-card {
-            background: var(--bg);
-            border-radius: var(--radius-sm);
-            padding: 12px;
-            margin: 12px 0;
-        }
+        .summary-card { background: var(--bg); border-radius: var(--radius-sm); padding: 12px; margin: 12px 0; }
 
         .info-row {
             display: flex;
@@ -1178,22 +980,13 @@
             gap: 4px;
         }
 
-        .info-row strong {
-            color: var(--text);
-        }
+        hr { border-color: var(--border); margin: 8px 0; }
 
-        hr {
-            border-color: var(--border);
-            margin: 8px 0;
-        }
-
-        /* ===== HOME PAGE IMAGE ===== */
         .home-bottom-image {
             margin: 16px 0;
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow);
-            position: relative;
         }
 
         .home-bottom-image img {
@@ -1205,7 +998,6 @@
             object-fit: cover;
         }
 
-        /* ===== WHATSAPP FLOAT ===== */
         .whatsapp-float {
             position: fixed;
             bottom: 85px;
@@ -1222,7 +1014,6 @@
             font-size: 0.7rem;
             z-index: 999;
             font-family: 'Poppins', sans-serif;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
         }
 
         .loading-spinner {
@@ -1236,11 +1027,8 @@
             margin-right: 6px;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ===== MODALS ===== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -1254,9 +1042,7 @@
             align-items: center;
         }
 
-        .modal-overlay.show {
-            display: flex;
-        }
+        .modal-overlay.show { display: flex; }
 
         .modal-container {
             background: var(--card-bg);
@@ -1266,12 +1052,6 @@
             max-height: 85vh;
             overflow-y: auto;
             position: relative;
-            animation: modalFadeIn 0.2s ease;
-        }
-
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
         }
 
         .modal-header {
@@ -1286,78 +1066,21 @@
             z-index: 10;
         }
 
-        .modal-header h3 {
-            font-size: 0.95rem;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-        }
+        .modal-header h3 { font-size: 0.95rem; font-weight: 600; font-family: 'Poppins', sans-serif; }
+        .close-modal { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-light); }
+        .modal-body { padding: 20px; }
 
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: var(--text-light);
-        }
+        .tracking-input-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tracking-input-group input { flex: 1; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg); font-family: monospace; }
+        .tracking-input-group button { padding: 12px 20px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm); cursor: pointer; font-weight: 600; font-family: 'Poppins', sans-serif; }
 
-        .modal-body {
-            padding: 20px;
-        }
+        .tracking-result { display: none; margin-top: 16px; }
+        .tracking-result.show { display: block; }
 
-        /* ===== TRACKING ===== */
-        .tracking-input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+        .tracking-card { background: var(--bg); border-radius: var(--radius-sm); padding: 14px; }
 
-        .tracking-input-group input {
-            flex: 1;
-            padding: 12px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border);
-            background: var(--bg);
-            font-family: monospace;
-        }
-
-        .tracking-input-group button {
-            padding: 12px 20px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .tracking-result {
-            display: none;
-            margin-top: 16px;
-        }
-
-        .tracking-result.show {
-            display: block;
-        }
-
-        .tracking-card {
-            background: var(--bg);
-            border-radius: var(--radius-sm);
-            padding: 14px;
-        }
-
-        .status-timeline {
-            display: flex;
-            justify-content: space-between;
-            margin: 16px 0;
-            flex-wrap: wrap;
-        }
-
-        .status-step {
-            text-align: center;
-            flex: 1;
-            min-width: 45px;
-        }
+        .status-timeline { display: flex; justify-content: space-between; margin: 16px 0; flex-wrap: wrap; }
+        .status-step { text-align: center; flex: 1; min-width: 45px; }
 
         .status-icon {
             width: 30px;
@@ -1371,63 +1094,14 @@
             font-size: 0.7rem;
         }
 
-        .status-step.completed .status-icon {
-            background: var(--success);
-            color: white;
-        }
+        .status-step.completed .status-icon { background: var(--success); color: white; }
+        .status-step.active .status-icon { background: var(--primary); color: white; }
+        .status-label { font-size: 0.55rem; font-weight: 600; }
 
-        .status-step.active .status-icon {
-            background: var(--primary);
-            color: white;
-            animation: pulseStatus 1.5s infinite;
-        }
-
-        @keyframes pulseStatus {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(24, 119, 242, 0.4); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(24, 119, 242, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(24, 119, 242, 0); }
-        }
-
-        .status-label {
-            font-size: 0.55rem;
-            font-weight: 600;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 2px 8px;
-            border-radius: 20px;
-            font-size: 0.6rem;
-            font-weight: 600;
-        }
-
+        .status-badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.6rem; font-weight: 600; }
         .status-pending { background: var(--warning); color: #000; }
         .status-processing { background: var(--info); color: white; }
-        .status-completed,
-        .status-delivered { background: var(--success); color: white; }
-
-        .auto-refresh-badge {
-            font-size: 0.55rem;
-            color: var(--text-light);
-            text-align: center;
-            margin-top: 8px;
-        }
-
-        .whatsapp-track-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: var(--whatsapp);
-            color: white;
-            padding: 8px 14px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-top: 14px;
-            width: 100%;
-        }
+        .status-completed, .status-delivered { background: var(--success); color: white; }
 
         .download-receipt-btn {
             display: inline-flex;
@@ -1438,7 +1112,6 @@
             color: white;
             padding: 8px 14px;
             border-radius: 40px;
-            text-decoration: none;
             font-size: 0.7rem;
             font-weight: 600;
             margin-top: 12px;
@@ -1460,8 +1133,7 @@
             border: 2px dashed var(--primary);
         }
 
-        .copy-btn,
-        .track-order-btn {
+        .copy-btn, .track-order-btn {
             background: var(--primary);
             color: white;
             border: none;
@@ -1470,28 +1142,13 @@
             font-size: 0.8rem;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.2s ease;
             margin: 3px;
             font-family: 'Poppins', sans-serif;
         }
 
-        .track-order-btn {
-            background: var(--info);
-        }
+        .track-order-btn { background: var(--info); }
+        .button-group-inline { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
 
-        .copy-btn:hover,
-        .track-order-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .button-group-inline {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        /* ===== REVIEWS MODAL ===== */
         .reviews-carousel-modal {
             overflow-x: auto;
             scroll-behavior: smooth;
@@ -1502,29 +1159,11 @@
             margin-bottom: 8px;
         }
 
-        .reviews-carousel-modal:active {
-            cursor: grabbing;
-        }
+        .reviews-carousel-modal::-webkit-scrollbar { height: 3px; }
+        .reviews-carousel-modal::-webkit-scrollbar-track { background: var(--border); border-radius: 10px; }
+        .reviews-carousel-modal::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
-        .reviews-carousel-modal::-webkit-scrollbar {
-            height: 3px;
-        }
-
-        .reviews-carousel-modal::-webkit-scrollbar-track {
-            background: var(--border);
-            border-radius: 10px;
-        }
-
-        .reviews-carousel-modal::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 10px;
-        }
-
-        .reviews-items-modal {
-            display: inline-flex;
-            gap: 12px;
-            padding: 4px 0;
-        }
+        .reviews-items-modal { display: inline-flex; gap: 12px; padding: 4px 0; }
 
         .review-card {
             background: var(--card-bg);
@@ -1534,52 +1173,15 @@
             max-width: 260px;
             border: 1px solid var(--border);
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .review-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
+        .review-rating { color: var(--review-star); font-size: 0.75rem; letter-spacing: 2px; margin-bottom: 6px; }
+        .review-text { font-size: 0.75rem; line-height: 1.4; margin-bottom: 8px; color: var(--text); }
+        .review-author { font-size: 0.6rem; color: var(--text-light); font-weight: 500; font-family: 'Poppins', sans-serif; }
 
-        .review-rating {
-            color: var(--review-star);
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            margin-bottom: 6px;
-        }
-
-        .review-text {
-            font-size: 0.75rem;
-            line-height: 1.4;
-            margin-bottom: 8px;
-            color: var(--text);
-        }
-
-        .review-author {
-            font-size: 0.6rem;
-            color: var(--text-light);
-            font-weight: 500;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .rating-input {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 10px;
-            justify-content: center;
-        }
-
-        .star-rating {
-            font-size: 1.4rem;
-            cursor: pointer;
-            color: var(--border);
-            transition: color 0.2s;
-        }
-
-        .star-rating.active {
-            color: var(--review-star);
-        }
+        .rating-input { display: flex; gap: 4px; margin-bottom: 10px; justify-content: center; }
+        .star-rating { font-size: 1.4rem; cursor: pointer; color: var(--border); }
+        .star-rating.active { color: var(--review-star); }
 
         .btn-review {
             width: 100%;
@@ -1595,25 +1197,10 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        .section-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
+        .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .section-header h3 { font-size: 0.85rem; font-weight: 600; font-family: 'Poppins', sans-serif; }
+        .section-header span { font-size: 0.6rem; color: var(--text-light); }
 
-        .section-header h3 {
-            font-size: 0.85rem;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .section-header span {
-            font-size: 0.6rem;
-            color: var(--text-light);
-        }
-
-        /* ===== ADMIN PANEL MODAL ===== */
         .admin-panel-modal {
             display: none;
             position: fixed;
@@ -1627,9 +1214,7 @@
             align-items: center;
         }
 
-        .admin-panel-modal.show {
-            display: flex;
-        }
+        .admin-panel-modal.show { display: flex; }
 
         .admin-panel-content {
             background: var(--card-bg);
@@ -1638,7 +1223,6 @@
             max-width: 420px;
             max-height: 80vh;
             overflow-y: auto;
-            animation: modalFadeIn 0.2s ease;
             position: relative;
         }
 
@@ -1654,77 +1238,17 @@
             z-index: 10;
         }
 
-        .admin-panel-header h3 {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--primary);
-            font-family: 'Poppins', sans-serif;
-        }
+        .admin-panel-header h3 { font-size: 0.9rem; font-weight: 700; color: var(--primary); font-family: 'Poppins', sans-serif; }
+        .admin-panel-header .close-panel { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-light); }
+        .admin-panel-inner { padding: 16px; }
 
-        .admin-panel-header .close-panel {
-            background: none;
-            border: none;
-            font-size: 1.2rem;
-            cursor: pointer;
-            color: var(--text-light);
-        }
+        .admin-stats-mini { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
+        .stat-mini { background: var(--bg); border-radius: 10px; padding: 8px; text-align: center; font-size: 0.55rem; color: var(--text-light); font-family: 'Poppins', sans-serif; }
+        .stat-mini .num { font-size: 0.9rem; font-weight: 700; color: var(--text); display: block; }
 
-        .admin-panel-inner {
-            padding: 16px;
-        }
-
-        .admin-stats-mini {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .stat-mini {
-            background: var(--bg);
-            border-radius: 10px;
-            padding: 8px;
-            text-align: center;
-            font-size: 0.55rem;
-            color: var(--text-light);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .stat-mini .num {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--text);
-            display: block;
-        }
-
-        .admin-tabs-mini {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-            background: var(--bg);
-            padding: 4px;
-            border-radius: 30px;
-        }
-
-        .tab-mini {
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 0.6rem;
-            font-weight: 600;
-            cursor: pointer;
-            background: transparent;
-            border: none;
-            color: var(--text-light);
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
-
-        .tab-mini.active {
-            background: var(--primary);
-            color: white;
-        }
+        .admin-tabs-mini { display: flex; gap: 4px; margin-bottom: 12px; flex-wrap: wrap; background: var(--bg); padding: 4px; border-radius: 30px; }
+        .tab-mini { padding: 6px 14px; border-radius: 30px; font-size: 0.6rem; font-weight: 600; cursor: pointer; background: transparent; border: none; color: var(--text-light); font-family: 'Poppins', sans-serif; }
+        .tab-mini.active { background: var(--primary); color: white; }
 
         .refresh-btn {
             background: var(--info);
@@ -1740,15 +1264,9 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        .admin-content-mini {
-            max-height: 40vh;
-            overflow-y: auto;
-        }
+        .admin-content-mini { max-height: 40vh; overflow-y: auto; }
 
-        .order-mini,
-        .deposit-mini,
-        .user-mini,
-        .review-mini {
+        .order-mini, .deposit-mini, .user-mini, .review-mini {
             background: var(--bg);
             border-radius: 10px;
             padding: 10px;
@@ -1757,129 +1275,26 @@
             border: 1px solid var(--border);
         }
 
-        .order-mini .order-row,
-        .deposit-mini .order-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 4px;
-            margin: 4px 0;
-        }
+        .order-mini .order-row, .deposit-mini .order-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px; margin: 4px 0; }
+        .order-status-select-mini { padding: 4px 8px; border-radius: 15px; font-size: 0.55rem; border: 1px solid var(--primary); background: var(--card-bg); font-family: 'Poppins', sans-serif; color: var(--text); }
 
-        .order-status-select-mini {
-            padding: 4px 8px;
-            border-radius: 15px;
-            font-size: 0.55rem;
-            border: 1px solid var(--primary);
-            background: var(--card-bg);
-            font-family: 'Poppins', sans-serif;
-            color: var(--text);
-        }
+        .deposit-actions { display: flex; gap: 4px; margin-top: 6px; }
+        .deposit-actions button { padding: 4px 12px; border-radius: 15px; font-size: 0.55rem; font-weight: 600; border: none; cursor: pointer; font-family: 'Poppins', sans-serif; }
+        .btn-approve-mini { background: var(--success); color: white; }
+        .btn-reject-mini { background: var(--danger); color: white; }
 
-        .deposit-actions {
-            display: flex;
-            gap: 4px;
-            margin-top: 6px;
-        }
+        .user-mini { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px; }
+        .review-mini { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px; }
+        .del-mini { background: var(--danger); color: white; border: none; border-radius: 15px; padding: 4px 12px; font-size: 0.5rem; cursor: pointer; font-family: 'Poppins', sans-serif; }
 
-        .deposit-actions button {
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.55rem;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-        }
+        .password-box { text-align: center; padding: 10px; }
+        .password-box input { padding: 10px; border-radius: 30px; border: 1px solid var(--border); width: 100%; text-align: center; margin-bottom: 10px; background: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; }
+        .password-box button { background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 30px; cursor: pointer; width: 100%; font-weight: 600; font-family: 'Poppins', sans-serif; }
 
-        .btn-approve-mini {
-            background: var(--success);
-            color: white;
-        }
+        .admin-warning { background: #fff3cd; color: #856404; padding: 10px; border-radius: 10px; font-size: 0.65rem; text-align: center; font-family: 'Poppins', sans-serif; }
 
-        .btn-reject-mini {
-            background: var(--danger);
-            color: white;
-        }
-
-        .user-mini {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-
-        .review-mini {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 4px;
-        }
-
-        .del-mini {
-            background: var(--danger);
-            color: white;
-            border: none;
-            border-radius: 15px;
-            padding: 4px 12px;
-            font-size: 0.5rem;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .password-box {
-            text-align: center;
-            padding: 10px;
-        }
-
-        .password-box input {
-            padding: 10px;
-            border-radius: 30px;
-            border: 1px solid var(--border);
-            width: 100%;
-            text-align: center;
-            margin-bottom: 10px;
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .password-box button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
-            cursor: pointer;
-            width: 100%;
-            font-weight: 600;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .admin-warning {
-            background: #fff3cd;
-            color: #856404;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 0.65rem;
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        /* ===== ADS MODAL ===== */
-        .ads-modal-content {
-            max-height: 70vh;
-        }
-
-        .ads-scroll-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            padding: 10px 0;
-        }
+        .ads-modal-content { max-height: 70vh; }
+        .ads-scroll-container { display: flex; flex-direction: column; gap: 16px; padding: 10px 0; }
 
         .ad-card {
             background: var(--bg);
@@ -1893,198 +1308,37 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            transition: transform 0.2s;
         }
 
-        .ad-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
+        .ad-card .ad-icon { font-size: 1.5rem; }
+        .ad-card .ad-title { font-weight: 600; font-size: 0.75rem; color: var(--text); }
+        .ad-card .ad-desc { font-size: 0.6rem; color: var(--text-light); }
+        .ad-card .ad-btn { padding: 6px 16px; border-radius: 20px; font-size: 0.6rem; font-weight: 600; cursor: pointer; border: none; background: var(--primary); color: white; font-family: 'Poppins', sans-serif; }
 
-        .ad-card .ad-icon {
-            font-size: 1.5rem;
-        }
+        .site-footer { text-align: center; font-size: 0.55rem; color: var(--text-light); margin: 16px 0; padding: 10px; font-family: 'Poppins', sans-serif; }
 
-        .ad-card .ad-title {
-            font-weight: 600;
-            font-size: 0.75rem;
-            color: var(--text);
-        }
-
-        .ad-card .ad-desc {
-            font-size: 0.6rem;
-            color: var(--text-light);
-        }
-
-        .ad-card .ad-btn {
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.6rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            background: var(--primary);
-            color: white;
-            font-family: 'Poppins', sans-serif;
-            transition: all 0.2s;
-        }
-
-        .ad-card .ad-btn:hover {
-            background: var(--primary-dark);
-        }
-
-        /* ===== FOOTER ===== */
-        .site-footer {
-            text-align: center;
-            font-size: 0.55rem;
-            color: var(--text-light);
-            margin: 16px 0;
-            padding: 10px;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        /* ===== RESPONSIVE ===== */
         @media (max-width: 480px) {
-            .main-content {
-                padding: 0 12px 12px 12px;
-            }
-
-            .card {
-                padding: 16px;
-            }
-
-            .modal-container {
-                width: 95%;
-            }
-
-            .logo-img {
-                height: 32px;
-            }
-
-            .logo-container h1 {
-                font-size: 0.7rem;
-            }
-
-            .admin-login-btn {
-                padding: 4px 8px;
-                font-size: 0.5rem;
-            }
-
-            .theme-toggle {
-                padding: 4px 8px;
-                font-size: 0.7rem;
-            }
-
-            .pkg-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 8px;
-            }
-
-            .pkg-card {
-                padding: 10px 8px;
-            }
-
-            .pkg-card .pkg-icon {
-                font-size: 1.3rem;
-            }
-
-            .pkg-card .pkg-name {
-                font-size: 0.6rem;
-            }
-
-            .pkg-card .pkg-desc {
-                font-size: 0.5rem;
-            }
-
-            .service-pill {
-                font-size: 0.6rem;
-                padding: 6px 10px;
-            }
-
-            .price-box .price-main {
-                font-size: 1.4rem;
-            }
-
-            .logo-img-landing img {
-                height: 100px;
-            }
-
-            .logo-section h1 {
-                font-size: 1.3rem;
-            }
-
-            .options-container {
-                padding: 12px;
-            }
-
-            .option-card {
-                padding: 10px;
-            }
-
-            .trust-strip {
-                gap: 6px;
-                margin-top: 8px;
-            }
-
-            .qty-section {
-                flex-wrap: wrap;
-                gap: 8px;
-            }
-
-            .qty-section input {
-                width: 60px;
-                font-size: 0.75rem;
-            }
-
-            .bottom-nav .nav-item {
-                padding: 4px 8px;
-                min-width: 50px;
-            }
-
-            .bottom-nav .nav-item i {
-                font-size: 1rem;
-            }
-
-            .bottom-nav .nav-item span {
-                font-size: 0.5rem;
-            }
-
-            .admin-panel-content {
-                width: 95%;
-                max-width: 95vw;
-            }
-        }
-
-        @media (max-width: 380px) {
-            .pkg-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 6px;
-            }
-
-            .pkg-card {
-                padding: 8px 6px;
-            }
-
-            .pkg-card .pkg-icon {
-                font-size: 1.1rem;
-            }
-
-            .pkg-card .pkg-name {
-                font-size: 0.55rem;
-            }
-
-            .service-pill {
-                font-size: 0.5rem;
-                padding: 4px 8px;
-                min-width: 40px;
-            }
+            .main-content { padding: 0 12px 12px 12px; }
+            .card { padding: 16px; }
+            .modal-container { width: 95%; }
+            .logo-img { height: 32px; }
+            .logo-container h1 { font-size: 0.7rem; }
+            .pkg-grid { gap: 8px; }
+            .pkg-card { padding: 10px 8px; }
+            .pkg-card .pkg-icon { font-size: 1.3rem; }
+            .service-pill { font-size: 0.6rem; padding: 6px 10px; }
+            .price-box .price-main { font-size: 1.4rem; }
+            .logo-img-landing img { height: 100px; }
+            .bottom-nav .nav-item { padding: 4px 8px; min-width: 50px; }
+            .bottom-nav .nav-item i { font-size: 1rem; }
+            .bottom-nav .nav-item span { font-size: 0.5rem; }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- ========== LANDING PAGE ========== -->
+    <!-- LANDING PAGE -->
     <div class="landing-page" id="landingPage">
         <div class="landing-container">
             <div class="logo-section">
@@ -2125,11 +1379,10 @@
         </div>
     </div>
 
-    <!-- ========== AUTH MODAL ========== -->
+    <!-- AUTH MODAL -->
     <div class="auth-modal" id="authModal">
         <div class="auth-modal-content">
-            <div class="guest-notice" id="guestNotice" style="display:none;">💡 Login or create an account to save
-                progress, get a wallet & 100 free followers!</div>
+            <div class="guest-notice" id="guestNotice" style="display:none;">💡 Login or create an account to save progress, get a wallet & 100 free followers!</div>
             <div class="auth-tabs">
                 <button class="auth-tab active" data-tab="login" id="authTabLogin">Login</button>
                 <button class="auth-tab" data-tab="signup" id="authTabSignup">Sign Up</button>
@@ -2145,7 +1398,6 @@
                     <input type="password" id="loginPassword" placeholder="Enter your password">
                     <div class="error-message" id="loginPasswordError">Please enter your password</div>
                 </div>
-                <div class="error-message" id="loginGeneralError" style="text-align:center;"></div>
                 <button class="btn-next" id="loginBtn" style="width:100%;">Login</button>
                 <button class="btn-close-auth" id="closeAuthBtn">Cancel</button>
             </div>
@@ -2170,27 +1422,24 @@
                     <input type="password" id="signupConfirmPassword" placeholder="Confirm your password">
                     <div class="error-message" id="signupConfirmError">Passwords do not match</div>
                 </div>
-                <div class="error-message" id="signupGeneralError" style="text-align:center;"></div>
                 <div class="benefits-list">
                     <div><i class="fas fa-gift"></i> <strong>100 Free Facebook Followers</strong></div>
                     <div><i class="fas fa-wallet"></i> <strong>Wallet with 5% deposit bonus</strong></div>
                     <div><i class="fas fa-history"></i> <strong>Order & Transaction History</strong></div>
                 </div>
-                <button class="btn-next" id="signupBtn" style="width:100%;">Create Account & Claim 100 Free Followers
-                    🎁</button>
+                <button class="btn-next" id="signupBtn" style="width:100%;">Create Account 🎁</button>
                 <button class="btn-close-auth" id="closeAuthBtn2">Cancel</button>
             </div>
         </div>
     </div>
 
-    <!-- ========== MAIN SITE ========== -->
+    <!-- MAIN SITE -->
     <div class="main-site" id="mainSite">
         <div class="sticky-header">
             <div class="container">
                 <div class="header">
                     <div class="logo-container">
-                        <img src="https://i.postimg.cc/NjgFm0v4/Vibrant-Logo-with-African-Spirit-(1).png"
-                            alt="Get Fans Kenya" class="logo-img" onerror="this.style.display='none'">
+                        <img src="https://i.postimg.cc/NjgFm0v4/Vibrant-Logo-with-African-Spirit-(1).png" alt="Get Fans Kenya" class="logo-img">
                         <h1>Get Fans Kenya</h1>
                     </div>
                     <div class="header-buttons">
@@ -2203,40 +1452,23 @@
 
         <div class="main-content">
             <div class="container">
-                <!-- SYNC STATUS BAR -->
                 <div class="sync-status-bar" id="syncStatusBar">
-                    <span><span class="sync-dot synced" id="syncDot"></span> <span id="syncStatusText">Synced with cloud</span></span>
-                    <span id="syncTimeText">Last sync: Just now</span>
+                    <span><span class="sync-dot synced" id="syncDot"></span> <span id="syncStatusText">Connected</span></span>
+                    <span id="syncTimeText">Ready</span>
                 </div>
 
-                <!-- PROGRESS -->
                 <div class="progress-container">
                     <div class="progress-steps">
-                        <div class="step-indicator active" id="step1Indicator">
-                            <span class="step-num">1</span>
-                            <div>Select</div>
-                        </div>
-                        <div class="step-indicator" id="step2Indicator">
-                            <span class="step-num">2</span>
-                            <div>Details</div>
-                        </div>
-                        <div class="step-indicator" id="step3Indicator">
-                            <span class="step-num">3</span>
-                            <div>Payment</div>
-                        </div>
+                        <div class="step-indicator active" id="step1Indicator"><span class="step-num">1</span><div>Select</div></div>
+                        <div class="step-indicator" id="step2Indicator"><span class="step-num">2</span><div>Details</div></div>
+                        <div class="step-indicator" id="step3Indicator"><span class="step-num">3</span><div>Payment</div></div>
                     </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
                 </div>
 
-                <!-- STEP 1 -->
                 <div class="step active" id="step1">
                     <div class="card">
-                        <div class="card-title">
-                            <i class="fas fa-rocket"></i> Choose Your Package
-                        </div>
-
+                        <div class="card-title"><i class="fas fa-rocket"></i> Choose Your Package</div>
                         <div class="pkg-grid">
                             <div class="pkg-card active" data-platform="facebook" id="fbPkg">
                                 <span class="pkg-check"><i class="fas fa-check"></i></span>
@@ -2251,101 +1483,53 @@
                                 <div class="pkg-desc">Boost your profile</div>
                             </div>
                         </div>
-
                         <div class="service-pills" id="serviceButtons">
                             <div class="service-pill active" data-service="followers">Followers</div>
                             <div class="service-pill" data-service="likes">Likes</div>
                             <div class="service-pill" data-service="comments">Comments</div>
                         </div>
-
                         <div class="qty-section">
                             <label>Qty</label>
-                            <div class="qty-controls">
-                                <button id="qtyMinus">−</button>
-                                <input type="text" id="quantityNumber" value="10000">
-                                <button id="qtyPlus">+</button>
-                            </div>
+                            <div class="qty-controls"><button id="qtyMinus">−</button><input type="text" id="quantityNumber" value="10000"><button id="qtyPlus">+</button></div>
                             <input type="range" id="quantitySlider" min="100" max="1000000" step="100" value="10000">
                         </div>
-
                         <div class="price-box">
                             <div>
-                                <span class="price-main">
-                                    <span class="currency">KSh</span> <span id="finalPrice">3,399</span>
-                                </span>
+                                <span class="price-main"><span class="currency">KSh</span> <span id="finalPrice">3,399</span></span>
                                 <span class="price-original" id="originalPriceDisplay">KSh 4,600</span>
                                 <span class="price-save" id="savedBadge">Save 1,201</span>
                             </div>
                             <div class="price-label">Best price in Kenya • No hidden fees</div>
                         </div>
-
-                        <div class="delivery-time-note delivery-fast" id="deliveryTimeNote">
-                            ⚡ <span id="deliveryEstimate">30 minutes</span> delivery
-                        </div>
-
-                        <button class="btn-next" id="nextToStep2">
-                            Continue <i class="fas fa-arrow-right"></i>
-                        </button>
+                        <div class="delivery-time-note delivery-fast" id="deliveryTimeNote">⚡ <span id="deliveryEstimate">30 minutes</span> delivery</div>
+                        <button class="btn-next" id="nextToStep2">Continue <i class="fas fa-arrow-right"></i></button>
                     </div>
-
-                    <!-- GOOGLE ADSENSE AD UNIT - AFTER CHOOSE PACKAGE -->
-                    <div class="ad-unit" style="margin: 12px 0 16px 0;">
+                    <div class="ad-unit" style="margin:12px 0 16px 0;">
                         <div class="ad-label">— Sponsored —</div>
-                        <ins class="adsbygoogle"
-                            style="display:block"
-                            data-ad-client="ca-pub-4545598578147918"
-                            data-ad-slot="1234567890"
-                            data-ad-format="auto"
-                            data-full-width-responsive="true"></ins>
-                        <script>
-                            (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
+                        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4545598578147918" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                     </div>
-
-                    <!-- HOME PAGE BOTTOM IMAGE -->
                     <div class="home-bottom-image">
-                        <img src="https://drive.google.com/thumbnail?id=1wRe5NHR-_0f2fd81SgiIKZOReVjgAYU_&sz=w800"
-                            alt="Happy teens using phones - Get Fans Kenya"
-                            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=400&fit=crop';">
+                        <img src="https://drive.google.com/thumbnail?id=1wRe5NHR-_0f2fd81SgiIKZOReVjgAYU_&sz=w800" alt="Get Fans Kenya"
+                            onerror="this.src='https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=400&fit=crop'">
                     </div>
                 </div>
 
-                <!-- STEP 2 -->
                 <div class="step" id="step2">
                     <div class="card">
-                        <div class="card-title">
-                            <i class="fas fa-user-edit"></i> Your Information
-                        </div>
-                        <div class="form-group">
-                            <label id="usernameLabel">Facebook Profile URL <span class="required">*</span></label>
-                            <input type="text" id="profileUrl" placeholder="Profile URL or username">
-                        </div>
-                        <div class="form-group" id="postLinkGroup" style="display: none;">
-                            <label id="postLinkLabel">Post Link <span class="required">*</span></label>
-                            <input type="text" id="postLink" placeholder="Link to post or video">
-                        </div>
-                        <div class="form-group">
-                            <label>Full Name <span class="required">*</span></label>
-                            <input type="text" id="customerName" placeholder="Your full name">
-                        </div>
-                        <div class="form-group">
-                            <label>WhatsApp Number <span class="required">*</span></label>
-                            <input type="tel" id="customerPhone" placeholder="0712345678">
-                        </div>
-                        <div class="button-group">
-                            <button class="btn-back" id="backToStep1"><i class="fas fa-arrow-left"></i> Back</button>
-                            <button class="btn-next" id="nextToStep3">Continue <i class="fas fa-arrow-right"></i></button>
-                        </div>
+                        <div class="card-title"><i class="fas fa-user-edit"></i> Your Information</div>
+                        <div class="form-group"><label id="usernameLabel">Facebook Profile URL <span class="required">*</span></label><input type="text" id="profileUrl" placeholder="Profile URL or username"></div>
+                        <div class="form-group" id="postLinkGroup" style="display:none;"><label id="postLinkLabel">Post Link <span class="required">*</span></label><input type="text" id="postLink" placeholder="Link to post or video"></div>
+                        <div class="form-group"><label>Full Name <span class="required">*</span></label><input type="text" id="customerName" placeholder="Your full name"></div>
+                        <div class="form-group"><label>WhatsApp Number <span class="required">*</span></label><input type="tel" id="customerPhone" placeholder="0712345678"></div>
+                        <div class="button-group"><button class="btn-back" id="backToStep1"><i class="fas fa-arrow-left"></i> Back</button><button class="btn-next" id="nextToStep3">Continue <i class="fas fa-arrow-right"></i></button></div>
                     </div>
                 </div>
 
-                <!-- STEP 3 -->
                 <div class="step" id="step3">
                     <div class="card">
-                        <div class="card-title">
-                            <i class="fas fa-credit-card"></i> Complete Payment
-                        </div>
-                        <div class="mpesa-container" style="margin-top: 0;">
+                        <div class="card-title"><i class="fas fa-credit-card"></i> Complete Payment</div>
+                        <div class="mpesa-container">
                             <div class="till-number">8941840</div>
                             <div class="payment-steps">
                                 <div>1. M-Pesa > Lipa Na M-Pesa > Buy Goods</div>
@@ -2353,70 +1537,43 @@
                                 <div>3. Amount: <strong id="paymentAmountStep">KSh 3,399</strong></div>
                                 <div>4. Enter PIN and confirm</div>
                             </div>
-                            <div class="mpesa-field">
-                                <label>Paste M-Pesa Confirmation</label>
-                                <textarea id="mpesaConfirmation" rows="2" placeholder="Paste the M-Pesa message here"></textarea>
-                            </div>
+                            <div class="mpesa-field"><label>Paste M-Pesa Confirmation</label><textarea id="mpesaConfirmation" rows="2" placeholder="Paste the M-Pesa message here"></textarea></div>
                         </div>
                         <div class="summary-card">
-                            <div class="info-row"><strong>Tracking ID:</strong><span id="trackingId">Loading...</span></div>
-                            <hr>
+                            <div class="info-row"><strong>Tracking ID:</strong><span id="trackingId">Loading...</span></div><hr>
                             <div class="info-row"><span>Platform:</span><strong id="summaryPlatform">Facebook</strong></div>
                             <div class="info-row"><span>Service:</span><strong id="summaryService">Followers</strong></div>
                             <div class="info-row"><span>Quantity:</span><strong id="summaryQty">10,000</strong></div>
                             <div class="info-row"><span>Total:</span><strong id="summaryPrice">KSh 3,399</strong></div>
                         </div>
-                        <div class="button-group">
-                            <button class="btn-back" id="backToStep2"><i class="fas fa-arrow-left"></i> Back</button>
-                            <button class="btn-submit" id="submitOrder">Place Order <i class="fas fa-check"></i></button>
-                        </div>
+                        <div class="button-group"><button class="btn-back" id="backToStep2"><i class="fas fa-arrow-left"></i> Back</button><button class="btn-submit" id="submitOrder">Place Order <i class="fas fa-check"></i></button></div>
                     </div>
                 </div>
-
-                <!-- SITE FOOTER -->
-                <div class="site-footer">
-                    Get Fans Kenya • Till 8941840 • &copy; 2024 All Rights Reserved
-                </div>
+                <div class="site-footer">Get Fans Kenya • Till 8941840</div>
             </div>
         </div>
     </div>
 
-    <!-- ========== BOTTOM NAVIGATION ========== -->
+    <!-- BOTTOM NAV -->
     <div class="bottom-nav" id="bottomNav">
-        <div class="nav-item active" data-tab="home">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </div>
-        <div class="nav-item" data-tab="track">
-            <i class="fas fa-search"></i>
-            <span>Track</span>
-        </div>
-        <div class="nav-item" data-tab="reviews">
-            <i class="fas fa-star"></i>
-            <span>Reviews</span>
-        </div>
-        <div class="nav-item" data-tab="account" id="accountNav">
-            <i class="fas fa-user"></i>
-            <span id="accountNavLabel">Account</span>
-        </div>
+        <div class="nav-item active" data-tab="home"><i class="fas fa-home"></i><span>Home</span></div>
+        <div class="nav-item" data-tab="track"><i class="fas fa-search"></i><span>Track</span></div>
+        <div class="nav-item" data-tab="reviews"><i class="fas fa-star"></i><span>Reviews</span></div>
+        <div class="nav-item" data-tab="account" id="accountNav"><i class="fas fa-user"></i><span id="accountNavLabel">Login</span></div>
     </div>
 
     <!-- SUCCESS MODAL -->
     <div class="modal-overlay" id="successModal">
         <div class="modal-container">
-            <div class="modal-header">
-                <h3>🎉 Order Placed!</h3>
-                <button class="close-modal" id="closeSuccessModal">&times;</button>
-            </div>
-            <div class="modal-body" style="text-align: center;">
-                <div style="font-size: 2.5rem;">✅</div>
-                <p style="margin: 10px 0; font-weight: 600;">Your Tracking ID</p>
+            <div class="modal-header"><h3>🎉 Order Placed!</h3><button class="close-modal" id="closeSuccessModal">&times;</button></div>
+            <div class="modal-body" style="text-align:center;">
+                <div style="font-size:2.5rem;">✅</div>
+                <p style="margin:10px 0;font-weight:600;">Your Tracking ID</p>
                 <div class="tracking-code" id="successTrackingId">GFKXXXXXX</div>
                 <div class="button-group-inline">
                     <button class="copy-btn" id="copyTrackingBtn"><i class="fas fa-copy"></i> Copy</button>
                     <button class="track-order-btn" id="trackFromSuccessBtn"><i class="fas fa-search"></i> Track</button>
                 </div>
-                <p style="font-size: 0.65rem; margin-top: 12px; color: var(--text-light);">Save your Tracking ID to check order status</p>
             </div>
         </div>
     </div>
@@ -2424,19 +1581,10 @@
     <!-- TRACK MODAL -->
     <div class="modal-overlay" id="trackModal">
         <div class="modal-container">
-            <div class="modal-header">
-                <h3><i class="fas fa-search"></i> Track Your Order</h3>
-                <button class="close-modal" id="closeModalBtn">&times;</button>
-            </div>
+            <div class="modal-header"><h3><i class="fas fa-search"></i> Track Order</h3><button class="close-modal" id="closeModalBtn">&times;</button></div>
             <div class="modal-body">
-                <div class="tracking-input-group">
-                    <input type="text" id="trackingInput" placeholder="Enter Tracking ID">
-                    <button id="searchTrackBtn">Track</button>
-                </div>
+                <div class="tracking-input-group"><input type="text" id="trackingInput" placeholder="Enter Tracking ID"><button id="searchTrackBtn">Track</button></div>
                 <div id="trackingResult" class="tracking-result"></div>
-                <div class="auto-refresh-badge" id="autoRefreshStatus">🔄 Auto-refreshing every 2 seconds</div>
-                <a href="https://wa.me/254750600715?text=Hello%20Get%20Fans%20Kenya%2C%20I%20need%20help%20with%20my%20order"
-                    class="whatsapp-track-link" target="_blank"><i class="fab fa-whatsapp"></i> Need help? WhatsApp us</a>
             </div>
         </div>
     </div>
@@ -2444,115 +1592,40 @@
     <!-- REVIEWS MODAL -->
     <div class="modal-overlay" id="reviewsModal">
         <div class="modal-container">
-            <div class="modal-header">
-                <h3>⭐ Customer Reviews</h3>
-                <button class="close-modal" id="closeReviewsModal">&times;</button>
-            </div>
+            <div class="modal-header"><h3>⭐ Customer Reviews</h3><button class="close-modal" id="closeReviewsModal">&times;</button></div>
             <div class="modal-body">
-                <div class="section-header">
-                    <h3>What our customers say</h3><span>← swipe →</span>
-                </div>
-                <div class="reviews-carousel-modal" id="reviewsCarouselModal">
-                    <div class="reviews-items-modal" id="reviewsItemsModal"></div>
-                </div>
-                <hr style="margin: 16px 0;">
-                <div style="font-weight: 600; margin-bottom: 10px; font-size: 0.75rem; font-family: 'Poppins', sans-serif;">
-                    Leave a Review</div>
+                <div class="section-header"><h3>What customers say</h3><span>← swipe →</span></div>
+                <div class="reviews-carousel-modal" id="reviewsCarouselModal"><div class="reviews-items-modal" id="reviewsItemsModal"></div></div>
+                <hr style="margin:16px 0;">
+                <div style="font-weight:600;margin-bottom:10px;font-size:0.75rem;">Leave a Review</div>
                 <div class="rating-input" id="ratingStars">
-                    <span class="star-rating" data-rating="1">★</span>
-                    <span class="star-rating" data-rating="2">★</span>
-                    <span class="star-rating" data-rating="3">★</span>
-                    <span class="star-rating" data-rating="4">★</span>
+                    <span class="star-rating" data-rating="1">★</span><span class="star-rating" data-rating="2">★</span>
+                    <span class="star-rating" data-rating="3">★</span><span class="star-rating" data-rating="4">★</span>
                     <span class="star-rating" data-rating="5">★</span>
                 </div>
-                <input type="text" id="reviewerName" placeholder="Your name" style="margin-bottom: 8px; font-size: 0.75rem;">
-                <textarea id="reviewText" rows="2" placeholder="Share your experience" style="font-size: 0.75rem;"></textarea>
+                <input type="text" id="reviewerName" placeholder="Your name" style="margin-bottom:8px;font-size:0.75rem;">
+                <textarea id="reviewText" rows="2" placeholder="Share your experience" style="font-size:0.75rem;"></textarea>
                 <button class="btn-review" id="submitReview">Submit Review</button>
             </div>
         </div>
     </div>
 
-    <!-- ADS MODAL -->
-    <div class="modal-overlay" id="adsModal">
-        <div class="modal-container ads-modal-content">
-            <div class="modal-header">
-                <h3>📢 Special Offers & Ads</h3>
-                <button class="close-modal" id="closeAdsModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="ads-scroll-container" id="adsScrollContainer">
-                    <div class="ad-card">
-                        <div class="ad-icon">🚀</div>
-                        <div class="ad-title">Boost Your Followers</div>
-                        <div class="ad-desc">Get 10,000 Facebook followers for only KSh 3,399</div>
-                        <button class="ad-btn" onclick="document.getElementById('adsModal').classList.remove('show')">Order Now</button>
-                    </div>
-                    <div class="ad-card">
-                        <div class="ad-icon">📸</div>
-                        <div class="ad-title">Instagram Growth</div>
-                        <div class="ad-desc">10,000 Instagram followers at KSh 5,000 - Best deal!</div>
-                        <button class="ad-btn" onclick="document.getElementById('adsModal').classList.remove('show')">Get Started</button>
-                    </div>
-                    <div class="ad-card">
-                        <div class="ad-icon">💬</div>
-                        <div class="ad-title">Need WhatsApp Likes?</div>
-                        <div class="ad-desc">We also offer WhatsApp status views & likes</div>
-                        <button class="ad-btn" onclick="window.open('https://wa.me/254750600715','_blank')">Chat on WhatsApp</button>
-                    </div>
-                    <div class="ad-card">
-                        <div class="ad-icon">🎯</div>
-                        <div class="ad-title">Targeted Followers</div>
-                        <div class="ad-desc">Get Kenyan-based followers for authentic growth</div>
-                        <button class="ad-btn" onclick="document.getElementById('adsModal').classList.remove('show')">Learn More</button>
-                    </div>
-                    <div class="ad-card">
-                        <div class="ad-icon">⚡</div>
-                        <div class="ad-title">Fast Delivery</div>
-                        <div class="ad-desc">Orders start delivering within 30 minutes!</div>
-                        <button class="ad-btn" onclick="document.getElementById('adsModal').classList.remove('show')">Order Now</button>
-                    </div>
-                    <div class="ad-card">
-                        <div class="ad-icon">🎁</div>
-                        <div class="ad-title">Referral Bonus</div>
-                        <div class="ad-desc">Refer a friend and get 500 free followers!</div>
-                        <button class="ad-btn" onclick="document.getElementById('adsModal').classList.remove('show')">Refer Now</button>
-                    </div>
-                    <div class="ad-card">
-                        <div class="ad-icon">💎</div>
-                        <div class="ad-title">Premium Package</div>
-                        <div class="ad-desc">VIP delivery with 24/7 priority support</div>
-                        <button class="ad-btn" onclick="document.getElementById('adsModal').classList.remove('show')">Upgrade</button>
-                    </div>
-                    <div class="ad-card">
-                        <div class="ad-icon">📊</div>
-                        <div class="ad-title">Analytics Report</div>
-                        <div class="ad-desc">Get detailed growth analytics for your page</div>
-                        <button class="ad-btn" onclick="document.getElementById('adsModal').classList.remove('show')">Request</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ADMIN PANEL MODAL (POPUP) -->
+    <!-- ADMIN PANEL MODAL -->
     <div class="admin-panel-modal" id="adminPanelModal">
         <div class="admin-panel-content">
-            <div class="admin-panel-header">
-                <h3><i class="fas fa-shield-alt"></i> Admin Panel</h3>
-                <button class="close-panel" id="closeAdminPanel">&times;</button>
-            </div>
+            <div class="admin-panel-header"><h3><i class="fas fa-shield-alt"></i> Admin Panel</h3><button class="close-panel" id="closeAdminPanel">&times;</button></div>
             <div class="admin-panel-inner">
-                <div class="admin-stats-mini" id="adminStatsMini">
+                <div class="admin-stats-mini">
                     <div class="stat-mini"><span class="num" id="statOrdersMini">0</span>Orders</div>
                     <div class="stat-mini"><span class="num" id="statRevenueMini">KSh 0</span>Revenue</div>
                     <div class="stat-mini"><span class="num" id="statPendingMini">0</span>Pending</div>
                     <div class="stat-mini"><span class="num" id="statUsersMini">0</span>Users</div>
                 </div>
                 <div class="admin-tabs-mini">
-                    <button class="tab-mini active" data-tab="orders" id="tabOrders"><i class="fas fa-shopping-cart"></i> Orders</button>
-                    <button class="tab-mini" data-tab="deposits" id="tabDeposits"><i class="fas fa-money-bill"></i> Deposits</button>
-                    <button class="tab-mini" data-tab="reviews" id="tabReviews"><i class="fas fa-star"></i> Reviews</button>
-                    <button class="tab-mini" data-tab="users" id="tabUsers"><i class="fas fa-users"></i> Users</button>
+                    <button class="tab-mini active" data-tab="orders">Orders</button>
+                    <button class="tab-mini" data-tab="deposits">Deposits</button>
+                    <button class="tab-mini" data-tab="reviews">Reviews</button>
+                    <button class="tab-mini" data-tab="users">Users</button>
                 </div>
                 <button class="refresh-btn" id="refreshDataBtn"><i class="fas fa-sync-alt"></i> Refresh Data</button>
                 <div class="admin-content-mini" id="adminContentMini"></div>
@@ -2562,17 +1635,9 @@
 
     <!-- PASSWORD MODAL -->
     <div class="modal-overlay" id="passwordModal">
-        <div class="modal-container" style="max-width: 320px;">
-            <div class="modal-header">
-                <h3><i class="fas fa-lock"></i> Admin Access</h3>
-                <button class="close-modal" id="closePasswordModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="password-box">
-                    <input type="password" id="adminPassword" placeholder="Enter password">
-                    <button id="submitPassword">Unlock</button>
-                </div>
-            </div>
+        <div class="modal-container" style="max-width:320px;">
+            <div class="modal-header"><h3><i class="fas fa-lock"></i> Admin Access</h3><button class="close-modal" id="closePasswordModal">&times;</button></div>
+            <div class="modal-body"><div class="password-box"><input type="password" id="adminPassword" placeholder="Enter password"><button id="submitPassword">Unlock</button></div></div>
         </div>
     </div>
 
@@ -2580,89 +1645,48 @@
     <a href="https://wa.me/254750600715?text=Hi" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
 
     <script>
-        // ========== CONFIGURATION ==========
         const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbz_SyGDjZDgL9jW__jyKBuNROkMii4HAhqdS5ajosZ7q18DQWZV4Es5u8DWrh5EHdlklQ/exec";
         const ADMIN_PASSWORD = "GetFans2024";
-        const TELEGRAM_BOT_TOKEN = "8825700469:AAEpywAnsc6jEXUmCyvWN4niPbWTSg1xn68";
-        const TELEGRAM_CHAT_ID = "5740390611";
 
-        // ========== GLOBAL VARIABLES ==========
-        let orders = [];
-        let reviews = [];
-        let deposits = [];
-        let usersData = [];
-        let currentPlatform = "facebook";
-        let currentService = "followers";
-        let currentQuantity = 10000;
-        let currentStep = 1;
-        let isAdminLoggedIn = false;
-        let autoRefreshInterval = null;
-        let currentTrackingIdForAutoRefresh = null;
-        let autoScrollInterval = null;
-        let syncInterval = null;
-        let currentTrackingId = 'GFK' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substring(2, 4).toUpperCase();
+        let orders = [], reviews = [], deposits = [], usersData = [];
+        let currentPlatform = "facebook", currentService = "followers", currentQuantity = 10000, currentStep = 1;
+        let isAdminLoggedIn = false, autoRefreshInterval = null, currentTrackingIdForAutoRefresh = null;
+        let autoScrollInterval = null, syncInterval = null;
+        let currentTrackingId = 'GFK' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substring(2,4).toUpperCase();
 
-        // ===== TELEGRAM NOTIFICATION =====
-        function sendTelegramNotification(message) {
-            try {
-                const url = 'https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage';
-                fetch(url, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message })
-                }).catch(() => {});
-            } catch (e) {}
-        }
-
-        // ===== TOAST =====
         function toast(message, isError = false) {
-            const toastEl = document.createElement('div');
-            toastEl.style.cssText =
-                `position:fixed; bottom:85px; left:50%; transform:translateX(-50%); background:${isError ? '#e74c3c' : '#2ecc71'}; color:white; padding:10px 20px; border-radius:30px; z-index:3000; font-size:0.7rem; font-family:'Poppins',sans-serif; max-width:90%; text-align:center; box-shadow:0 4px 15px rgba(0,0,0,0.2);`;
-            toastEl.innerHTML = message;
-            document.body.appendChild(toastEl);
-            setTimeout(() => toastEl.remove(), 3000);
+            const t = document.createElement('div');
+            t.style.cssText = `position:fixed;bottom:85px;left:50%;transform:translateX(-50%);background:${isError?'#e74c3c':'#2ecc71'};color:white;padding:10px 20px;border-radius:30px;z-index:3000;font-size:0.7rem;font-family:'Poppins',sans-serif;max-width:90%;text-align:center;`;
+            t.innerHTML = message; document.body.appendChild(t); setTimeout(() => t.remove(), 3000);
         }
 
-        // ===== LANDING PAGE FUNCTIONS =====
         function showMainSite() {
             document.getElementById('landingPage').classList.add('hide-landing');
             document.getElementById('mainSite').classList.add('active');
             updateAccountNav();
+            startAutoSync();
         }
 
-        document.getElementById('guestBtn').addEventListener('click', function() {
+        document.getElementById('guestBtn').onclick = () => {
             localStorage.setItem('gfk_user_type', 'guest');
             localStorage.removeItem('gfk_user_email');
             localStorage.removeItem('gfk_user_name');
             showMainSite();
-            toast('👤 Guest Mode - Order anytime!');
-            sendTelegramNotification('👤 Guest user started browsing');
-        });
+            toast('👤 Guest Mode');
+        };
 
-        document.getElementById('signupBtn2').addEventListener('click', function() {
+        document.getElementById('signupBtn2').onclick = () => {
             document.getElementById('authModal').classList.add('show');
             switchAuthTab('signup');
             document.getElementById('guestNotice').style.display = 'block';
-        });
+        };
 
-        document.getElementById('loginLink').addEventListener('click', function(e) {
+        document.getElementById('loginLink').onclick = (e) => {
             e.preventDefault();
             document.getElementById('authModal').classList.add('show');
             switchAuthTab('login');
             document.getElementById('guestNotice').style.display = 'block';
-        });
-
-        // ===== AUTH MODAL FUNCTIONS =====
-        document.getElementById('authTabLogin').addEventListener('click', function() { switchAuthTab('login'); });
-        document.getElementById('authTabSignup').addEventListener('click', function() { switchAuthTab('signup'); });
-        document.getElementById('closeAuthBtn').addEventListener('click', function() { closeAuthModal(); });
-        document.getElementById('closeAuthBtn2').addEventListener('click', function() { closeAuthModal(); });
-
-        function closeAuthModal() {
-            document.getElementById('authModal').classList.remove('show');
-        }
+        };
 
         function switchAuthTab(tab) {
             document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
@@ -2678,1048 +1702,476 @@
             document.querySelectorAll('.error-message').forEach(e => e.classList.remove('show'));
         }
 
-        // ===== LOGIN =====
-        document.getElementById('loginBtn').addEventListener('click', function() {
-            document.querySelectorAll('#loginForm .error-message').forEach(e => e.classList.remove('show'));
+        document.getElementById('authTabLogin').onclick = () => switchAuthTab('login');
+        document.getElementById('authTabSignup').onclick = () => switchAuthTab('signup');
+        document.getElementById('closeAuthBtn').onclick = () => document.getElementById('authModal').classList.remove('show');
+        document.getElementById('closeAuthBtn2').onclick = () => document.getElementById('authModal').classList.remove('show');
+
+        document.getElementById('loginBtn').onclick = () => {
             const email = document.getElementById('loginEmail').value.trim();
             const pwd = document.getElementById('loginPassword').value;
-
             if (!email) { document.getElementById('loginEmailError').classList.add('show'); return; }
             if (!pwd) { document.getElementById('loginPasswordError').classList.add('show'); return; }
-
             localStorage.setItem('gfk_user_type', 'member');
             localStorage.setItem('gfk_user_email', email);
             localStorage.setItem('gfk_user_name', email.split('@')[0]);
-
-            closeAuthModal();
-            if (!document.getElementById('mainSite').classList.contains('active')) {
-                showMainSite();
-            }
+            document.getElementById('authModal').classList.remove('show');
+            if (!document.getElementById('mainSite').classList.contains('active')) showMainSite();
             updateAccountNav();
-            toast('Welcome back! 🎉');
-            sendTelegramNotification('🔑 User logged in: ' + email);
-        });
+            toast('Welcome! 🎉');
+        };
 
-        // ===== SIGNUP =====
-        document.getElementById('signupBtn').addEventListener('click', function() {
-            document.querySelectorAll('#signupForm .error-message').forEach(e => e.classList.remove('show'));
+        document.getElementById('signupBtn').onclick = () => {
             const name = document.getElementById('signupName').value.trim();
             const email = document.getElementById('signupEmail').value.trim();
             const pwd = document.getElementById('signupPassword').value;
             const cpwd = document.getElementById('signupConfirmPassword').value;
-
-            let hasError = false;
-            if (!name) { document.getElementById('signupNameError').classList.add('show'); hasError = true; }
-            if (!email || !email.includes('@')) { document.getElementById('signupEmailError').classList.add('show'); hasError = true; }
-            if (!pwd || pwd.length < 6) { document.getElementById('signupPasswordError').classList.add('show'); hasError = true; }
-            if (pwd !== cpwd) { document.getElementById('signupConfirmError').classList.add('show'); hasError = true; }
-            if (hasError) return;
-
+            let err = false;
+            if (!name) { document.getElementById('signupNameError').classList.add('show'); err = true; }
+            if (!email || !email.includes('@')) { document.getElementById('signupEmailError').classList.add('show'); err = true; }
+            if (!pwd || pwd.length < 6) { document.getElementById('signupPasswordError').classList.add('show'); err = true; }
+            if (pwd !== cpwd) { document.getElementById('signupConfirmError').classList.add('show'); err = true; }
+            if (err) return;
             localStorage.setItem('gfk_user_type', 'member');
             localStorage.setItem('gfk_user_email', email);
             localStorage.setItem('gfk_user_name', name);
-
-            saveToGoogleSheets({
-                type: "newUser",
-                name: name,
-                email: email,
-                password: pwd,
-                createdAt: new Date().toLocaleString("en-KE")
-            });
-
-            closeAuthModal();
-            if (!document.getElementById('mainSite').classList.contains('active')) {
-                showMainSite();
-            }
+            saveToGoogleSheets({ type: "newUser", name, email, password: pwd, createdAt: new Date().toLocaleString("en-KE") });
+            document.getElementById('authModal').classList.remove('show');
+            if (!document.getElementById('mainSite').classList.contains('active')) showMainSite();
             updateAccountNav();
-            toast('Account created! 🎉 You got 100 free followers!');
-            sendTelegramNotification('🎉 New User Signup: ' + name + ' (' + email + ')');
-        });
+            toast('Account created! 🎉');
+        };
 
-        // ===== UPDATE ACCOUNT NAV =====
         function updateAccountNav() {
-            const userType = localStorage.getItem('gfk_user_type');
-            const accountLabel = document.getElementById('accountNavLabel');
-            if (userType === 'member') {
-                accountLabel.textContent = 'Account';
-            } else {
-                accountLabel.textContent = 'Login';
-            }
+            document.getElementById('accountNavLabel').textContent = localStorage.getItem('gfk_user_type') === 'member' ? 'Account' : 'Login';
         }
 
-        // ===== BOTTOM NAVIGATION =====
         document.querySelectorAll('.bottom-nav .nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const tab = this.dataset.tab;
+            item.onclick = function() {
                 document.querySelectorAll('.bottom-nav .nav-item').forEach(n => n.classList.remove('active'));
                 this.classList.add('active');
-
-                if (tab === 'home') {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else if (tab === 'track') {
-                    document.getElementById('trackModal').classList.add('show');
-                    document.getElementById('trackingResult').classList.remove('show');
-                } else if (tab === 'reviews') {
-                    document.getElementById('reviewsModal').classList.add('show');
-                } else if (tab === 'account') {
-                    const userType = localStorage.getItem('gfk_user_type');
-                    if (userType === 'member') {
-                        toast('👤 Account: ' + (localStorage.getItem('gfk_user_email') || 'Member'));
-                    } else {
-                        document.getElementById('authModal').classList.add('show');
-                        document.getElementById('guestNotice').style.display = 'block';
-                        switchAuthTab('login');
-                    }
+                const tab = this.dataset.tab;
+                if (tab === 'home') window.scrollTo({ top: 0, behavior: 'smooth' });
+                else if (tab === 'track') { document.getElementById('trackModal').classList.add('show'); document.getElementById('trackingResult').classList.remove('show'); }
+                else if (tab === 'reviews') document.getElementById('reviewsModal').classList.add('show');
+                else if (tab === 'account') {
+                    if (localStorage.getItem('gfk_user_type') === 'member') toast('👤 ' + (localStorage.getItem('gfk_user_email') || 'Member'));
+                    else { document.getElementById('authModal').classList.add('show'); switchAuthTab('login'); }
                 }
-            });
+            };
         });
 
-        document.getElementById('closeReviewsModal').addEventListener('click', function() {
-            document.getElementById('reviewsModal').classList.remove('show');
-        });
-        document.getElementById('closeAdsModal').addEventListener('click', function() {
-            document.getElementById('adsModal').classList.remove('show');
-        });
+        document.getElementById('closeReviewsModal').onclick = () => document.getElementById('reviewsModal').classList.remove('show');
+        document.getElementById('closeModalBtn').onclick = () => { document.getElementById('trackModal').classList.remove('show'); if (autoRefreshInterval) clearInterval(autoRefreshInterval); };
+        document.getElementById('closeSuccessModal').onclick = () => document.getElementById('successModal').classList.remove('show');
 
-        // ===== SYNC FUNCTIONS =====
         function updateSyncStatus(status, message) {
-            const dot = document.getElementById('syncDot');
-            const text = document.getElementById('syncStatusText');
-            const timeText = document.getElementById('syncTimeText');
-            if (status === 'synced') {
-                dot.className = 'sync-dot synced';
-                text.textContent = message || 'Synced with cloud';
-                timeText.textContent = 'Last sync: ' + new Date().toLocaleTimeString();
-            } else if (status === 'syncing') {
-                dot.className = 'sync-dot syncing';
-                text.textContent = message || 'Syncing...';
-            } else if (status === 'error') {
-                dot.className = 'sync-dot error';
-                text.textContent = message || 'Using local data';
-            }
+            const dot = document.getElementById('syncDot'), text = document.getElementById('syncStatusText'), timeText = document.getElementById('syncTimeText');
+            if (status === 'synced') { dot.className = 'sync-dot synced'; text.textContent = message || 'Connected'; timeText.textContent = 'Last: ' + new Date().toLocaleTimeString(); }
+            else if (status === 'syncing') { dot.className = 'sync-dot syncing'; text.textContent = 'Loading...'; }
+            else { dot.className = 'sync-dot error'; text.textContent = 'Offline mode'; }
         }
 
         async function fetchAllFromCloud() {
-            updateSyncStatus('syncing', 'Fetching data...');
+            updateSyncStatus('syncing');
             try {
-                const url = GOOGLE_SHEET_API_URL + '?action=all&t=' + Date.now();
-                const response = await fetch(url, {
-                    method: 'GET',
-                    mode: 'cors',
-                    headers: { 'Accept': 'application/json' }
-                });
-                
-                if (!response.ok) throw new Error('HTTP ' + response.status);
-                
-                const text = await response.text();
-                let data;
-                try {
-                    data = JSON.parse(text);
-                } catch(e) {
-                    throw new Error('Invalid JSON response');
-                }
-
-                if (data.orders && Array.isArray(data.orders)) {
-                    orders = data.orders;
-                    localStorage.setItem('getfanskenya_orders', JSON.stringify(orders));
-                }
-                if (data.reviews && Array.isArray(data.reviews)) {
-                    reviews = data.reviews;
-                    localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
-                    renderReviews();
-                }
-                if (data.deposits && Array.isArray(data.deposits)) {
-                    deposits = data.deposits;
-                    localStorage.setItem('getfanskenya_deposits', JSON.stringify(deposits));
-                }
-                if (data.users && Array.isArray(data.users)) {
-                    usersData = data.users;
-                    localStorage.setItem('getfanskenya_users', JSON.stringify(usersData));
-                }
-
-                if (document.getElementById('adminPanelModal').classList.contains('show')) {
-                    updateAdminPanel();
-                }
-
-                updateSyncStatus('synced', 'Synced with Google Sheets');
+                const response = await fetch(GOOGLE_SHEET_API_URL + '?action=all&t=' + Date.now());
+                const data = await response.json();
+                if (data.orders) { orders = data.orders; localStorage.setItem('getfanskenya_orders', JSON.stringify(orders)); }
+                if (data.reviews) { reviews = data.reviews; localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews)); renderReviews(); }
+                if (data.deposits) { deposits = data.deposits; localStorage.setItem('getfanskenya_deposits', JSON.stringify(deposits)); }
+                if (data.users) { usersData = data.users; localStorage.setItem('getfanskenya_users', JSON.stringify(usersData)); }
+                updateSyncStatus('synced', 'Connected');
                 return true;
             } catch (e) {
-                console.error('Sync error:', e.message);
-                updateSyncStatus('error', 'Using stored data');
+                console.log('Sync: using local data');
+                updateSyncStatus('error');
                 loadFromLocalStorage();
                 return false;
             }
         }
 
         function loadFromLocalStorage() {
-            const localOrders = localStorage.getItem('getfanskenya_orders');
-            if (localOrders) { try { orders = JSON.parse(localOrders); } catch (e) {} }
-            const localDeposits = localStorage.getItem('getfanskenya_deposits');
-            if (localDeposits) { try { deposits = JSON.parse(localDeposits); } catch (e) {} }
-            const localReviews = localStorage.getItem('getfanskenya_reviews');
-            if (localReviews) { try { reviews = JSON.parse(localReviews); renderReviews(); } catch (e) {} }
-            const localUsers = localStorage.getItem('getfanskenya_users');
-            if (localUsers) { try { usersData = JSON.parse(localUsers); } catch (e) {} }
+            try { const o = localStorage.getItem('getfanskenya_orders'); if (o) orders = JSON.parse(o); } catch(e){}
+            try { const d = localStorage.getItem('getfanskenya_deposits'); if (d) deposits = JSON.parse(d); } catch(e){}
+            try { const r = localStorage.getItem('getfanskenya_reviews'); if (r) { reviews = JSON.parse(r); renderReviews(); } } catch(e){}
+            try { const u = localStorage.getItem('getfanskenya_users'); if (u) usersData = JSON.parse(u); } catch(e){}
         }
 
         function startAutoSync() {
             if (syncInterval) clearInterval(syncInterval);
-            // Initial sync
             fetchAllFromCloud();
-            // Then every 30 seconds
-            syncInterval = setInterval(() => fetchAllFromCloud(), 30000);
+            syncInterval = setInterval(fetchAllFromCloud, 30000);
         }
 
-        // ===== ADMIN PANEL =====
-        document.getElementById('adminLoginBtn').addEventListener('click', function() {
-            if (isAdminLoggedIn) {
-                document.getElementById('adminPanelModal').classList.add('show');
-                updateAdminPanel();
-            } else {
-                document.getElementById('passwordModal').classList.add('show');
-            }
-        });
+        async function saveToGoogleSheets(data) {
+            try { await fetch(GOOGLE_SHEET_API_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); return true; }
+            catch (e) { return false; }
+        }
 
-        document.getElementById('closeAdminPanel').addEventListener('click', function() {
-            document.getElementById('adminPanelModal').classList.remove('show');
-        });
-
-        document.getElementById('tabOrders').addEventListener('click', function() { switchAdminTabMini('orders'); });
-        document.getElementById('tabDeposits').addEventListener('click', function() { switchAdminTabMini('deposits'); });
-        document.getElementById('tabReviews').addEventListener('click', function() { switchAdminTabMini('reviews'); });
-        document.getElementById('tabUsers').addEventListener('click', function() { switchAdminTabMini('users'); });
-
-        document.getElementById('refreshDataBtn').addEventListener('click', async function() {
-            toast('Syncing data...');
-            await fetchAllFromCloud();
-            updateAdminPanel();
-            toast('Data refreshed!');
-        });
-
-        document.getElementById('submitPassword').addEventListener('click', function() {
-            const pwd = document.getElementById('adminPassword').value;
-            if (pwd === ADMIN_PASSWORD) {
+        // Admin Panel
+        document.getElementById('adminLoginBtn').onclick = () => {
+            if (isAdminLoggedIn) { document.getElementById('adminPanelModal').classList.add('show'); updateAdminPanel(); }
+            else document.getElementById('passwordModal').classList.add('show');
+        };
+        document.getElementById('closeAdminPanel').onclick = () => document.getElementById('adminPanelModal').classList.remove('show');
+        document.getElementById('submitPassword').onclick = () => {
+            if (document.getElementById('adminPassword').value === ADMIN_PASSWORD) {
                 isAdminLoggedIn = true;
                 document.getElementById('passwordModal').classList.remove('show');
                 document.getElementById('adminPanelModal').classList.add('show');
                 updateAdminPanel();
                 toast('Welcome Admin!');
-                sendTelegramNotification('🔐 Admin logged in');
-            } else {
-                toast('Wrong password', true);
-            }
-        });
+            } else toast('Wrong password', true);
+        };
+        document.getElementById('closePasswordModal').onclick = () => document.getElementById('passwordModal').classList.remove('show');
+        document.getElementById('refreshDataBtn').onclick = async () => { toast('Syncing...'); await fetchAllFromCloud(); updateAdminPanel(); toast('Done!'); };
 
-        document.getElementById('closePasswordModal').addEventListener('click', function() {
-            document.getElementById('passwordModal').classList.remove('show');
+        document.querySelectorAll('.tab-mini').forEach(tab => {
+            tab.onclick = function() {
+                document.querySelectorAll('.tab-mini').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                switchAdminTabMini(this.dataset.tab);
+            };
         });
 
         function updateAdminPanel() {
-            const totalOrders = orders.length;
-            const totalRevenue = orders.reduce((sum, o) => sum + (parseFloat(o.price) || parseFloat(o['Price (KSh)']) || 0), 0);
-            const pendingOrders = orders.filter(o => (o.status || o.Status || 'Pending') === 'Pending').length;
-            const totalUsers = usersData.length || 0;
-
-            document.getElementById('statOrdersMini').textContent = totalOrders;
-            document.getElementById('statRevenueMini').textContent = 'KSh ' + totalRevenue.toLocaleString();
-            document.getElementById('statPendingMini').textContent = pendingOrders;
-            document.getElementById('statUsersMini').textContent = totalUsers;
-
-            const activeTab = document.querySelector('.tab-mini.active');
-            if (activeTab) {
-                switchAdminTabMini(activeTab.dataset.tab);
-            } else {
-                switchAdminTabMini('orders');
-            }
+            document.getElementById('statOrdersMini').textContent = orders.length;
+            document.getElementById('statRevenueMini').textContent = 'KSh ' + orders.reduce((s,o) => s + (parseFloat(o.price)||parseFloat(o['Price (KSh)'])||0), 0).toLocaleString();
+            document.getElementById('statPendingMini').textContent = orders.filter(o => (o.status||o.Status||'Pending')==='Pending').length;
+            document.getElementById('statUsersMini').textContent = usersData.length || 0;
+            const active = document.querySelector('.tab-mini.active');
+            switchAdminTabMini(active ? active.dataset.tab : 'orders');
         }
 
         function switchAdminTabMini(tab) {
-            document.querySelectorAll('.tab-mini').forEach(t => t.classList.remove('active'));
-            document.querySelector(`.tab-mini[data-tab="${tab}"]`).classList.add('active');
-            const container = document.getElementById('adminContentMini');
-
-            if (tab === 'orders') {
-                if (orders.length === 0) {
-                    container.innerHTML = '<div class="admin-warning">📭 No orders yet</div>';
-                    return;
-                }
-                container.innerHTML = orders.map(o => `
-                        <div class="order-mini">
-                            <div class="order-row">
-                                <span><strong>${escapeHtml(o.trackingId || o['Tracking ID'])}</strong></span>
-                                <span style="font-size:0.5rem;color:var(--text-light);">${escapeHtml(o.customerName || o['Customer Name'])}</span>
-                            </div>
-                            <div class="order-row">
-                                <span>${escapeHtml(o.service || o.Service)}</span>
-                                <span>💰 KSh ${(parseFloat(o.price) || parseFloat(o['Price (KSh)']) || 0).toLocaleString()}</span>
-                            </div>
-                            <div class="order-row">
-                                <select class="order-status-select-mini" onchange="updateOrderStatus('${o.trackingId || o['Tracking ID']}', this.value)">
-                                    <option value="Pending" ${(o.status || o.Status || 'Pending') === 'Pending' ? 'selected' : ''}>⏳ Pending</option>
-                                    <option value="Processing" ${(o.status || o.Status) === 'Processing' ? 'selected' : ''}>🔄 Processing</option>
-                                    <option value="Completed" ${(o.status || o.Status) === 'Completed' ? 'selected' : ''}>✅ Completed</option>
-                                    <option value="Delivered" ${(o.status || o.Status) === 'Delivered' ? 'selected' : ''}>🚀 Delivered</option>
-                                </select>
-                            </div>
-                        </div>
-                    `).join('');
-            } else if (tab === 'deposits') {
-                if (deposits.length === 0) {
-                    container.innerHTML = '<div class="admin-warning">💰 No deposits yet</div>';
-                    return;
-                }
-                container.innerHTML = deposits.map(d => `
-                        <div class="deposit-mini">
-                            <div class="order-row">
-                                <span><strong>${escapeHtml(d.depositCode || d['Deposit Code'])}</strong></span>
-                                <span>💰 KSh ${(parseFloat(d.amount) || parseFloat(d['Total Amount']) || 0).toLocaleString()}</span>
-                            </div>
-                            <div class="order-row">
-                                <span>👤 ${escapeHtml(d.userName || d['User Name'])}</span>
-                                <span class="status-badge ${(d.Status || d.status || 'Pending') === 'Approved' ? 'status-delivered' : 'status-pending'}" style="font-size:0.5rem;">
-                                    ${d.Status || d.status || 'Pending'}
-                                </span>
-                            </div>
-                            ${(d.Status || d.status || 'Pending') === 'Pending' ? `
-                                <div class="deposit-actions">
-                                    <button class="btn-approve-mini" onclick="approveDeposit('${d.depositCode || d['Deposit Code']}')">✅ Approve</button>
-                                    <button class="btn-reject-mini" onclick="rejectDeposit('${d.depositCode || d['Deposit Code']}')">❌ Reject</button>
-                                </div>
-                            ` : ''}
-                        </div>
-                    `).join('');
-            } else if (tab === 'reviews') {
-                if (reviews.length === 0) {
-                    container.innerHTML = '<div class="admin-warning">⭐ No reviews yet</div>';
-                    return;
-                }
-                container.innerHTML = reviews.map((r, i) => `
-                        <div class="review-mini">
-                            <div>
-                                <strong>${escapeHtml(r.name)}</strong> (${'★'.repeat(parseInt(r.rating) || 0)})
-                                <br><span style="font-size:0.5rem;">"${escapeHtml((r.review || '').substring(0, 40))}${(r.review || '').length > 40 ? '...' : ''}"</span>
-                            </div>
-                            <button class="del-mini" onclick="deleteReview(${i})">🗑️</button>
-                        </div>
-                    `).join('');
-            } else if (tab === 'users') {
-                if (usersData.length === 0) {
-                    container.innerHTML = '<div class="admin-warning">👥 No users found</div>';
-                    return;
-                }
-                container.innerHTML = usersData.map(u => `
-                        <div class="user-mini">
-                            <div><strong>${escapeHtml(u.Name || u.name || 'N/A')}</strong></div>
-                            <div>📧 ${escapeHtml(u.Email || u.email || 'N/A')}</div>
-                            <div>💰 KSh ${(parseFloat(u['Wallet Balance']) || parseFloat(u.walletBalance) || 0).toLocaleString()}</div>
-                        </div>
-                    `).join('');
-            }
+            const c = document.getElementById('adminContentMini');
+            if (tab === 'orders') c.innerHTML = orders.length ? orders.map(o => `<div class="order-mini"><div class="order-row"><span><strong>${escapeHtml(o.trackingId||o['Tracking ID'])}</strong></span></div><div class="order-row"><span>${escapeHtml(o.service||o.Service)}</span><span>KSh ${(parseFloat(o.price)||0).toLocaleString()}</span></div><select class="order-status-select-mini" onchange="updateOrderStatus('${o.trackingId||o['Tracking ID']}',this.value)"><option value="Pending" ${(o.status||o.Status||'Pending')==='Pending'?'selected':''}>Pending</option><option value="Processing" ${(o.status||o.Status)==='Processing'?'selected':''}>Processing</option><option value="Completed" ${(o.status||o.Status)==='Completed'?'selected':''}>Completed</option><option value="Delivered" ${(o.status||o.Status)==='Delivered'?'selected':''}>Delivered</option></select></div>`).join('') : '<div class="admin-warning">No orders</div>';
+            else if (tab === 'deposits') c.innerHTML = deposits.length ? deposits.map(d => `<div class="deposit-mini"><div class="order-row"><span>${escapeHtml(d.depositCode||d['Deposit Code'])}</span><span>KSh ${(parseFloat(d.amount)||0).toLocaleString()}</span></div>${(d.Status||d.status||'Pending')==='Pending'?`<div class="deposit-actions"><button class="btn-approve-mini" onclick="approveDeposit('${d.depositCode||d['Deposit Code']}')">Approve</button><button class="btn-reject-mini" onclick="rejectDeposit('${d.depositCode||d['Deposit Code']}')">Reject</button></div>`:''}</div>`).join('') : '<div class="admin-warning">No deposits</div>';
+            else if (tab === 'reviews') c.innerHTML = reviews.length ? reviews.map((r,i) => `<div class="review-mini"><span>${escapeHtml(r.name)} (${'★'.repeat(parseInt(r.rating)||0)})</span><button class="del-mini" onclick="deleteReview(${i})">Del</button></div>`).join('') : '<div class="admin-warning">No reviews</div>';
+            else if (tab === 'users') c.innerHTML = usersData.length ? usersData.map(u => `<div class="user-mini"><span>${escapeHtml(u.Name||u.name||'N/A')}</span><span>${escapeHtml(u.Email||u.email||'N/A')}</span></div>`).join('') : '<div class="admin-warning">No users</div>';
         }
 
-        // ===== ADMIN ACTIONS =====
-        async function updateOrderStatus(trackingId, newStatus) {
-            try {
-                await saveToGoogleSheets({
-                    action: "updateStatus",
-                    trackingId: trackingId,
-                    newStatus: newStatus
-                });
-                const orderIndex = orders.findIndex(o => (o.trackingId || o['Tracking ID']) === trackingId);
-                if (orderIndex !== -1) {
-                    orders[orderIndex].status = newStatus;
-                    orders[orderIndex].Status = newStatus;
-                    localStorage.setItem('getfanskenya_orders', JSON.stringify(orders));
-                }
-                toast('Order status updated!');
-                updateAdminPanel();
-                sendTelegramNotification('🔄 Order ' + trackingId + ' → ' + newStatus);
-            } catch (error) {
-                toast('Error updating status', true);
-            }
+        async function updateOrderStatus(tid, status) {
+            await saveToGoogleSheets({ action: "updateStatus", trackingId: tid, newStatus: status });
+            const o = orders.find(o => (o.trackingId||o['Tracking ID'])===tid);
+            if (o) { o.status = status; o.Status = status; localStorage.setItem('getfanskenya_orders', JSON.stringify(orders)); }
+            toast('Updated!'); updateAdminPanel();
         }
 
-        async function approveDeposit(depositCode) {
-            try {
-                await saveToGoogleSheets({
-                    action: "approveDeposit",
-                    depositCode: depositCode
-                });
-                const depositIndex = deposits.findIndex(d => (d.depositCode || d['Deposit Code']) === depositCode);
-                if (depositIndex !== -1) {
-                    deposits[depositIndex].Status = 'Approved';
-                    deposits[depositIndex].status = 'Approved';
-                    localStorage.setItem('getfanskenya_deposits', JSON.stringify(deposits));
-                }
-                toast('Deposit approved!');
-                updateAdminPanel();
-                sendTelegramNotification('✅ Deposit Approved: ' + depositCode);
-                await fetchAllFromCloud();
-            } catch (error) {
-                toast('Error approving deposit', true);
-            }
+        async function approveDeposit(code) {
+            await saveToGoogleSheets({ action: "approveDeposit", depositCode: code });
+            const d = deposits.find(d => (d.depositCode||d['Deposit Code'])===code);
+            if (d) { d.Status = 'Approved'; d.status = 'Approved'; localStorage.setItem('getfanskenya_deposits', JSON.stringify(deposits)); }
+            toast('Approved!'); updateAdminPanel();
         }
 
-        async function rejectDeposit(depositCode) {
-            try {
-                await saveToGoogleSheets({
-                    action: "rejectDeposit",
-                    depositCode: depositCode
-                });
-                const depositIndex = deposits.findIndex(d => (d.depositCode || d['Deposit Code']) === depositCode);
-                if (depositIndex !== -1) {
-                    deposits[depositIndex].Status = 'Rejected';
-                    deposits[depositIndex].status = 'Rejected';
-                    localStorage.setItem('getfanskenya_deposits', JSON.stringify(deposits));
-                }
-                toast('Deposit rejected.');
-                updateAdminPanel();
-                sendTelegramNotification('❌ Deposit Rejected: ' + depositCode);
-            } catch (error) {
-                toast('Error rejecting deposit', true);
-            }
+        async function rejectDeposit(code) {
+            await saveToGoogleSheets({ action: "rejectDeposit", depositCode: code });
+            const d = deposits.find(d => (d.depositCode||d['Deposit Code'])===code);
+            if (d) { d.Status = 'Rejected'; d.status = 'Rejected'; localStorage.setItem('getfanskenya_deposits', JSON.stringify(deposits)); }
+            toast('Rejected'); updateAdminPanel();
         }
 
-        function deleteReview(index) {
-            if (confirm('Delete this review?')) {
-                reviews.splice(index, 1);
-                localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
-                updateAdminPanel();
-                renderReviews();
-                toast('Review deleted');
-            }
-        }
+        function deleteReview(i) { reviews.splice(i,1); localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews)); updateAdminPanel(); renderReviews(); }
 
-        // ===== PRICE CALCULATION =====
         const platformSettings = {
-            facebook: {
-                name: "Facebook",
-                usernameLabel: "Facebook Profile URL",
-                usernamePlaceholder: "Profile URL or username",
-                postLabel: "Post Link",
-                multiplier: 1,
-                followersOffer: { enabled: true, offerPrice: 3399, originalPrice: 4600 }
-            },
-            instagram: {
-                name: "Instagram",
-                usernameLabel: "Instagram Username",
-                usernamePlaceholder: "e.g., @username or username",
-                postLabel: "Post/Reel Link",
-                multiplier: 1.9,
-                followersOffer: { enabled: true, offerPrice: 5000, originalPrice: 8740 }
-            }
+            facebook: { name: "Facebook", usernameLabel: "Facebook Profile URL", usernamePlaceholder: "Profile URL or username", postLabel: "Post Link", multiplier: 1, followersOffer: { enabled: true, offerPrice: 3399, originalPrice: 4600 } },
+            instagram: { name: "Instagram", usernameLabel: "Instagram Username", usernamePlaceholder: "e.g., @username", postLabel: "Post/Reel Link", multiplier: 1.9, followersOffer: { enabled: true, offerPrice: 5000, originalPrice: 8740 } }
         };
-
-        const serviceOptions = {
-            facebook: ["followers", "likes", "comments"],
-            instagram: ["followers", "likes", "comments"]
-        };
-
+        const serviceOptions = { facebook: ["followers","likes","comments"], instagram: ["followers","likes","comments"] };
         const serviceNames = { followers: "Followers", likes: "Likes", comments: "Comments" };
         const basePrices = { facebook: { followers: 0.46, likes: 0.30, comments: 0.35 } };
 
         function calculatePrice(platform, service, qty) {
-            if (service === "followers" && qty === 10000) {
-                const offer = platformSettings[platform]?.followersOffer;
-                if (offer && offer.enabled && offer.offerPrice) return offer.offerPrice;
-            }
-            let facebookRate = basePrices.facebook[service] || 0.46;
-            let multiplier = platformSettings[platform]?.multiplier || 1;
-            let rate = facebookRate * multiplier;
+            if (service==="followers" && qty===10000) { const o = platformSettings[platform]?.followersOffer; if (o?.enabled && o.offerPrice) return o.offerPrice; }
+            let rate = (basePrices.facebook[service]||0.46) * (platformSettings[platform]?.multiplier||1);
             let price = Math.round(qty * rate);
-            if (qty >= 50000 && qty !== 10000) price = Math.round(price * 0.9);
-            if (qty >= 100000 && qty !== 10000) price = Math.round(price * 0.8);
-            if (qty >= 500000 && qty !== 10000) price = Math.round(price * 0.7);
+            if (qty>=50000 && qty!==10000) price = Math.round(price*0.9);
+            if (qty>=100000 && qty!==10000) price = Math.round(price*0.8);
+            if (qty>=500000 && qty!==10000) price = Math.round(price*0.7);
             return Math.max(price, 25);
         }
 
         function getOriginalPrice(platform, service, qty) {
-            if (service === "followers" && qty === 10000) {
-                const offer = platformSettings[platform]?.followersOffer;
-                if (offer && offer.originalPrice) return offer.originalPrice;
-            }
+            if (service==="followers" && qty===10000) { const o = platformSettings[platform]?.followersOffer; if (o?.originalPrice) return o.originalPrice; }
             return null;
         }
 
         function getOfferSavings(platform, service, qty) {
-            if (service === "followers" && qty === 10000) {
-                const offer = platformSettings[platform]?.followersOffer;
-                if (offer && offer.originalPrice && offer.offerPrice) return offer.originalPrice - offer.offerPrice;
-            }
+            if (service==="followers" && qty===10000) { const o = platformSettings[platform]?.followersOffer; if (o?.originalPrice && o.offerPrice) return o.originalPrice - o.offerPrice; }
             return 0;
         }
 
-        function getDeliveryTime(qty) {
-            if (qty <= 50000) return "30 minutes";
-            if (qty <= 300000) return "3 hours";
-            return "6 hours";
-        }
+        function getDeliveryTime(qty) { if (qty<=50000) return "30 minutes"; if (qty<=300000) return "3 hours"; return "6 hours"; }
+        function getDeliveryClass(qty) { if (qty<=50000) return "delivery-fast"; if (qty<=300000) return "delivery-medium"; return "delivery-slow"; }
 
-        function getDeliveryClass(qty) {
-            if (qty <= 50000) return "delivery-fast";
-            if (qty <= 300000) return "delivery-medium";
-            return "delivery-slow";
-        }
-
-        // ===== UI FUNCTIONS =====
-        function selectPlatform(platform) {
+        function selectPlatform(p) {
             document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('active'));
-            document.querySelector(`.pkg-card[data-platform="${platform}"]`).classList.add('active');
-            currentPlatform = platform;
-            currentService = "followers";
-            updateServiceButtons();
-            updateUI();
+            document.querySelector(`[data-platform="${p}"]`).classList.add('active');
+            currentPlatform = p; currentService = "followers"; updateServiceButtons(); updateUI();
         }
 
-        document.getElementById('fbPkg').addEventListener('click', function() { selectPlatform('facebook'); });
-        document.getElementById('igPkg').addEventListener('click', function() { selectPlatform('instagram'); });
+        document.getElementById('fbPkg').onclick = () => selectPlatform('facebook');
+        document.getElementById('igPkg').onclick = () => selectPlatform('instagram');
 
         function updateServiceButtons() {
-            const container = document.getElementById('serviceButtons');
-            const services = serviceOptions[currentPlatform] || [];
-            container.innerHTML = services.map(s =>
-                `<div class="service-pill ${s === currentService ? 'active' : ''} ${currentPlatform === 'instagram' ? 'instagram-pill' : ''}" data-service="${s}">${serviceNames[s]}</div>`
-            ).join('');
-            document.querySelectorAll('.service-pill').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.service-pill').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentService = this.dataset.service;
-                    updateUI();
-                });
-            });
+            const c = document.getElementById('serviceButtons');
+            c.innerHTML = (serviceOptions[currentPlatform]||[]).map(s => `<div class="service-pill ${s===currentService?'active':''}" data-service="${s}">${serviceNames[s]}</div>`).join('');
+            c.querySelectorAll('.service-pill').forEach(b => { b.onclick = function() { c.querySelectorAll('.service-pill').forEach(x => x.classList.remove('active')); this.classList.add('active'); currentService = this.dataset.service; updateUI(); }; });
         }
 
-        document.getElementById('qtyMinus').addEventListener('click', function() { adjustQuantity(-100); });
-        document.getElementById('qtyPlus').addEventListener('click', function() { adjustQuantity(100); });
+        document.getElementById('qtyMinus').onclick = () => adjustQuantity(-100);
+        document.getElementById('qtyPlus').onclick = () => adjustQuantity(100);
 
-        function adjustQuantity(amount) {
-            let val = currentQuantity + amount;
-            val = Math.min(1000000, Math.max(100, val));
-            currentQuantity = val;
-            document.getElementById('quantityNumber').value = val;
-            document.getElementById('quantitySlider').value = val;
+        function adjustQuantity(a) {
+            currentQuantity = Math.min(1000000, Math.max(100, currentQuantity + a));
+            document.getElementById('quantityNumber').value = currentQuantity;
+            document.getElementById('quantitySlider').value = currentQuantity;
             updateUI();
         }
 
         function updateUI() {
-            let price = calculatePrice(currentPlatform, currentService, currentQuantity);
-            let originalPrice = getOriginalPrice(currentPlatform, currentService, currentQuantity);
-            let savings = getOfferSavings(currentPlatform, currentService, currentQuantity);
-
+            const price = calculatePrice(currentPlatform, currentService, currentQuantity);
+            const orig = getOriginalPrice(currentPlatform, currentService, currentQuantity);
             document.getElementById('finalPrice').textContent = price.toLocaleString();
-            const originalPriceSpan = document.getElementById('originalPriceDisplay');
-            const savedBadge = document.getElementById('savedBadge');
-
-            if (originalPrice && originalPrice > price) {
-                originalPriceSpan.style.display = 'inline';
-                originalPriceSpan.textContent = 'KSh ' + originalPrice.toLocaleString();
-                savedBadge.style.display = 'inline-block';
-                savedBadge.textContent = 'Save ' + savings.toLocaleString();
-            } else {
-                originalPriceSpan.style.display = 'none';
-                savedBadge.style.display = 'none';
-            }
-
+            const os = document.getElementById('originalPriceDisplay'), sb = document.getElementById('savedBadge');
+            if (orig && orig > price) { os.style.display = 'inline'; os.textContent = 'KSh ' + orig.toLocaleString(); sb.style.display = 'inline-block'; sb.textContent = 'Save ' + getOfferSavings(currentPlatform, currentService, currentQuantity).toLocaleString(); }
+            else { os.style.display = 'none'; sb.style.display = 'none'; }
             document.getElementById('paymentAmountStep').textContent = 'KSh ' + price.toLocaleString();
-            updateDeliveryDisplay(currentQuantity);
-
-            let showPostLink = (currentService === "likes" || currentService === "comments");
-            document.getElementById('postLinkGroup').style.display = showPostLink ? 'block' : 'none';
-            document.getElementById('postLinkLabel').innerHTML = `${platformSettings[currentPlatform].postLabel} <span class="required">*</span>`;
-            document.getElementById('usernameLabel').innerHTML = `${platformSettings[currentPlatform].usernameLabel} <span class="required">*</span>`;
+            const dtn = document.getElementById('deliveryTimeNote');
+            dtn.className = 'delivery-time-note ' + getDeliveryClass(currentQuantity);
+            document.getElementById('deliveryEstimate').textContent = getDeliveryTime(currentQuantity);
+            document.getElementById('postLinkGroup').style.display = (currentService==="likes"||currentService==="comments") ? 'block' : 'none';
+            document.getElementById('postLinkLabel').innerHTML = platformSettings[currentPlatform].postLabel + ' <span class="required">*</span>';
+            document.getElementById('usernameLabel').innerHTML = platformSettings[currentPlatform].usernameLabel + ' <span class="required">*</span>';
             document.getElementById('profileUrl').placeholder = platformSettings[currentPlatform].usernamePlaceholder;
             document.getElementById('trackingId').textContent = currentTrackingId;
         }
 
-        function updateDeliveryDisplay(qty) {
-            const time = getDeliveryTime(qty);
-            const deliveryClass = getDeliveryClass(qty);
-            const noteDiv = document.getElementById('deliveryTimeNote');
-            noteDiv.className = `delivery-time-note ${deliveryClass}`;
-            document.getElementById('deliveryEstimate').textContent = time;
-        }
-
         function updateProgress() {
-            document.getElementById('progressFill').style.width = `${(currentStep - 1) * 50}%`;
-            ['step1Indicator', 'step2Indicator', 'step3Indicator'].forEach((id, i) => {
-                const el = document.getElementById(id);
-                el.classList.remove('active', 'completed');
-                if (currentStep > i + 1) el.classList.add('completed');
-                else if (currentStep === i + 1) el.classList.add('active');
+            document.getElementById('progressFill').style.width = ((currentStep-1)*50) + '%';
+            ['step1Indicator','step2Indicator','step3Indicator'].forEach((id,i) => {
+                const el = document.getElementById(id); el.classList.remove('active','completed');
+                if (currentStep > i+1) el.classList.add('completed');
+                else if (currentStep === i+1) el.classList.add('active');
             });
         }
 
-        function showStep(step) {
-            document.getElementById('step1').classList.remove('active');
-            document.getElementById('step2').classList.remove('active');
-            document.getElementById('step3').classList.remove('active');
-            document.getElementById(`step${step}`).classList.add('active');
-            currentStep = step;
-            updateProgress();
-            if (step === 3) {
-                let price = calculatePrice(currentPlatform, currentService, currentQuantity);
+        function showStep(s) {
+            document.querySelectorAll('.step').forEach(x => x.classList.remove('active'));
+            document.getElementById('step'+s).classList.add('active');
+            currentStep = s; updateProgress();
+            if (s===3) {
+                const p = calculatePrice(currentPlatform, currentService, currentQuantity);
                 document.getElementById('summaryPlatform').textContent = platformSettings[currentPlatform].name;
                 document.getElementById('summaryService').textContent = serviceNames[currentService];
                 document.getElementById('summaryQty').textContent = currentQuantity.toLocaleString();
-                document.getElementById('summaryPrice').textContent = 'KSh ' + price.toLocaleString();
-                document.getElementById('paymentAmountStep').textContent = 'KSh ' + price.toLocaleString();
+                document.getElementById('summaryPrice').textContent = 'KSh ' + p.toLocaleString();
+                document.getElementById('paymentAmountStep').textContent = 'KSh ' + p.toLocaleString();
             }
         }
 
-        document.getElementById('nextToStep2').addEventListener('click', function() { showStep(2); });
-        document.getElementById('backToStep1').addEventListener('click', function() { showStep(1); });
-        document.getElementById('nextToStep3').addEventListener('click', function() {
-            const profile = document.getElementById('profileUrl').value.trim();
-            const phone = document.getElementById('customerPhone').value.trim();
-            if (profile && phone) {
-                showStep(3);
-            } else {
-                toast('Fill profile URL and phone number', true);
-            }
-        });
-        document.getElementById('backToStep2').addEventListener('click', function() { showStep(2); });
+        document.getElementById('nextToStep2').onclick = () => showStep(2);
+        document.getElementById('backToStep1').onclick = () => showStep(1);
+        document.getElementById('nextToStep3').onclick = () => {
+            if (document.getElementById('profileUrl').value.trim() && document.getElementById('customerPhone').value.trim()) showStep(3);
+            else toast('Fill all fields', true);
+        };
+        document.getElementById('backToStep2').onclick = () => showStep(2);
 
-        // ===== QUANTITY CONTROLS =====
-        const quantityInput = document.getElementById('quantityNumber');
-        const quantitySlider = document.getElementById('quantitySlider');
-
-        quantityInput.addEventListener('input', function() {
-            let val = parseInt(this.value);
-            if (!isNaN(val) && val >= 100 && val <= 1000000) {
-                currentQuantity = val;
-                quantitySlider.value = val;
-                updateUI();
-            }
-        });
-
-        quantityInput.addEventListener('blur', function() {
-            let val = parseInt(this.value);
-            if (isNaN(val)) val = 100;
-            val = Math.min(1000000, Math.max(100, val));
-            currentQuantity = val;
-            quantitySlider.value = val;
-            quantityInput.value = val;
+        document.getElementById('quantityNumber').oninput = function() {
+            const v = parseInt(this.value);
+            if (!isNaN(v) && v>=100 && v<=1000000) { currentQuantity = v; document.getElementById('quantitySlider').value = v; updateUI(); }
+        };
+        document.getElementById('quantityNumber').onblur = function() {
+            let v = parseInt(this.value); if (isNaN(v)) v = 100;
+            v = Math.min(1000000, Math.max(100, v));
+            currentQuantity = v; this.value = v; document.getElementById('quantitySlider').value = v; updateUI();
+        };
+        document.getElementById('quantitySlider').oninput = function() {
+            currentQuantity = parseInt(this.value);
+            document.getElementById('quantityNumber').value = currentQuantity;
             updateUI();
-        });
+        };
 
-        quantitySlider.addEventListener('input', function() {
-            currentQuantity = parseInt(quantitySlider.value);
-            quantityInput.value = currentQuantity;
-            updateUI();
-        });
-
-        // ===== SAVE TO GOOGLE SHEETS =====
-        async function saveToGoogleSheets(data) {
-            try {
-                await fetch(GOOGLE_SHEET_API_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                return true;
-            } catch (error) {
-                console.error('Error saving:', error);
-                return false;
-            }
-        }
-
-        // ===== TRACKING =====
-        async function displayTrackingResult(trackingId) {
+        async function displayTrackingResult(tid) {
             await fetchAllFromCloud();
-            const order = orders.find(o => o.trackingId === trackingId || o['Tracking ID'] === trackingId);
-            const resultDiv = document.getElementById('trackingResult');
-
-            if (!order) {
-                resultDiv.innerHTML = `<div style="background:#e74c3c;color:white;padding:12px;border-radius:12px;text-align:center;">Order not found. Check your Tracking ID and try again.</div>`;
-                resultDiv.classList.add('show');
-                return;
+            const order = orders.find(o => o.trackingId===tid || o['Tracking ID']===tid);
+            const rd = document.getElementById('trackingResult');
+            if (!order) { rd.innerHTML = '<div style="background:#e74c3c;color:white;padding:12px;border-radius:12px;text-align:center;">Not found</div>'; rd.classList.add('show'); return; }
+            const status = order.status || order.Status || 'Pending';
+            const steps = ['Pending','Processing','Completed','Delivered'];
+            const idx = steps.indexOf(status);
+            let html = '';
+            for (let i=0;i<steps.length;i++) {
+                let cls='',icon='○';
+                if (i<idx) { cls='completed'; icon='✓'; }
+                else if (i===idx) { cls='active'; icon='●'; }
+                html += `<div class="status-step ${cls}"><div class="status-icon">${icon}</div><div class="status-label">${steps[i]}</div></div>`;
             }
-
-            const currentStatus = order.status || order.Status || 'Pending';
-            const steps = ['Pending', 'Processing', 'Completed', 'Delivered'];
-            const currentIdx = steps.indexOf(currentStatus);
-
-            let timelineHtml = '';
-            for (let i = 0; i < steps.length; i++) {
-                let stepClass = '', icon = '○';
-                if (i < currentIdx) { stepClass = 'completed'; icon = '✓'; }
-                else if (i === currentIdx) { stepClass = 'active'; icon = '●'; }
-                timelineHtml += `<div class="status-step ${stepClass}"><div class="status-icon">${icon}</div><div class="status-label">${steps[i]}</div></div>`;
-            }
-
-            resultDiv.innerHTML = `
-                    <div class="tracking-card">
-                        <div class="info-row"><strong>Tracking ID:</strong> ${escapeHtml(order.trackingId || order['Tracking ID'])}</div>
-                        <div class="info-row"><strong>Status:</strong> <span class="status-badge status-${currentStatus.toLowerCase()}">${currentStatus}</span></div>
-                        <div class="status-timeline">${timelineHtml}</div>
-                        <div class="info-row"><span>Service:</span><strong>${escapeHtml(order.service || order.Service || '')}</strong></div>
-                        <div class="info-row"><span>Quantity:</span><strong>${(parseInt(order.quantity) || parseInt(order.Quantity) || 0).toLocaleString()}</strong></div>
-                        <div class="info-row"><span>Amount:</span><strong>KSh ${(parseFloat(order.price) || parseFloat(order['Price (KSh)']) || 0).toLocaleString()}</strong></div>
-                        ${currentStatus === 'Delivered' ? `<button class="download-receipt-btn" onclick="downloadReceipt('${order.trackingId || order['Tracking ID']}')">📥 Download Receipt</button>` : ''}
-                    </div>`;
-            resultDiv.classList.add('show');
+            rd.innerHTML = `<div class="tracking-card"><div class="info-row"><strong>Tracking:</strong> ${escapeHtml(order.trackingId||order['Tracking ID'])}</div><div class="info-row"><strong>Status:</strong> <span class="status-badge status-${status.toLowerCase()}">${status}</span></div><div class="status-timeline">${html}</div><div class="info-row"><span>Service:</span><strong>${escapeHtml(order.service||order.Service||'')}</strong></div><div class="info-row"><span>Qty:</span><strong>${(parseInt(order.quantity)||0).toLocaleString()}</strong></div><div class="info-row"><span>Amount:</span><strong>KSh ${(parseFloat(order.price)||0).toLocaleString()}</strong></div>${status==='Delivered'?`<button class="download-receipt-btn" onclick="downloadReceipt('${order.trackingId||order['Tracking ID']}')">📥 Download Receipt</button>`:''}</div>`;
+            rd.classList.add('show');
         }
 
-        function downloadReceipt(trackingId) {
-            const order = orders.find(o => (o.trackingId || o['Tracking ID']) === trackingId);
-            if (!order) {
-                toast('Order not found', true);
-                return;
-            }
-
-            const receiptHTML = `
-                <html><head><style>
-                    body { font-family: 'Poppins', Arial, sans-serif; padding: 20px; max-width: 500px; margin: 0 auto; }
-                    h1 { color: #1877f2; font-size: 1.2rem; }
-                    .receipt-box { border: 2px solid #1877f2; border-radius: 12px; padding: 16px; margin-top: 12px; }
-                    .row { display: flex; justify-content: space-between; margin: 8px 0; font-size: 0.8rem; }
-                    .total { font-weight: bold; font-size: 1rem; border-top: 1px solid #ccc; padding-top: 8px; }
-                </style></head><body>
-                    <h1>Get Fans Kenya - Receipt</h1>
-                    <div class="receipt-box">
-                        <div class="row"><span>Tracking ID:</span><strong>${trackingId}</strong></div>
-                        <div class="row"><span>Service:</span><strong>${order.service || order.Service || ''}</strong></div>
-                        <div class="row"><span>Quantity:</span><strong>${(parseInt(order.quantity) || parseInt(order.Quantity) || 0).toLocaleString()}</strong></div>
-                        <div class="row"><span>Date:</span><strong>${order.timestamp || new Date().toLocaleString()}</strong></div>
-                        <div class="row total"><span>Total:</span><strong>KSh ${(parseFloat(order.price) || parseFloat(order['Price (KSh)']) || 0).toLocaleString()}</strong></div>
-                    </div>
-                    <p style="text-align:center;font-size:0.7rem;margin-top:12px;">Thank you for choosing Get Fans Kenya!</p>
-                </body></html>`;
-
-            const blob = new Blob([receiptHTML], { type: 'text/html' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `Receipt_${trackingId}.html`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-            toast('Receipt downloaded! 📥');
+        function downloadReceipt(tid) {
+            const o = orders.find(o => (o.trackingId||o['Tracking ID'])===tid);
+            if (!o) return toast('Not found', true);
+            const h = `<html><head><style>body{font-family:Arial;padding:20px;max-width:500px;margin:0 auto}h1{color:#1877f2}.box{border:2px solid #1877f2;border-radius:12px;padding:16px}.row{display:flex;justify-content:space-between;margin:8px 0;font-size:0.8rem}.total{font-weight:bold;border-top:1px solid #ccc;padding-top:8px}</style></head><body><h1>Get Fans Kenya Receipt</h1><div class="box"><div class="row"><span>ID:</span><strong>${tid}</strong></div><div class="row"><span>Service:</span><strong>${o.service||o.Service||''}</strong></div><div class="row"><span>Qty:</span><strong>${(parseInt(o.quantity)||0).toLocaleString()}</strong></div><div class="row total"><span>Total:</span><strong>KSh ${(parseFloat(o.price)||0).toLocaleString()}</strong></div></div></body></html>`;
+            const b = new Blob([h],{type:'text/html'});
+            const u = URL.createObjectURL(b);
+            const a = document.createElement('a'); a.href = u; a.download = 'Receipt_'+tid+'.html'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(u);
+            toast('Downloaded!');
         }
 
-        async function trackOrder(trackingId) {
-            const trackBtn = document.getElementById('searchTrackBtn');
-            const originalText = trackBtn.innerHTML;
-            trackBtn.innerHTML = '<span class="loading-spinner"></span> Searching...';
-            trackBtn.disabled = true;
-
-            try {
-                await displayTrackingResult(trackingId);
-                currentTrackingIdForAutoRefresh = trackingId;
-                if (autoRefreshInterval) clearInterval(autoRefreshInterval);
-                autoRefreshInterval = setInterval(async () => {
-                    if (currentTrackingIdForAutoRefresh) {
-                        await fetchAllFromCloud();
-                        await displayTrackingResult(currentTrackingIdForAutoRefresh);
-                    }
-                }, 2000);
-            } catch (error) {
-                toast('Error tracking order', true);
-            } finally {
-                trackBtn.innerHTML = originalText;
-                trackBtn.disabled = false;
-            }
-        }
-
-        document.getElementById('searchTrackBtn').addEventListener('click', function() {
-            const id = document.getElementById('trackingInput').value.trim().toUpperCase();
-            if (id) { trackOrder(id); } else { toast('Enter Tracking ID', true); }
-        });
-
-        document.getElementById('closeModalBtn').addEventListener('click', function() {
-            document.getElementById('trackModal').classList.remove('show');
+        async function trackOrder(tid) {
+            const btn = document.getElementById('searchTrackBtn');
+            btn.innerHTML = 'Searching...'; btn.disabled = true;
+            await displayTrackingResult(tid);
+            currentTrackingIdForAutoRefresh = tid;
             if (autoRefreshInterval) clearInterval(autoRefreshInterval);
-        });
+            autoRefreshInterval = setInterval(async () => { if (currentTrackingIdForAutoRefresh) { await fetchAllFromCloud(); await displayTrackingResult(currentTrackingIdForAutoRefresh); } }, 2000);
+            btn.innerHTML = 'Track'; btn.disabled = false;
+        }
 
-        // ===== SUCCESS MODAL =====
-        document.getElementById('closeSuccessModal').addEventListener('click', function() {
-            document.getElementById('successModal').classList.remove('show');
-        });
+        document.getElementById('searchTrackBtn').onclick = () => {
+            const id = document.getElementById('trackingInput').value.trim().toUpperCase();
+            if (id) trackOrder(id); else toast('Enter ID', true);
+        };
 
-        document.getElementById('copyTrackingBtn').addEventListener('click', function() {
-            const id = document.getElementById('successTrackingId').textContent;
-            navigator.clipboard.writeText(id).then(() => toast('Tracking ID copied!')).catch(() => toast('Failed to copy', true));
-        });
+        document.getElementById('copyTrackingBtn').onclick = () => {
+            navigator.clipboard.writeText(document.getElementById('successTrackingId').textContent).then(() => toast('Copied!'));
+        };
 
-        document.getElementById('trackFromSuccessBtn').addEventListener('click', function() {
+        document.getElementById('trackFromSuccessBtn').onclick = () => {
             const id = document.getElementById('successTrackingId').textContent;
             document.getElementById('successModal').classList.remove('show');
             document.getElementById('trackingInput').value = id;
             document.getElementById('trackModal').classList.add('show');
             setTimeout(() => trackOrder(id), 500);
-        });
+        };
 
-        // ===== REVIEWS (IN MODAL) =====
         function renderReviews() {
-            const container = document.getElementById('reviewsItemsModal');
-            if (!container) return;
-            if (reviews.length === 0) {
-                container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-light);">No reviews yet - be the first!</div>';
-                return;
-            }
-
-            const allReviews = [...reviews, ...reviews, ...reviews];
-            container.innerHTML = allReviews.map(r => `
-                    <div class="review-card">
-                        <div class="review-rating">${'★'.repeat(parseInt(r.rating) || 0)}${'☆'.repeat(5 - (parseInt(r.rating) || 0))}</div>
-                        <div class="review-text">"${escapeHtml(r.review || '')}"</div>
-                        <div class="review-author">— ${escapeHtml(r.name || 'Anonymous')}</div>
-                    </div>
-                `).join('');
-
-            startInfiniteScrollModal();
+            const c = document.getElementById('reviewsItemsModal');
+            if (!c) return;
+            if (!reviews.length) { c.innerHTML = '<div style="padding:20px;text-align:center;">No reviews yet</div>'; return; }
+            const all = [...reviews, ...reviews, ...reviews];
+            c.innerHTML = all.map(r => `<div class="review-card"><div class="review-rating">${'★'.repeat(parseInt(r.rating)||0)}${'☆'.repeat(5-(parseInt(r.rating)||0))}</div><div class="review-text">"${escapeHtml(r.review||'')}"</div><div class="review-author">— ${escapeHtml(r.name||'Anonymous')}</div></div>`).join('');
         }
 
-        function startInfiniteScrollModal() {
-            const carousel = document.getElementById('reviewsCarouselModal');
-            if (!carousel) return;
-            if (autoScrollInterval) clearInterval(autoScrollInterval);
-
-            let isDragging = false;
-            let startX, scrollLeft;
-
-            carousel.addEventListener('mousedown', (e) => {
-                isDragging = true;
-                startX = e.pageX - carousel.offsetLeft;
-                scrollLeft = carousel.scrollLeft;
-                carousel.style.cursor = 'grabbing';
-            });
-
-            carousel.addEventListener('mouseleave', () => { isDragging = false; carousel.style.cursor = 'grab'; });
-            carousel.addEventListener('mouseup', () => { isDragging = false; carousel.style.cursor = 'grab'; });
-
-            carousel.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                e.preventDefault();
-                const x = e.pageX - carousel.offsetLeft;
-                const walk = (x - startX) * 2;
-                carousel.scrollLeft = scrollLeft - walk;
-            });
-
-            autoScrollInterval = setInterval(() => {
-                if (carousel && !isDragging && carousel.scrollWidth > carousel.clientWidth) {
-                    const maxScroll = carousel.scrollWidth - carousel.clientWidth;
-                    let newScroll = carousel.scrollLeft + 280;
-                    if (newScroll >= maxScroll) {
-                        carousel.scrollTo({ left: 0, behavior: 'smooth' });
-                    } else {
-                        carousel.scrollTo({ left: newScroll, behavior: 'smooth' });
-                    }
-                }
-            }, 4000);
-        }
-
-        // ===== REVIEW SUBMIT =====
         let selectedRating = 0;
-        document.querySelectorAll('#ratingStars .star-rating').forEach(star => {
-            star.addEventListener('click', function() {
+        document.querySelectorAll('#ratingStars .star-rating').forEach(s => {
+            s.onclick = function() {
                 selectedRating = parseInt(this.dataset.rating);
-                document.querySelectorAll('#ratingStars .star-rating').forEach(s => parseInt(s.dataset.rating) <= selectedRating ? s.classList.add('active') : s.classList.remove('active'));
-            });
+                document.querySelectorAll('#ratingStars .star-rating').forEach(x => parseInt(x.dataset.rating) <= selectedRating ? x.classList.add('active') : x.classList.remove('active'));
+            };
         });
 
-        document.getElementById('submitReview').addEventListener('click', async function() {
+        document.getElementById('submitReview').onclick = async function() {
             const name = document.getElementById('reviewerName').value.trim();
             const review = document.getElementById('reviewText').value.trim();
-
-            if (!name) { toast('Enter your name', true); return; }
-            if (!review) { toast('Write your review', true); return; }
-            if (selectedRating === 0) { toast('Select a rating', true); return; }
-
-            const btn = this;
-            btn.innerHTML = '<span class="loading-spinner"></span> Submitting...';
-            btn.disabled = true;
-
-            await saveToGoogleSheets({
-                type: 'review',
-                name: name,
-                rating: selectedRating,
-                review: review,
-                timestamp: new Date().toLocaleString('en-KE')
-            });
-
+            if (!name) return toast('Enter name', true);
+            if (!review) return toast('Write review', true);
+            if (!selectedRating) return toast('Select rating', true);
+            this.innerHTML = 'Submitting...'; this.disabled = true;
+            await saveToGoogleSheets({ type: 'review', name, rating: selectedRating, review, timestamp: new Date().toLocaleString('en-KE') });
             reviews.unshift({ name, rating: selectedRating, review });
             localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
             renderReviews();
-
-            btn.innerHTML = 'Submit Review';
-            btn.disabled = false;
-            document.getElementById('reviewerName').value = '';
-            document.getElementById('reviewText').value = '';
+            this.innerHTML = 'Submit Review'; this.disabled = false;
+            document.getElementById('reviewerName').value = ''; document.getElementById('reviewText').value = '';
             selectedRating = 0;
             document.querySelectorAll('#ratingStars .star-rating').forEach(s => s.classList.remove('active'));
+            toast('Thank you!');
+        };
 
-            toast('Thank you for your review!');
-            sendTelegramNotification('⭐ New Review from ' + name + ' (' + selectedRating + '/5)');
-        });
-
-        // ===== SUBMIT ORDER =====
-        document.getElementById('submitOrder').addEventListener('click', async function() {
+        document.getElementById('submitOrder').onclick = async function() {
             const name = document.getElementById('customerName').value.trim();
             const profile = document.getElementById('profileUrl').value.trim();
             const phone = document.getElementById('customerPhone').value.trim();
             const link = document.getElementById('postLink').value.trim();
-            const mpesaText = document.getElementById('mpesaConfirmation').value.trim();
+            const mpesa = document.getElementById('mpesaConfirmation').value.trim();
 
-            if (!name) { toast('Enter your name', true); showStep(2); return; }
-            if (!profile) { toast(`Enter ${platformSettings[currentPlatform].usernameLabel}`, true); showStep(2); return; }
-            if (!phone) { toast('Enter WhatsApp number', true); showStep(2); return; }
-            if ((currentService === 'likes' || currentService === 'comments') && !link) {
-                toast(`Enter ${platformSettings[currentPlatform].postLabel}`, true);
-                showStep(2);
-                return;
-            }
-            if (!mpesaText) { toast('Paste M-Pesa confirmation', true); showStep(3); return; }
+            if (!name) return toast('Enter name', true);
+            if (!profile) return toast('Enter profile', true);
+            if (!phone) return toast('Enter phone', true);
+            if (!mpesa) return toast('Paste M-Pesa message', true);
 
-            let price = calculatePrice(currentPlatform, currentService, currentQuantity);
-            let deliveryTime = getDeliveryTime(currentQuantity);
-            let transactionId = mpesaText.match(/[A-Z0-9]{10,}/i)?.[0] || 'Not extracted';
-            let fullServiceName = `${platformSettings[currentPlatform].name} ${serviceNames[currentService]}`;
-            let finalTrackingId = currentTrackingId;
-
+            const price = calculatePrice(currentPlatform, currentService, currentQuantity);
+            const tid = currentTrackingId;
             const orderData = {
-                trackingId: finalTrackingId,
+                trackingId: tid,
                 platform: platformSettings[currentPlatform].name,
-                service: fullServiceName,
+                service: platformSettings[currentPlatform].name + ' ' + serviceNames[currentService],
                 quantity: currentQuantity,
                 price: price,
-                deliveryTime: deliveryTime,
+                deliveryTime: getDeliveryTime(currentQuantity),
                 customerName: name,
                 profile: profile,
-                postLink: link || 'Not provided',
+                postLink: link || 'N/A',
                 phone: phone,
-                transactionId: transactionId,
-                mpesaConfirmation: mpesaText.substring(0, 500),
+                transactionId: mpesa.match(/[A-Z0-9]{10,}/i)?.[0] || 'N/A',
+                mpesaConfirmation: mpesa.substring(0,500),
                 status: 'Pending',
                 timestamp: new Date().toLocaleString('en-KE')
             };
 
-            const btn = this;
-            btn.innerHTML = '<span class="loading-spinner"></span> Processing...';
-            btn.disabled = true;
+            this.innerHTML = 'Processing...'; this.disabled = true;
+            await saveToGoogleSheets(orderData);
+            orders.unshift(orderData);
+            localStorage.setItem('getfanskenya_orders', JSON.stringify(orders));
 
-            const saved = await saveToGoogleSheets(orderData);
+            document.getElementById('successTrackingId').textContent = tid;
+            document.getElementById('successModal').classList.add('show');
 
-            if (saved) {
-                orders.unshift(orderData);
-                localStorage.setItem('getfanskenya_orders', JSON.stringify(orders));
+            currentTrackingId = 'GFK' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substring(2,4).toUpperCase();
+            document.getElementById('trackingId').textContent = currentTrackingId;
+            document.getElementById('customerName').value = '';
+            document.getElementById('profileUrl').value = '';
+            document.getElementById('postLink').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('mpesaConfirmation').value = '';
+            currentPlatform = 'facebook'; currentService = 'followers'; currentQuantity = 10000;
+            document.getElementById('quantitySlider').value = 10000;
+            document.getElementById('quantityNumber').value = 10000;
+            updateServiceButtons(); updateUI(); showStep(1);
+            this.innerHTML = 'Place Order <i class="fas fa-check"></i>'; this.disabled = false;
+            toast('Order placed!');
+        };
 
-                document.getElementById('successTrackingId').textContent = finalTrackingId;
-                document.getElementById('successModal').classList.add('show');
-
-                currentTrackingId = 'GFK' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substring(2, 4).toUpperCase();
-                document.getElementById('trackingId').textContent = currentTrackingId;
-                document.getElementById('customerName').value = '';
-                document.getElementById('profileUrl').value = '';
-                document.getElementById('postLink').value = '';
-                document.getElementById('customerPhone').value = '';
-                document.getElementById('mpesaConfirmation').value = '';
-                currentPlatform = 'facebook';
-                currentService = 'followers';
-                currentQuantity = 10000;
-                quantitySlider.value = 10000;
-                quantityInput.value = 10000;
-                updateServiceButtons();
-                updateUI();
-                showStep(1);
-
-                toast('Order placed successfully!');
-                sendTelegramNotification('🛒 NEW ORDER\n👤 ' + name + '\n📱 ' + phone + '\n📊 ' + fullServiceName + '\n💰 KSh ' + price + '\n📝 ' + finalTrackingId);
-            } else {
-                toast('Failed to save order. Please try again.', true);
-            }
-
-            btn.innerHTML = 'Place Order <i class="fas fa-check"></i>';
-            btn.disabled = false;
-        });
-
-        // ===== DARK MODE =====
-        document.getElementById('themeToggle').addEventListener('click', function() {
+        document.getElementById('themeToggle').onclick = () => {
             document.body.classList.toggle('dark');
             localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-        });
+        };
+        if (localStorage.getItem('theme')==='dark') document.body.classList.add('dark');
 
-        if (localStorage.getItem('theme') === 'dark') {
-            document.body.classList.add('dark');
-        }
-
-        // ===== HELPERS =====
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
+        function escapeHtml(t) { if (!t) return ''; const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 
         function loadDefaultReviews() {
             reviews = [
-                { name: 'John M.', rating: 5, review: 'Ordered 10,000 Facebook followers at 3399, delivered fast! My page is growing!' },
-                { name: 'Sarah W.', rating: 5, review: 'Got 10,000 Instagram followers for only 5000! Best deal in Kenya!' },
-                { name: 'David K.', rating: 5, review: 'Very reliable service! The Facebook likes came in 30 minutes!' },
-                { name: 'Grace N.', rating: 5, review: 'Saved big on Instagram followers! Professional and on time.' },
-                { name: 'Peter O.', rating: 4, review: 'Great service, affordable prices. Will order again.' },
-                { name: 'Mary A.', rating: 5, review: 'Best social media growth service in Kenya! 10/10!' }
+                { name:'John M.',rating:5,review:'Ordered 10,000 Facebook followers at 3399, delivered fast!' },
+                { name:'Sarah W.',rating:5,review:'Got 10,000 Instagram followers for only 5000! Best deal!' },
+                { name:'David K.',rating:5,review:'Very reliable! Facebook likes came in 30 minutes!' },
+                { name:'Grace N.',rating:5,review:'Saved big on Instagram followers! On time.' },
+                { name:'Peter O.',rating:4,review:'Great service, affordable prices. Will order again.' },
+                { name:'Mary A.',rating:5,review:'Best social media growth service in Kenya! 10/10!' }
             ];
             localStorage.setItem('getfanskenya_reviews', JSON.stringify(reviews));
         }
 
-        // ===== CLOSE MODALS ON CLICK OUTSIDE =====
-        document.querySelectorAll('.modal-overlay').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('show');
-                    if (this.id === 'trackModal' && autoRefreshInterval) {
-                        clearInterval(autoRefreshInterval);
-                    }
-                }
-            });
+        document.querySelectorAll('.modal-overlay').forEach(m => {
+            m.onclick = function(e) { if (e.target===this) { this.classList.remove('show'); if (this.id==='trackModal'&&autoRefreshInterval) clearInterval(autoRefreshInterval); } };
         });
 
-        // ===== INITIALIZE - SESSION PERSISTENCE FIXED =====
-        async function initialize() {
-            // CHECK SESSION - Skip landing if user already logged in/guest
-            const userType = localStorage.getItem('gfk_user_type');
-            if (userType === 'member' || userType === 'guest') {
-                document.getElementById('landingPage').classList.add('hide-landing');
-                document.getElementById('mainSite').classList.add('active');
-                updateAccountNav();
-            }
-
+        function initialize() {
             loadFromLocalStorage();
             if (!reviews.length) loadDefaultReviews();
-
-            updateServiceButtons();
-            updateUI();
-            updateProgress();
-            updateAccountNav();
-
-            // Start sync from Google Sheets
-            startAutoSync();
-
+            updateServiceButtons(); updateUI(); updateProgress(); updateAccountNav();
             document.getElementById('trackingId').textContent = currentTrackingId;
-
-            console.log('✅ Get Fans Kenya LOADED!');
-            console.log('📱 Session:', userType || 'none (showing landing)');
-            console.log('📡 API:', GOOGLE_SHEET_API_URL.substring(0, 60) + '...');
-            console.log('🔄 Auto-sync: 30 SECONDS');
-            console.log('📢 AdSense: ENABLED');
-            console.log('🖼️ Home Image: Google Drive link');
+            console.log('✅ Get Fans Kenya Ready - Landing Page Showing');
         }
 
-        // Start the app
         initialize();
-
-        // Push AdSense ads
-        setTimeout(() => {
-            try {
-                (adsbygoogle = window.adsbygoogle || []).push({});
-            } catch (e) {
-                console.log('AdSense push:', e);
-            }
-        }, 500);
     </script>
 
 </body>
