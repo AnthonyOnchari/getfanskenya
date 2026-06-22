@@ -902,7 +902,7 @@ function debugChatState() {
 }
 
 // Send chat message
-// Send chat message - USING THE WORKING adminMessage ENDPOINT
+// Send chat message - USING TELEGRAM DIRECTLY (Bypasses CORS)
 async function sendChatMessage() {
     var input = document.getElementById('chatInput');
     if (!input) {
@@ -932,53 +932,43 @@ async function sendChatMessage() {
     if (sendBtn) sendBtn.disabled = true;
     
     try {
-        // USE THE WORKING adminMessage ENDPOINT
-        var sender = currentUser.name + ' (' + currentUser.email + ')';
-        var response = await fetch(SHEET_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                action: 'adminMessage',
-                sender: sender,
-                message: message,
-                timestamp: new Date().toLocaleString()
-            })
-        });
+        // OPTION 1: Send directly to Telegram using the tg() function
+        var tgMessage = '💬 New Chat Message\n';
+        tgMessage += '━━━━━━━━━━━━━━━━\n';
+        tgMessage += '👤 User: ' + currentUser.name + '\n';
+        tgMessage += '📧 Email: ' + currentUser.email + '\n';
+        tgMessage += '💬 Message: ' + message + '\n';
+        tgMessage += '⏰ ' + new Date().toLocaleString();
         
-        console.log('Response status:', response.status);
+        // Send to Telegram via the tg() function (this bypasses CORS)
+        tg(tgMessage);
         
-        if (!response.ok) {
-            throw new Error('HTTP error: ' + response.status);
+        input.value = '';
+        toast('✅ Message sent to admin via Telegram!');
+        
+        // Also try to save to chat history via AppScript (may fail, but that's ok)
+        try {
+            await fetch(SHEET_URL, {
+                method: 'POST',
+                mode: 'no-cors', // This bypasses CORS
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'chatMessage',
+                    userEmail: currentUser.email,
+                    userName: currentUser.name,
+                    message: message,
+                    timestamp: new Date().toLocaleString()
+                })
+            });
+            console.log('Chat history save attempted');
+        } catch(e) {
+            console.log('Chat history save failed, but message was sent via Telegram');
         }
         
-        var result = await response.json();
-        console.log('Chat response:', result);
+        setTimeout(function() {
+            loadChatHistory();
+        }, 500);
         
-        if (result.success) {
-            input.value = '';
-            toast('✅ Message sent to admin!');
-            // Also try to save to chat history for display
-            try {
-                await fetch(SHEET_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        action: 'chatMessage',
-                        userEmail: currentUser.email,
-                        userName: currentUser.name,
-                        message: message,
-                        timestamp: new Date().toLocaleString()
-                    })
-                });
-            } catch(e) {
-                console.log('Chat history save failed, but message was sent via adminMessage');
-            }
-            setTimeout(function() {
-                loadChatHistory();
-            }, 500);
-        } else {
-            toast('❌ ' + (result.error || 'Failed to send message'), true);
-        }
     } catch(err) {
         console.error('Chat error:', err);
         toast('❌ Failed to send: ' + err.message, true);
