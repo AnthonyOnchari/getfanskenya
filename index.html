@@ -902,6 +902,7 @@ function debugChatState() {
 }
 
 // Send chat message
+// Send chat message - USING THE WORKING adminMessage ENDPOINT
 async function sendChatMessage() {
     var input = document.getElementById('chatInput');
     if (!input) {
@@ -931,15 +932,14 @@ async function sendChatMessage() {
     if (sendBtn) sendBtn.disabled = true;
     
     try {
+        // USE THE WORKING adminMessage ENDPOINT
+        var sender = currentUser.name + ' (' + currentUser.email + ')';
         var response = await fetch(SHEET_URL, {
             method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                action: 'chatMessage',
-                userEmail: currentUser.email,
-                userName: currentUser.name,
+                action: 'adminMessage',
+                sender: sender,
                 message: message,
                 timestamp: new Date().toLocaleString()
             })
@@ -957,6 +957,22 @@ async function sendChatMessage() {
         if (result.success) {
             input.value = '';
             toast('✅ Message sent to admin!');
+            // Also try to save to chat history for display
+            try {
+                await fetch(SHEET_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'chatMessage',
+                        userEmail: currentUser.email,
+                        userName: currentUser.name,
+                        message: message,
+                        timestamp: new Date().toLocaleString()
+                    })
+                });
+            } catch(e) {
+                console.log('Chat history save failed, but message was sent via adminMessage');
+            }
             setTimeout(function() {
                 loadChatHistory();
             }, 500);
