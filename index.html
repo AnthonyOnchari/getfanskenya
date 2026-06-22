@@ -869,7 +869,7 @@ function createParticles() {
 createParticles();
 
 // ===== CONFIGURATION =====
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbzwC0XVPRG3gLlJdy8_lJlPia7l6YDqg_5ZYPKUGuUvNkB9lBWBUHPqNSQbHROT2tcyoA/exec";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbw_F-JMJI0qrUZvkcNMCGA3DdZ0OadkNvbDZ7NAYyeM_aAZ7ZtRBndY2RtiQ7uwq2i5yA/exec";
 const ADMIN_PASS = "GetFans2024";
 const TG_TOKEN = "8825700469:AAEpywAnsc6jEXUmCyvWN4niPbWTSg1xn68";
 const TG_CHAT = "5740390611";
@@ -888,7 +888,7 @@ function saveUsers(u){localStorage.setItem('gfk_users',JSON.stringify(u));}
 function genId(){return'GFK'+Date.now().toString(36).toUpperCase()+Math.random().toString(36).substring(2,4).toUpperCase();}
 let trackingId=genId();
 
-// ===== CHAT FUNCTIONS (FIXED) =====
+// ===== CHAT FUNCTIONS =====
 
 // Debug function
 function debugChatState() {
@@ -901,8 +901,7 @@ function debugChatState() {
     console.log('SHEET_URL:', SHEET_URL);
 }
 
-// Send chat message
-// Send chat message - USING TELEGRAM DIRECTLY (Bypasses CORS)
+// Send chat message - Optimistic UI with Telegram fallback
 async function sendChatMessage() {
     var input = document.getElementById('chatInput');
     if (!input) {
@@ -923,51 +922,71 @@ async function sendChatMessage() {
         return;
     }
     
-    // Show sending status
-    toast('📤 Sending message...');
-    
     // Disable input while sending
     input.disabled = true;
     var sendBtn = document.querySelector('.chat-input-group button');
     if (sendBtn) sendBtn.disabled = true;
     
+    // ===== OPTIMISTIC UI UPDATE =====
+    var container = document.getElementById('chatMessages');
+    if (container) {
+        var emptyState = container.querySelector('.chat-empty');
+        if (emptyState) emptyState.remove();
+        
+        var messageHtml = '<div class="chat-message user">' +
+            '<div class="sender">' + currentUser.name + '</div>' +
+            '<div class="bubble">' + message + '</div>' +
+            '<div class="time">' + new Date().toLocaleString() + '</div>' +
+            '</div>';
+        container.innerHTML += messageHtml;
+        container.scrollTop = container.scrollHeight;
+    }
+    
+    var messageToSend = message;
+    input.value = '';
+    toast('📤 Sending...');
+    
     try {
-        // OPTION 1: Send directly to Telegram using the tg() function
+        // ===== SEND TO TELEGRAM DIRECTLY (BYPASSES CORS) =====
         var tgMessage = '💬 New Chat Message\n';
         tgMessage += '━━━━━━━━━━━━━━━━\n';
         tgMessage += '👤 User: ' + currentUser.name + '\n';
         tgMessage += '📧 Email: ' + currentUser.email + '\n';
-        tgMessage += '💬 Message: ' + message + '\n';
+        tgMessage += '💬 Message: ' + messageToSend + '\n';
         tgMessage += '⏰ ' + new Date().toLocaleString();
-        
-        // Send to Telegram via the tg() function (this bypasses CORS)
         tg(tgMessage);
         
-        input.value = '';
-        toast('✅ Message sent to admin via Telegram!');
-        
-        // Also try to save to chat history via AppScript (may fail, but that's ok)
+        // ===== TRY TO SAVE TO SHEETS =====
         try {
-            await fetch(SHEET_URL, {
+            var response = await fetch(SHEET_URL, {
                 method: 'POST',
-                mode: 'no-cors', // This bypasses CORS
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'text/plain;charset=utf-8'
+                },
                 body: JSON.stringify({
                     action: 'chatMessage',
                     userEmail: currentUser.email,
                     userName: currentUser.name,
-                    message: message,
+                    message: messageToSend,
                     timestamp: new Date().toLocaleString()
                 })
             });
-            console.log('Chat history save attempted');
-        } catch(e) {
-            console.log('Chat history save failed, but message was sent via Telegram');
+            
+            // Try to parse the response
+            try {
+                var data = await response.json();
+                if (data && data.success) {
+                    toast('✅ Message sent to admin!');
+                } else {
+                    toast('✅ Message sent to admin via Telegram!');
+                }
+            } catch(e) {
+                toast('✅ Message sent to admin via Telegram!');
+            }
+        } catch(sheetError) {
+            console.log('Sheet save failed, but Telegram sent:', sheetError);
+            toast('✅ Message sent to admin via Telegram!');
         }
-        
-        setTimeout(function() {
-            loadChatHistory();
-        }, 500);
         
     } catch(err) {
         console.error('Chat error:', err);
@@ -979,7 +998,7 @@ async function sendChatMessage() {
     }
 }
 
-// Load chat history
+// Load chat history - Simple GET without headers
 async function loadChatHistory() {
     if (!currentUser) {
         console.log('No user logged in, cannot load chat');
@@ -1003,31 +1022,42 @@ async function loadChatHistory() {
         console.log('Chat history loaded, count:', data ? data.length : 0);
         
         if (!data || data.length === 0) {
-            container.innerHTML = '<div class="chat-empty"><i class="fas fa-comment-dots"></i>No messages yet<br><span style="font-size:0.55rem;">Send a message to admin</span></div>';
+            // Don't overwrite if we already have optimistic messages
+            if (container.querySelector('.chat-empty')) {
+                container.innerHTML = '<div class="chat-empty"><i class="fas fa-comment-dots"></i>No messages yet<br><span style="font-size:0.55rem;">Send a message to admin</span></div>';
+            }
             return;
         }
         
-        var html = '';
-        data.forEach(function(msg) {
-            var isUser = msg.direction === 'outgoing';
-            var sender = isUser ? (currentUser ? currentUser.name : 'You') : 'Admin';
-            var align = isUser ? 'user' : 'admin';
-            var time = msg.timestamp || '';
-            var messageText = msg.message || '';
+        // Preserve optimistic messages by only showing history
+        // If there are no optimistic messages, show history
+        var hasOptimistic = container.querySelector('.chat-message.user');
+        if (!hasOptimistic) {
+            var html = '';
+            data.forEach(function(msg) {
+                var isUser = msg.direction === 'outgoing';
+                var sender = isUser ? (currentUser ? currentUser.name : 'You') : 'Admin';
+                var align = isUser ? 'user' : 'admin';
+                var time = msg.timestamp || '';
+                var messageText = msg.message || '';
+                
+                html += '<div class="chat-message ' + align + '">' +
+                    '<div class="sender">' + sender + '</div>' +
+                    '<div class="bubble">' + messageText + '</div>' +
+                    '<div class="time">' + time + '</div>' +
+                    '</div>';
+            });
             
-            html += '<div class="chat-message ' + align + '">' +
-                '<div class="sender">' + sender + '</div>' +
-                '<div class="bubble">' + messageText + '</div>' +
-                '<div class="time">' + time + '</div>' +
-                '</div>';
-        });
-        
-        container.innerHTML = html;
-        container.scrollTop = container.scrollHeight;
+            container.innerHTML = html;
+            container.scrollTop = container.scrollHeight;
+        }
         
     } catch(err) {
         console.error('Load chat error:', err);
-        container.innerHTML = '<div class="chat-empty"><i class="fas fa-exclamation-triangle"></i>Failed to load messages<br><span style="font-size:0.55rem;">' + err.message + '</span></div>';
+        // Don't overwrite existing messages on error
+        if (container.querySelector('.chat-empty')) {
+            container.innerHTML = '<div class="chat-empty"><i class="fas fa-info-circle"></i>Chat history temporarily unavailable<br><span style="font-size:0.55rem;">Messages still go to Telegram</span></div>';
+        }
     }
 }
 
